@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DentalPro — Painel Admin</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.3.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0F1923;color:#E4E9EE;min-height:100vh}
+.topbar{background:#1A2B3C;border-bottom:1px solid rgba(255,255,255,.08);padding:0 28px;height:56px;display:flex;align-items:center;gap:12px}
+.logo{display:flex;align-items:center;gap:8px}
+.logo-icon{width:28px;height:28px;background:#2D7DD2;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px}
+.logo-text{font-size:14px;font-weight:700;color:#fff}
+.admin-badge{background:#D94040;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.5px}
+.spacer{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;border:none;text-decoration:none;transition:all .15s}
+.btn-ghost{background:transparent;color:#8DA0B3;border:1px solid rgba(255,255,255,.1)}
+.btn-ghost:hover{background:rgba(255,255,255,.05);color:#fff}
+.btn-primary{background:#2D7DD2;color:#fff}
+.btn-primary:hover{background:#1A5FA8}
+.btn-danger{background:#D94040;color:#fff}
+.btn-danger:hover{background:#B83232}
+.btn-success{background:#1A9E75;color:#fff}
+.btn-success:hover{background:#0D7D5C}
+.btn-sm{padding:5px 10px;font-size:12px}
+
+.content{padding:28px}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat{background:#1A2B3C;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:18px}
+.stat-label{font-size:12px;color:#8DA0B3;font-weight:500;margin-bottom:6px}
+.stat-value{font-size:26px;font-weight:800;color:#fff;letter-spacing:-0.5px}
+.stat-sub{font-size:12px;color:#8DA0B3;margin-top:4px}
+
+/* CARD */
+.card{background:#1A2B3C;border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden;margin-bottom:20px}
+.card-header{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:12px}
+.card-title{font-size:14px;font-weight:600;color:#fff}
+.card-sub{font-size:12px;color:#8DA0B3}
+
+/* FILTERS */
+.filters{display:flex;gap:8px;margin-left:auto;align-items:center}
+.filter-btn{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:transparent;color:#8DA0B3;transition:all .15s}
+.filter-btn.active{background:#2D7DD2;color:#fff;border-color:#2D7DD2}
+.search{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:6px 12px}
+.search input{background:transparent;border:none;outline:none;color:#fff;font-size:13px;width:200px}
+.search input::placeholder{color:#8DA0B3}
+.search i{color:#8DA0B3}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse}
+th{padding:10px 16px;text-align:left;font-size:11px;font-weight:600;color:#8DA0B3;letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.15)}
+td{padding:13px 16px;font-size:13px;border-bottom:1px solid rgba(255,255,255,.04);color:#C8D4E0;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
+
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600}
+.badge-trial{background:rgba(45,125,210,.2);color:#7BBDF5}
+.badge-ativo{background:rgba(26,158,117,.2);color:#4DD8AA}
+.badge-suspenso{background:rgba(217,64,64,.2);color:#F08080}
+.badge-cancelado{background:rgba(90,106,122,.2);color:#8DA0B3}
+
+.plano-pill{display:inline-flex;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.3px}
+.plano-starter{background:rgba(255,255,255,.06);color:#C8D4E0}
+.plano-pro{background:rgba(45,125,210,.15);color:#7BBDF5}
+.plano-clinica{background:rgba(124,58,237,.15);color:#C4B5FD}
+
+.actions-cell{display:flex;gap:6px}
+.action-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:5px;padding:4px 8px;cursor:pointer;color:#8DA0B3;font-size:13px;transition:all .15s}
+.action-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+.action-btn.danger:hover{background:rgba(217,64,64,.2);color:#F08080;border-color:rgba(217,64,64,.3)}
+.action-btn.success:hover{background:rgba(26,158,117,.2);color:#4DD8AA;border-color:rgba(26,158,117,.3)}
+
+/* MRR CHART */
+.mrr-bars{display:flex;align-items:flex-end;gap:6px;height:80px;padding:0 20px 20px}
+.mrr-bar{flex:1;border-radius:4px 4px 0 0;background:#2D7DD2;opacity:.6;transition:opacity .15s;cursor:pointer;min-width:20px}
+.mrr-bar:hover{opacity:1}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#1A2B3C;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:28px;width:460px;max-width:95vw}
+.modal-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:20px}
+.form-group{margin-bottom:14px}
+.form-label{display:block;font-size:12px;font-weight:600;color:#8DA0B3;margin-bottom:5px}
+.form-input{width:100%;padding:9px 12px;border:1px solid rgba(255,255,255,.1);border-radius:7px;font-size:13.5px;outline:none;background:rgba(0,0,0,.2);color:#fff;transition:border-color .15s}
+.form-input:focus{border-color:#2D7DD2}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+
+/* EMPTY */
+.empty{text-align:center;padding:48px;color:#8DA0B3}
+.empty i{font-size:36px;display:block;margin-bottom:12px;color:#5A6A7A}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-icon"><i class="ti ti-tooth"></i></div>
+    <span class="logo-text">DentalPro</span>
+  </div>
+  <span class="admin-badge">SUPER ADMIN</span>
+  <div class="spacer"></div>
+  <button class="btn btn-ghost btn-sm" onclick="abrirModal('modal-add-tenant')">
+    <i class="ti ti-plus"></i> Adicionar clínica
+  </button>
+  <button class="btn btn-ghost btn-sm" onclick="logout()">
+    <i class="ti ti-logout"></i> Sair
+  </button>
+</div>
+
+<div class="content">
+
+  <!-- STATS -->
+  <div class="stats" id="stats-grid">
+    <div class="stat"><div class="stat-label">Total de clínicas</div><div class="stat-value" id="s-total">—</div><div class="stat-sub">tenants ativos</div></div>
+    <div class="stat"><div class="stat-label">MRR estimado</div><div class="stat-value" id="s-mrr">—</div><div class="stat-sub">receita mensal recorrente</div></div>
+    <div class="stat"><div class="stat-label">Em trial</div><div class="stat-value" id="s-trial">—</div><div class="stat-sub">expirando em breve</div></div>
+    <div class="stat"><div class="stat-label">Suspensos</div><div class="stat-value" id="s-suspenso">—</div><div class="stat-sub">inadimplentes</div></div>
+  </div>
+
+  <!-- TENANTS TABLE -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Clínicas cadastradas</div>
+        <div class="card-sub" id="tenants-count">Carregando...</div>
+      </div>
+      <div class="filters">
+        <button class="filter-btn active" onclick="filtrar('todos', this)">Todos</button>
+        <button class="filter-btn" onclick="filtrar('trial', this)">Trial</button>
+        <button class="filter-btn" onclick="filtrar('ativo', this)">Ativos</button>
+        <button class="filter-btn" onclick="filtrar('suspenso', this)">Suspensos</button>
+        <div class="search"><i class="ti ti-search"></i><input type="text" placeholder="Buscar clínica..." oninput="buscar(this.value)"></div>
+      </div>
+    </div>
+    <div id="loading" style="text-align:center;padding:40px;color:#8DA0B3"><i class="ti ti-loader" style="font-size:24px"></i><div style="margin-top:8px;font-size:13px">Carregando tenants...</div></div>
+    <table id="tenants-table" style="display:none">
+      <thead>
+        <tr>
+          <th>Clínica</th><th>Plano</th><th>Status</th><th>Trial / Ativo desde</th><th>Proprietário</th><th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="tenants-tbody"></tbody>
+    </table>
+    <div class="empty" id="empty-state" style="display:none">
+      <i class="ti ti-building-hospital"></i>
+      <p>Nenhuma clínica encontrada</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL: Detalhes / Ações -->
+<div class="modal-overlay" id="modal-tenant">
+  <div class="modal">
+    <div class="modal-title" id="modal-tenant-nome">Detalhes da clínica</div>
+    <div id="modal-tenant-body"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="fecharModal('modal-tenant')">Fechar</button>
+      <button class="btn btn-success btn-sm" id="modal-btn-ativar" onclick="acaoModal('ativar')" style="display:none"><i class="ti ti-check"></i> Ativar</button>
+      <button class="btn btn-danger btn-sm" id="modal-btn-suspender" onclick="acaoModal('suspender')" style="display:none"><i class="ti ti-ban"></i> Suspender</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Adicionar tenant manualmente -->
+<div class="modal-overlay" id="modal-add-tenant">
+  <div class="modal">
+    <div class="modal-title">Adicionar clínica manualmente</div>
+    <div class="form-group"><label class="form-label">Nome da clínica</label><input type="text" id="add-nome-clinica" class="form-input" placeholder="Clínica Sorriso"></div>
+    <div class="form-group"><label class="form-label">Proprietário</label><input type="text" id="add-nome-prop" class="form-input" placeholder="Dr. Nome"></div>
+    <div class="form-group"><label class="form-label">E-mail</label><input type="email" id="add-email" class="form-input" placeholder="dr@clinica.com"></div>
+    <div class="form-group"><label class="form-label">Plano</label>
+      <select id="add-plano" class="form-input">
+        <option value="starter">Starter — R$ 89/mês</option>
+        <option value="pro" selected>Pro — R$ 179/mês</option>
+        <option value="clinica">Clínica — R$ 349/mês</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="fecharModal('modal-add-tenant')">Cancelar</button>
+      <button class="btn btn-primary" onclick="addTenantManual()"><i class="ti ti-check"></i> Criar clínica</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { requireSuperAdmin, logout as doLogout } from "./js/auth.js";
+import {
+  listarTodosTenants, ativarPlano,
+  suspenderTenant, reativarTenant, PLANOS, criarTenant
+} from "./js/tenant.js";
+
+let allTenants = [];
+let filtroAtual = "todos";
+let tenantSelecionado = null;
+
+requireSuperAdmin(async () => {
+  await carregarTenants();
+});
+
+async function carregarTenants() {
+  document.getElementById("loading").style.display = "block";
+  document.getElementById("tenants-table").style.display = "none";
+  allTenants = await listarTodosTenants();
+  renderStats();
+  renderTabela(allTenants);
+  document.getElementById("loading").style.display = "none";
+  document.getElementById("tenants-table").style.display = "table";
+}
+
+function renderStats() {
+  const ativos    = allTenants.filter(t => t.status === "ativo");
+  const trials    = allTenants.filter(t => t.status === "trial");
+  const suspensos = allTenants.filter(t => t.status === "suspenso");
+
+  const mrr = ativos.reduce((s, t) => s + (PLANOS[t.plano]?.preco || 0), 0);
+
+  document.getElementById("s-total").textContent    = allTenants.length;
+  document.getElementById("s-mrr").textContent      = `R$ ${mrr.toLocaleString('pt-BR')}`;
+  document.getElementById("s-trial").textContent    = trials.length;
+  document.getElementById("s-suspenso").textContent = suspensos.length;
+}
+
+function renderTabela(list) {
+  const tbody = document.getElementById("tenants-tbody");
+  document.getElementById("tenants-count").textContent = `${list.length} clínica${list.length !== 1 ? 's' : ''}`;
+  document.getElementById("empty-state").style.display = list.length ? "none" : "block";
+
+  const badgeMap = {
+    trial:     "badge-trial",
+    ativo:     "badge-ativo",
+    suspenso:  "badge-suspenso",
+    cancelado: "badge-cancelado"
+  };
+  const statusLabel = {
+    trial:     "Trial",
+    ativo:     "Ativo",
+    suspenso:  "Suspenso",
+    cancelado: "Cancelado"
+  };
+  const planoClass = { starter: "plano-starter", pro: "plano-pro", clinica: "plano-clinica" };
+
+  tbody.innerHTML = list.map(t => {
+    const criadoEm = t.criadoEm?.toDate?.() || new Date();
+    const dataFmt  = criadoEm.toLocaleDateString("pt-BR");
+    const trial    = t.trialExpira?.toDate?.();
+    const dataInfo = t.status === "trial" && trial
+      ? `Trial até ${trial.toLocaleDateString("pt-BR")}`
+      : `Desde ${dataFmt}`;
+
+    return `<tr>
+      <td>
+        <div style="font-weight:600;color:#fff">${t.nome}</div>
+        <div style="font-size:11.5px;color:#8DA0B3;margin-top:2px">${t.clinicaId}</div>
+      </td>
+      <td><span class="plano-pill ${planoClass[t.plano]}">${(PLANOS[t.plano]?.nome||t.plano).toUpperCase()}</span></td>
+      <td><span class="badge ${badgeMap[t.status]||'badge-cancelado'}">${statusLabel[t.status]||t.status}</span></td>
+      <td style="font-size:12px;color:#8DA0B3">${dataInfo}</td>
+      <td>
+        <div style="font-size:13px;color:#C8D4E0">${t.nomeProprietario}</div>
+        <div style="font-size:11.5px;color:#8DA0B3">${t.email}</div>
+      </td>
+      <td>
+        <div class="actions-cell">
+          <button class="action-btn" title="Detalhes" onclick="abrirDetalhes('${t.id}')"><i class="ti ti-eye"></i></button>
+          ${t.status === 'suspenso'
+            ? `<button class="action-btn success" title="Reativar" onclick="reativar('${t.id}')"><i class="ti ti-player-play"></i></button>`
+            : `<button class="action-btn danger" title="Suspender" onclick="suspender('${t.id}')"><i class="ti ti-ban"></i></button>`}
+        </div>
+      </td>
+    </tr>`;
+  }).join("");
+}
+
+window.filtrar = function(status, btn) {
+  filtroAtual = status;
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  const filtered = status === "todos" ? allTenants : allTenants.filter(t => t.status === status);
+  renderTabela(filtered);
+};
+
+window.buscar = function(q) {
+  const termo = q.toLowerCase();
+  const filtered = allTenants.filter(t =>
+    (filtroAtual === "todos" || t.status === filtroAtual) &&
+    (t.nome.toLowerCase().includes(termo) || t.email.toLowerCase().includes(termo) || t.nomeProprietario.toLowerCase().includes(termo))
+  );
+  renderTabela(filtered);
+};
+
+window.abrirDetalhes = function(id) {
+  tenantSelecionado = allTenants.find(t => t.id === id);
+  if (!tenantSelecionado) return;
+  const t = tenantSelecionado;
+  const plano = PLANOS[t.plano] || {};
+
+  document.getElementById("modal-tenant-nome").textContent = t.nome;
+  document.getElementById("modal-tenant-body").innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <div style="background:rgba(0,0,0,.2);border-radius:8px;padding:12px">
+        <div style="font-size:11px;color:#8DA0B3;margin-bottom:4px">PLANO</div>
+        <div style="font-size:14px;font-weight:600;color:#fff">${plano.nome || t.plano}</div>
+        <div style="font-size:13px;color:#8DA0B3">R$ ${plano.preco}/mês</div>
+      </div>
+      <div style="background:rgba(0,0,0,.2);border-radius:8px;padding:12px">
+        <div style="font-size:11px;color:#8DA0B3;margin-bottom:4px">STATUS</div>
+        <div style="font-size:14px;font-weight:600;color:#fff">${t.status}</div>
+      </div>
+    </div>
+    <div style="font-size:13px;color:#C8D4E0;line-height:2;background:rgba(0,0,0,.15);border-radius:8px;padding:14px 16px">
+      <div><span style="color:#8DA0B3">Proprietário:</span> ${t.nomeProprietario}</div>
+      <div><span style="color:#8DA0B3">E-mail:</span> ${t.email}</div>
+      <div><span style="color:#8DA0B3">Telefone:</span> ${t.telefone || '—'}</div>
+      <div><span style="color:#8DA0B3">ID da clínica:</span> <code style="font-size:12px">${t.clinicaId}</code></div>
+      <div><span style="color:#8DA0B3">Limite pacientes:</span> ${t.limites?.maxPacientes || 'Ilimitado'}</div>
+      <div><span style="color:#8DA0B3">Limite usuários:</span> ${t.limites?.maxUsuarios || 'Ilimitado'}</div>
+      <div><span style="color:#8DA0B3">Stripe:</span> ${t.stripeCustomerId || 'Não configurado'}</div>
+    </div>
+
+    <div style="margin-top:14px">
+      <label class="form-label">Alterar plano</label>
+      <select id="modal-plano-select" class="form-input" style="margin-bottom:8px">
+        <option value="starter" ${t.plano==='starter'?'selected':''}>Starter — R$ 89/mês</option>
+        <option value="pro" ${t.plano==='pro'?'selected':''}>Pro — R$ 179/mês</option>
+        <option value="clinica" ${t.plano==='clinica'?'selected':''}>Clínica — R$ 349/mês</option>
+      </select>
+    </div>
+  `;
+
+  document.getElementById("modal-btn-ativar").style.display   = t.status !== "ativo"  ? "inline-flex" : "none";
+  document.getElementById("modal-btn-suspender").style.display= t.status !== "suspenso"? "inline-flex" : "none";
+  abrirModal("modal-tenant");
+};
+
+window.acaoModal = async function(acao) {
+  if (!tenantSelecionado) return;
+  const id    = tenantSelecionado.id;
+  const plano = document.getElementById("modal-plano-select")?.value || tenantSelecionado.plano;
+
+  if (acao === "ativar")    await ativarPlano(id, plano);
+  if (acao === "suspender") await suspenderTenant(id, "Suspensão manual pelo admin");
+
+  fecharModal("modal-tenant");
+  await carregarTenants();
+};
+
+window.suspender = async function(id) {
+  if (!confirm("Suspender esta clínica?")) return;
+  await suspenderTenant(id, "Suspensão manual pelo admin");
+  await carregarTenants();
+};
+
+window.reativar = async function(id) {
+  await reativarTenant(id);
+  await carregarTenants();
+};
+
+window.addTenantManual = async function() {
+  const nome     = document.getElementById("add-nome-clinica").value.trim();
+  const prop     = document.getElementById("add-nome-prop").value.trim();
+  const email    = document.getElementById("add-email").value.trim();
+  const plano    = document.getElementById("add-plano").value;
+  if (!nome || !email) { alert("Preencha nome e e-mail."); return; }
+  await criarTenant({ nome, nomeProprietario: prop, email, telefone: "", plano, uid: "manual-" + Date.now() });
+  fecharModal("modal-add-tenant");
+  await carregarTenants();
+};
+
+window.abrirModal = function(id) { document.getElementById(id).classList.add("open"); };
+window.fecharModal = function(id) { document.getElementById(id).classList.remove("open"); };
+document.querySelectorAll(".modal-overlay").forEach(m => m.addEventListener("click", e => { if (e.target===m) m.classList.remove("open"); }));
+
+window.logout = async function() {
+  const { logout: doLogout } = await import("./js/auth.js");
+  await doLogout();
+};
+</script>
+</body>
+</html>

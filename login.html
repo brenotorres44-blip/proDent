@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DentalPro — Entrar</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.3.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F7F8FA;display:flex;align-items:center;justify-content:center;min-height:100vh}
+.card{background:#fff;border-radius:16px;padding:40px;width:100%;max-width:380px;border:1px solid #E4E9EE;box-shadow:0 4px 24px rgba(0,0,0,0.06)}
+.logo{display:flex;align-items:center;gap:10px;margin-bottom:32px}
+.logo-icon{width:36px;height:36px;background:#2D7DD2;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px}
+.logo-text{font-size:18px;font-weight:700;color:#0F1923;letter-spacing:-0.3px}
+.logo-sub{font-size:12px;color:#8DA0B3;margin-top:1px}
+h1{font-size:20px;font-weight:700;color:#0F1923;margin-bottom:4px}
+p{font-size:13.5px;color:#5A6A7A;margin-bottom:28px}
+label{display:block;font-size:12px;font-weight:600;color:#5A6A7A;margin-bottom:6px}
+input{width:100%;padding:10px 12px;border:1px solid #E4E9EE;border-radius:8px;font-size:14px;outline:none;color:#0F1923;transition:border-color .15s;margin-bottom:16px}
+input:focus{border-color:#2D7DD2}
+.btn{width:100%;padding:11px;background:#2D7DD2;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s}
+.btn:hover{background:#1A5FA8}
+.btn:disabled{opacity:0.6;cursor:not-allowed}
+.error{background:#FDEAEA;color:#B83232;font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:16px;display:none}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <div class="logo-icon"><i class="ti ti-tooth"></i></div>
+    <div><div class="logo-text">DentalPro</div><div class="logo-sub">Gestão de Consultório</div></div>
+  </div>
+  <h1>Entrar</h1>
+  <p>Acesse o painel do consultório</p>
+
+  <div class="error" id="error-msg"></div>
+
+  <label>E-mail</label>
+  <input type="email" id="email" placeholder="doutor@email.com" autocomplete="username">
+
+  <label>Senha</label>
+  <input type="password" id="senha" placeholder="••••••••" autocomplete="current-password">
+
+  <button class="btn" id="btn-login" onclick="fazerLogin()">
+    <span id="btn-text">Entrar</span>
+  </button>
+</div>
+
+<script type="module">
+import { login } from "./js/auth.js";
+import { auth }  from "./js/firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+// Se já estiver logado, vai direto ao painel
+onAuthStateChanged(auth, user => {
+  if (user) window.location.href = "index.html";
+});
+
+window.fazerLogin = async function() {
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value;
+  const btn   = document.getElementById("btn-login");
+  const txt   = document.getElementById("btn-text");
+  const err   = document.getElementById("error-msg");
+
+  err.style.display = "none";
+
+  if (!email || !senha) {
+    err.textContent = "Preencha e-mail e senha.";
+    err.style.display = "block";
+    return;
+  }
+
+  btn.disabled = true;
+  txt.innerHTML = '<div class="spinner"></div>';
+
+  try {
+    await login(email, senha);
+    window.location.href = "index.html";
+  } catch (e) {
+    const msgs = {
+      "auth/user-not-found":  "Usuário não encontrado.",
+      "auth/wrong-password":  "Senha incorreta.",
+      "auth/invalid-email":   "E-mail inválido.",
+      "auth/too-many-requests": "Muitas tentativas. Aguarde um momento."
+    };
+    err.textContent = msgs[e.code] || "Erro ao fazer login. Tente novamente.";
+    err.style.display = "block";
+    btn.disabled = false;
+    txt.textContent = "Entrar";
+  }
+};
+
+// Enter no campo senha aciona o login
+document.getElementById("senha").addEventListener("keydown", e => {
+  if (e.key === "Enter") window.fazerLogin();
+});
+</script>
+</body>
+</html>
