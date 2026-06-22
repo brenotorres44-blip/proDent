@@ -278,12 +278,7 @@ nav{background:#fff;border-bottom:1px solid #E4E9EE;padding:0 40px;height:60px;d
 <script type="module">
 import { cadastrar } from "./js/auth.js";
 import { PLANOS }   from "./js/tenant.js";
-import { auth }     from "./js/firebase.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-onAuthStateChanged(auth, user => {
-  if (user) window.location.href = "index.html";
-});
+import { auth } from "./js/firebase.js";
 
 let planoSelecionado = "pro";
 
@@ -340,7 +335,7 @@ window.fazerCadastro = async function() {
       "auth/invalid-email":         "E-mail inválido.",
       "auth/weak-password":         "Senha muito fraca. Use ao menos 8 caracteres."
     };
-    err.textContent    = msgs[e.code] || "Erro ao criar conta. Tente novamente.";
+    err.textContent    = msgs[e.code] || e.message || "Erro ao criar conta. Tente novamente."; console.error("Erro cadastro:", e);
     err.style.display  = "block";
     btn.disabled       = false;
     txt.textContent    = "Criar conta e começar →";
