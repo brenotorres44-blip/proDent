@@ -89,7 +89,6 @@ export function requireAuth(onReady) {
       return;
     }
 
-    // Recarrega dados do tenant a cada navegação
     const userSnap = await getDoc(doc(db, "usuarios", user.uid));
     if (!userSnap.exists()) {
       await signOut(auth);
@@ -98,6 +97,14 @@ export function requireAuth(onReady) {
     }
 
     const { clinicaId, perfil } = userSnap.data();
+
+    // Super-admin passa direto, sem verificar tenant
+    if (perfil === "superadmin") {
+      salvarSessaoTenant(clinicaId, perfil);
+      onReady({ user, clinicaId, perfil, tenant: { status: "ativo", plano: "clinica" } });
+      return;
+    }
+
     const tenant = await carregarTenant(clinicaId);
 
     if (!tenant || !tenantAtivo(tenant)) {
