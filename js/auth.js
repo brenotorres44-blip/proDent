@@ -51,13 +51,17 @@ export async function login(email, senha) {
   const cred = await signInWithEmailAndPassword(auth, email, senha);
   const uid  = cred.user.uid;
 
-  // Descobre qual clínica pertence ao usuário
   const userSnap = await getDoc(doc(db, "usuarios", uid));
   if (!userSnap.exists()) throw new Error("Usuário sem clínica associada.");
 
   const { clinicaId, perfil } = userSnap.data();
 
-  // Verifica se o tenant está ativo
+  // Super-admin passa direto sem verificar tenant
+  if (perfil === "superadmin") {
+    salvarSessaoTenant(clinicaId, perfil);
+    return { user: cred.user, clinicaId, perfil, tenant: { status: "ativo", plano: "clinica" } };
+  }
+
   const tenant = await carregarTenant(clinicaId);
   if (!tenant) throw new Error("Clínica não encontrada.");
   if (!tenantAtivo(tenant)) {
