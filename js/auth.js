@@ -1,46 +1,77 @@
-// js/auth.js  (versão multi-tenant)
-// ─────────────────────────────────────────────────────────────
+// js/auth.js — versão corrigida multi-tenant
 import { auth, db } from "./firebase.js";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged,
-  sendPasswordResetEmail
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  doc, getDoc, setDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
   salvarSessaoTenant, limparSessaoTenant,
   carregarTenant, tenantAtivo, criarTenant
 } from "./tenant.js";
 
-// ── Cadastro completo (novo dentista + nova clínica) ──────────
+// ── Cadastro completo ─────────────────────────────────────────
 export async function cadastrar({ email, senha, nome, nomeClinica, telefone, plano }) {
-  // 1. Cria usuário no Firebase Auth
+
+  // 1. Cria o usuário no Firebase Auth
   const cred = await createUserWithEmailAndPassword(auth, email, senha);
   const uid  = cred.user.uid;
 
-  // 2. Cria o tenant (clínica) no Firestore
-  const clinicaId = await criarTenant({
-    nome: nomeClinica,
-    nomeProprietario: nome,
-    email,
-    telefone,
-    plano,
-    uid
-  });
+  // 2. Gera o clinicaId
+  const clinicaId = gerarClinicaId(nomeClinica);
 
-  // 3. Grava o mapeamento uid → clinicaId em /usuarios/{uid}
-  //    (facilita o lookup de qual clínica pertence ao usuário)
+  // 3. Grava /usuarios/{uid} — o usuário está autenticado agora, então as regras permitem
   await setDoc(doc(db, "usuarios", uid), {
     uid,
     email,
     clinicaId,
     perfil: "admin",
+    nome,
     criadoEm: serverTimestamp()
   });
 
-  // 4. Salva na sessão
+  // 4. Grava /tenants/{clinicaId}
+  const agora = new Date();
+  const trial = new Date(agora);
+  trial.setDate(agora.getDate() + 14);
+
+  const { Timestamp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+
+  await setDoc(doc(db, "tenants", clinicaId), {
+    clinicaId,
+    nome: nomeClinica,
+    nomeProprietario: nome,
+    email,
+    telefone: telefone || "",
+    plano,
+    status: "trial",
+    trialExpira: Timestamp.fromDate(trial),
+    limites: planoLimites(plano),
+    criadoEm: serverTimestamp(),
+    atualizadoEm: serverTimestamp()
+  });
+
+  // 5. Grava /clinica/{clinicaId} (documento raiz)
+  await setDoc(doc(db, "clinica", clinicaId), {
+    nome: nomeClinica,
+    criadoEm: serverTimestamp()
+  });
+
+  // 6. Grava /clinica/{clinicaId}/usuarios/{uid}
+  await setDoc(doc(db, "clinica", clinicaId, "usuarios", uid), {
+    uid,
+    nome,
+    email,
+    perfil: "admin",
+    ativo: true,
+    criadoEm: serverTimestamp()
+  });
+
+  // 7. Salva sessão
   salvarSessaoTenant(clinicaId, "admin");
 
   return { uid, clinicaId };
@@ -56,7 +87,7 @@ export async function login(email, senha) {
 
   const { clinicaId, perfil } = userSnap.data();
 
-  // Super-admin passa direto sem verificar tenant
+  // Super-admin passa direto
   if (perfil === "superadmin") {
     salvarSessaoTenant(clinicaId, perfil);
     return { user: cred.user, clinicaId, perfil, tenant: { status: "ativo", plano: "clinica" } };
@@ -80,29 +111,16 @@ export async function logout() {
   window.location.href = "login.html";
 }
 
-// ── Reset de senha ────────────────────────────────────────────
-export async function resetSenha(email) {
-  await sendPasswordResetEmail(auth, email);
-}
-
-// ── Guarda de rota: redireciona se não autenticado ────────────
+// ── Guarda de rota ────────────────────────────────────────────
 export function requireAuth(onReady) {
   onAuthStateChanged(auth, async user => {
-    if (!user) {
-      window.location.href = "login.html";
-      return;
-    }
+    if (!user) { window.location.href = "login.html"; return; }
 
     const userSnap = await getDoc(doc(db, "usuarios", user.uid));
-    if (!userSnap.exists()) {
-      await signOut(auth);
-      window.location.href = "login.html";
-      return;
-    }
+    if (!userSnap.exists()) { await signOut(auth); window.location.href = "login.html"; return; }
 
     const { clinicaId, perfil } = userSnap.data();
 
-    // Super-admin passa direto, sem verificar tenant
     if (perfil === "superadmin") {
       salvarSessaoTenant(clinicaId, perfil);
       onReady({ user, clinicaId, perfil, tenant: { status: "ativo", plano: "clinica" } });
@@ -110,27 +128,40 @@ export function requireAuth(onReady) {
     }
 
     const tenant = await carregarTenant(clinicaId);
-
-    if (!tenant || !tenantAtivo(tenant)) {
-      window.location.href = "suspenso.html";
-      return;
-    }
+    if (!tenant || !tenantAtivo(tenant)) { window.location.href = "suspenso.html"; return; }
 
     salvarSessaoTenant(clinicaId, perfil);
     onReady({ user, clinicaId, perfil, tenant });
   });
 }
 
-// ── Guarda de rota para o painel admin (super-admin) ─────────
+// ── Super-admin ───────────────────────────────────────────────
 export function requireSuperAdmin(onReady) {
   onAuthStateChanged(auth, async user => {
     if (!user) { window.location.href = "login.html"; return; }
-
     const userSnap = await getDoc(doc(db, "usuarios", user.uid));
     if (!userSnap.exists() || userSnap.data().perfil !== "superadmin") {
-      window.location.href = "index.html";
-      return;
+      window.location.href = "index.html"; return;
     }
     onReady(user);
   });
+}
+
+// ── Helpers ───────────────────────────────────────────────────
+function gerarClinicaId(nome) {
+  const slug = nome.toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-")
+    .replace(/^-|-$/g, "").substring(0, 20);
+  const rand = Math.random().toString(36).substring(2, 7);
+  return `${slug}-${rand}`;
+}
+
+function planoLimites(plano) {
+  const limites = {
+    starter: { maxUsuarios: 1,    maxPacientes: 100  },
+    pro:     { maxUsuarios: 3,    maxPacientes: null },
+    clinica: { maxUsuarios: null, maxPacientes: null }
+  };
+  return limites[plano] || limites.starter;
 }
