@@ -408,13 +408,12 @@ tr:hover td { background: #FAFBFD; }
       <i class="ti ti-trending-down"></i><span>Contas a Pagar</span>
     </div>
   </nav>
-  <div class="sidebar-user" style="cursor:pointer" onclick="fazerLogout()" title="Sair">
-    <div class="user-avatar" id="sidebar-avatar">—</div>
-    <div style="flex:1">
-      <div class="user-name" id="sidebar-nome">Carregando...</div>
-      <div class="user-role" id="sidebar-perfil">—</div>
+  <div class="sidebar-user">
+    <div class="user-avatar">DR</div>
+    <div>
+      <div class="user-name">Dr. Rafael</div>
+      <div class="user-role">Administrador</div>
     </div>
-    <i class="ti ti-logout" style="color:#8DA0B3;font-size:16px;flex-shrink:0" title="Sair"></i>
   </div>
 </aside>
 
@@ -440,26 +439,26 @@ tr:hover td { background: #FAFBFD; }
         <div class="stat-card">
           <div class="stat-icon" style="background:#EBF3FC;color:var(--accent)"><i class="ti ti-calendar-check"></i></div>
           <div class="stat-label">Consultas Hoje</div>
-          <div class="stat-value">8</div>
-          <div class="stat-delta"><i class="ti ti-arrow-up" style="font-size:11px"></i> 2 a mais que ontem</div>
+          <div class="stat-value" id="stat-consultas">—</div>
+          <div class="stat-delta" id="stat-consultas-delta">carregando...</div>
         </div>
         <div class="stat-card">
           <div class="stat-icon" style="background:var(--success-bg);color:var(--success)"><i class="ti ti-currency-dollar"></i></div>
           <div class="stat-label">Receita do Mês</div>
-          <div class="stat-value">R$ 18.4k</div>
-          <div class="stat-delta"><i class="ti ti-arrow-up" style="font-size:11px"></i> +12% vs mês anterior</div>
+          <div class="stat-value" id="stat-receita">R$ 0</div>
+          <div class="stat-delta">este mês</div>
         </div>
         <div class="stat-card">
           <div class="stat-icon" style="background:var(--warning-bg);color:var(--warning)"><i class="ti ti-clock-exclamation"></i></div>
           <div class="stat-label">A Receber</div>
-          <div class="stat-value">R$ 4.2k</div>
-          <div class="stat-delta down"><i class="ti ti-alert-circle" style="font-size:11px"></i> 3 faturas em aberto</div>
+          <div class="stat-value" id="stat-receber">R$ 0</div>
+          <div class="stat-delta down" id="stat-receber-delta">carregando...</div>
         </div>
         <div class="stat-card">
           <div class="stat-icon" style="background:#F3EDFC;color:#7C3AED"><i class="ti ti-users"></i></div>
           <div class="stat-label">Pacientes Ativos</div>
-          <div class="stat-value" id="stat-pacientes">—</div>
-          <div class="stat-delta" id="stat-pacientes-delta">carregando...</div>
+          <div class="stat-value">142</div>
+          <div class="stat-delta"><i class="ti ti-arrow-up" style="font-size:11px"></i> +6 este mês</div>
         </div>
       </div>
 
@@ -468,7 +467,7 @@ tr:hover td { background: #FAFBFD; }
           <div class="card-header">
             <div>
               <div class="card-title">Consultas de Hoje</div>
-              <div class="card-title-sub" id="data-hoje"></div>
+              <div class="card-title-sub">Segunda-feira, 17 de junho de 2026</div>
             </div>
             <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="showPage('agenda')">Ver agenda completa</button>
           </div>
@@ -476,44 +475,17 @@ tr:hover td { background: #FAFBFD; }
             <thead><tr>
               <th>Horário</th><th>Paciente</th><th>Procedimento</th><th>Status</th><th></th>
             </tr></thead>
-            <tbody>
-              <tr><td><b>08:00</b></td><td><div class="patient-cell"><div class="avatar" style="background:#2D7DD2">AM</div>Ana Mendes</div></td><td>Consulta de Rotina</td><td><span class="badge badge-success">Concluído</span></td><td><button class="action-btn" title="Ver prontuário" onclick="window.location.href='prontuario.html'"><i class="ti ti-eye"></i></button></td></tr>
-              <tr><td><b>09:00</b></td><td><div class="patient-cell"><div class="avatar" style="background:#7C3AED">CS</div>Carlos Silva</div></td><td>Extração</td><td><span class="badge badge-success">Concluído</span></td><td><button class="action-btn" title="Ver prontuário" onclick="window.location.href='prontuario.html'"><i class="ti ti-eye"></i></button></td></tr>
-              <tr><td><b>10:00</b></td><td><div class="patient-cell"><div class="avatar" style="background:#D94040">MO</div>Mariana Oliveira</div></td><td>Clareamento</td><td><span class="badge badge-success">Concluído</span></td><td><button class="action-btn" title="Ver prontuário" onclick="window.location.href='prontuario.html'"><i class="ti ti-eye"></i></button></td></tr>
-              <tr><td><b>11:00</b></td><td><div class="patient-cell"><div class="avatar" style="background:#D98B1A">PF</div>Pedro Fontes</div></td><td>Ortodontia</td><td><span class="badge badge-info">Em atendimento</span></td><td><button class="action-btn" title="Ver prontuário" onclick="window.location.href='prontuario.html'"><i class="ti ti-eye"></i></button></td></tr>
-              <tr><td><b>14:00</b></td><td><div class="patient-cell"><div class="avatar" style="background:#1A9E75">LC</div>Lúcia Costa</div></td><td>Canal</td><td><span class="badge badge-gray">Aguardando</span></td><td><button class="action-btn" title="Ver prontuário" onclick="window.location.href='prontuario.html'"><i class="ti ti-eye"></i></button></td></tr>
-              <tr><td><b>15:00</b></td><td><div class="patient-cell"><div class="avatar" style="background:#0F6E56">RB</div>Roberto Braga</div></td><td>Restauração</td><td><span class="badge badge-gray">Aguardando</span></td><td><button class="action-btn" title="Ver prontuário" onclick="window.location.href='prontuario.html'"><i class="ti ti-eye"></i></button></td></tr>
-              <tr><td><b>16:00</b></td><td><div class="patient-cell"><div class="avatar" style="background:#534AB7">JN</div>Juliana Neves</div></td><td>Implante</td><td><span class="badge badge-gray">Aguardando</span></td><td><button class="action-btn" title="Ver prontuário" onclick="window.location.href='prontuario.html'"><i class="ti ti-eye"></i></button></td></tr>
-              <tr><td><b>17:00</b></td><td><div class="patient-cell"><div class="avatar" style="background:#993C1D">TM</div>Thiago Melo</div></td><td>Periodontia</td><td><span class="badge badge-warning">Confirmado</span></td><td><button class="action-btn" title="Ver prontuário" onclick="window.location.href='prontuario.html'"><i class="ti ti-eye"></i></button></td></tr>
-            </tbody>
+            <tbody id="consultas-hoje-tbody"><tr><td colspan="5" style="text-align:center;padding:32px;color:var(--text-3)">Carregando...</td></tr></tbody>
           </table>
         </div>
         <div style="display:flex;flex-direction:column;gap:20px">
           <div class="card">
             <div class="card-header"><div class="card-title">Alertas Financeiros</div></div>
-            <div style="padding:12px 16px">
-              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--warning-bg);border-radius:8px;margin-bottom:8px">
-                <i class="ti ti-alert-triangle" style="color:var(--warning);font-size:18px;flex-shrink:0"></i>
-                <div><div style="font-size:13px;font-weight:600;color:#7A5500">R$ 1.800 vence amanhã</div><div style="font-size:11.5px;color:var(--warning)">Implante — Ana Mendes</div></div>
-              </div>
-              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--danger-bg);border-radius:8px;margin-bottom:8px">
-                <i class="ti ti-alert-circle" style="color:var(--danger);font-size:18px;flex-shrink:0"></i>
-                <div><div style="font-size:13px;font-weight:600;color:#8B1A1A">R$ 950 em atraso (5 dias)</div><div style="font-size:11.5px;color:var(--danger)">Ortodontia — Carlos Silva</div></div>
-              </div>
-              <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--success-bg);border-radius:8px">
-                <i class="ti ti-circle-check" style="color:var(--success);font-size:18px;flex-shrink:0"></i>
-                <div><div style="font-size:13px;font-weight:600;color:#0D5C40">Meta mensal: 73% atingida</div><div style="font-size:11.5px;color:var(--success)">R$ 18.4k de R$ 25k</div></div>
-              </div>
-              <div class="progress-bar" style="margin-top:12px"><div class="progress-fill" style="width:73%"></div></div>
-            </div>
+            <div id="alertas-financeiros" style="padding:12px 16px"><div style="text-align:center;padding:20px;color:var(--text-3);font-size:13px">Carregando...</div></div>
           </div>
           <div class="card">
             <div class="card-header"><div class="card-title">Próximas Contas a Pagar</div></div>
-            <div style="padding:0 16px 8px">
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:13px;font-weight:500">Aluguel</div><div style="font-size:11.5px;color:var(--text-2)">Vence 25/06</div></div><div style="font-size:13px;font-weight:600">R$ 3.200</div></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:13px;font-weight:500">Fornecedor de Materiais</div><div style="font-size:11.5px;color:var(--text-2)">Vence 28/06</div></div><div style="font-size:13px;font-weight:600">R$ 1.450</div></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0"><div><div style="font-size:13px;font-weight:500">Software / Licenças</div><div style="font-size:11.5px;color:var(--text-2)">Vence 30/06</div></div><div style="font-size:13px;font-weight:600">R$ 280</div></div>
-            </div>
+            <div id="proximas-contas" style="padding:0 16px 8px"><div style="text-align:center;padding:20px;color:var(--text-3);font-size:13px">Carregando...</div></div>
           </div>
         </div>
       </div>
@@ -544,13 +516,7 @@ tr:hover td { background: #FAFBFD; }
           </div>
           <div class="card">
             <div class="card-header"><div class="card-title">Consultas de Hoje</div></div>
-            <div class="upcoming-list">
-              <div class="upcoming-item"><div class="upcoming-time">08:00</div><div><div class="upcoming-name">Ana Mendes</div><div class="upcoming-proc">Consulta de Rotina</div></div><span class="badge badge-success" style="margin-left:auto">OK</span></div>
-              <div class="upcoming-item"><div class="upcoming-time">11:00</div><div><div class="upcoming-name">Pedro Fontes</div><div class="upcoming-proc">Ortodontia</div></div><span class="badge badge-info" style="margin-left:auto">Em andamento</span></div>
-              <div class="upcoming-item"><div class="upcoming-time">14:00</div><div><div class="upcoming-name">Lúcia Costa</div><div class="upcoming-proc">Canal</div></div><span class="badge badge-gray" style="margin-left:auto">Aguardando</span></div>
-              <div class="upcoming-item"><div class="upcoming-time">15:00</div><div><div class="upcoming-name">Roberto Braga</div><div class="upcoming-proc">Restauração</div></div><span class="badge badge-gray" style="margin-left:auto">Aguardando</span></div>
-              <div class="upcoming-item"><div class="upcoming-time">17:00</div><div><div class="upcoming-name">Thiago Melo</div><div class="upcoming-proc">Periodontia</div></div><span class="badge badge-warning" style="margin-left:auto">Confirmado</span></div>
-            </div>
+            <div class="upcoming-list" id="upcoming-list"><div style="text-align:center;padding:20px;color:var(--text-3);font-size:13px">Carregando...</div></div>
           </div>
         </div>
       </div>
@@ -560,7 +526,7 @@ tr:hover td { background: #FAFBFD; }
     <div id="page-pacientes" class="page">
       <div class="card">
         <div class="card-header">
-          <div><div class="card-title">Pacientes</div><div class="card-title-sub" id="pacientes-count">Carregando...</div></div>
+          <div><div class="card-title">Pacientes</div><div class="card-title-sub">142 cadastrados</div></div>
           <div class="search-input">
             <i class="ti ti-search"></i>
             <input type="text" placeholder="Buscar por nome, CPF..." oninput="filterPatients(this.value)">
@@ -602,7 +568,7 @@ tr:hover td { background: #FAFBFD; }
     <div id="page-receber" class="page">
       <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
         <div class="stat-card"><div class="stat-icon" style="background:var(--success-bg);color:var(--success)"><i class="ti ti-check"></i></div><div class="stat-label">Recebido no mês</div><div class="stat-value">R$ 14.2k</div></div>
-        <div class="stat-card"><div class="stat-icon" style="background:var(--warning-bg);color:var(--warning)"><i class="ti ti-clock"></i></div><div class="stat-label">A receber</div><div class="stat-value">R$ 4.2k</div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:var(--warning-bg);color:var(--warning)"><i class="ti ti-clock"></i></div><div class="stat-label">A receber</div><div class="stat-value" id="stat-receber">R$ 0</div></div>
         <div class="stat-card"><div class="stat-icon" style="background:var(--danger-bg);color:var(--danger)"><i class="ti ti-alert-circle"></i></div><div class="stat-label">Em atraso</div><div class="stat-value">R$ 950</div></div>
       </div>
       <div class="card">
@@ -757,7 +723,7 @@ tr:hover td { background: #FAFBFD; }
 
 <script>
 const pages = {
-  dashboard: { title: 'Dashboard', sub: 'Bem-vindo de volta', action: 'modal-agenda', label: 'Novo Agendamento' },
+  dashboard: { title: 'Dashboard', sub: 'Bem-vindo de volta, Dr. Rafael', action: 'modal-agenda', label: 'Novo Agendamento' },
   agenda: { title: 'Agenda', sub: 'Visualização semanal', action: 'modal-agenda', label: 'Novo Agendamento' },
   pacientes: { title: 'Pacientes', sub: 'Cadastro e fichas', action: 'modal-paciente', label: 'Novo Paciente' },
   procedimentos: { title: 'Procedimentos', sub: 'Histórico de atendimentos', action: 'modal-proc', label: 'Registrar Procedimento' },
@@ -787,77 +753,56 @@ function topbarAction() {
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); }));
 
-// PATIENTS — carregados do Firestore pelo script module abaixo
-const CORES = ['#2D7DD2','#7C3AED','#D94040','#1A9E75','#D98B1A','#534AB7','#0F6E56','#993C1D'];
-function avatarCor(nome) { return CORES[(nome||'A').charCodeAt(0) % CORES.length]; }
-function iniciais(nome) { return (nome||'?').split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase(); }
-function calcIdade(dataNasc) {
-  if (!dataNasc) return '—';
-  return (new Date().getFullYear() - new Date(dataNasc).getFullYear()) + ' anos';
-}
+// PATIENTS DATA
+const patients = [
+  { name: 'Ana Mendes', initials: 'AM', color: '#2D7DD2', birth: '12/04/1988', phone: '(11) 98765-4321', plan: 'Unimed', last: '17/06/2026', status: 'Ativo' },
+  { name: 'Carlos Silva', initials: 'CS', color: '#7C3AED', birth: '30/07/1975', phone: '(11) 97654-3210', plan: '—', last: '16/06/2026', status: 'Ativo' },
+  { name: 'Mariana Oliveira', initials: 'MO', color: '#D94040', birth: '05/11/1992', phone: '(11) 96543-2109', plan: 'Bradesco', last: '15/06/2026', status: 'Ativo' },
+  { name: 'Pedro Fontes', initials: 'PF', color: '#D98B1A', birth: '22/03/2005', phone: '(11) 95432-1098', plan: 'Amil', last: '14/06/2026', status: 'Ativo' },
+  { name: 'Lúcia Costa', initials: 'LC', color: '#1A9E75', birth: '14/09/1963', phone: '(11) 94321-0987', plan: '—', last: '13/06/2026', status: 'Ativo' },
+  { name: 'Roberto Braga', initials: 'RB', color: '#0F6E56', birth: '08/02/1980', phone: '(11) 93210-9876', plan: 'SulAmérica', last: '12/06/2026', status: 'Ativo' },
+  { name: 'Juliana Neves', initials: 'JN', color: '#534AB7', birth: '19/06/1995', phone: '(11) 92109-8765', plan: '—', last: '12/06/2026', status: 'Ativo' },
+  { name: 'Thiago Melo', initials: 'TM', color: '#993C1D', birth: '27/12/1987', phone: '(11) 91098-7654', plan: 'Unimed', last: '11/06/2026', status: 'Ativo' },
+  { name: 'Fernanda Lima', initials: 'FL', color: '#D94040', birth: '03/05/1999', phone: '(11) 90987-6543', plan: '—', last: '05/06/2026', status: 'Ativo' },
+  { name: 'Eduardo Santos', initials: 'ES', color: '#0F6E56', birth: '11/08/1972', phone: '(11) 99876-5432', plan: 'Bradesco', last: '01/06/2026', status: 'Inativo' },
+];
 
-let todosOsPacientes = [];
-
-window.renderPatients = function(list) {
-  const total = list.length;
-  const elCount = document.getElementById('pacientes-count');
-  if (elCount) elCount.textContent = total + ' cadastrado' + (total !== 1 ? 's' : '');
-  const elStat = document.getElementById('stat-pacientes');
-  if (elStat) elStat.textContent = total;
-  const elDelta = document.getElementById('stat-pacientes-delta');
-  if (elDelta) elDelta.innerHTML = total > 0 ? '<i class="ti ti-users" style="font-size:11px"></i> pacientes ativos' : 'Nenhum cadastrado ainda';
-
+function renderPatients(list) {
   const tbody = document.getElementById('patients-tbody');
-  if (!list.length) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--text-3)">Nenhum paciente cadastrado ainda</td></tr>';
-    return;
-  }
   tbody.innerHTML = list.map(p => `
     <tr data-paciente-id="${p.id}">
-      <td><div class="patient-cell"><div class="avatar" style="background:${avatarCor(p.nome)}">${iniciais(p.nome)}</div>${p.nome}</div></td>
-      <td>${calcIdade(p.dataNasc)}</td>
-      <td>${p.telefone || '—'}</td>
-      <td>${p.convenio || 'Particular'}</td>
-      <td>${p.atualizadoEm?.toDate?.()?.toLocaleDateString('pt-BR') || '—'}</td>
-      <td><span class="badge ${p.ativo ? 'badge-success' : 'badge-gray'}">${p.ativo ? 'Ativo' : 'Inativo'}</span></td>
+      <td><div class="patient-cell"><div class="avatar" style="background:${p.color}">${p.initials}</div>${p.name}</div></td>
+      <td>${p.birth}</td>
+      <td>${p.phone}</td>
+      <td>${p.plan}</td>
+      <td>${p.last}</td>
+      <td><span class="badge ${p.status === 'Ativo' ? 'badge-success' : 'badge-gray'}">${p.status}</span></td>
       <td>
-        <button class="action-btn" title="Ver prontuário" onclick="window.location.href='prontuario.html?id=${p.id}'"><i class="ti ti-eye"></i></button>
+        <button class="action-btn" title="Ver prontuário" onclick="window.location.href='prontuario.html?id='+this.closest('tr').dataset.pacienteId"><i class="ti ti-eye"></i></button>
         <button class="action-btn" title="Editar"><i class="ti ti-edit"></i></button>
       </td>
     </tr>
   `).join('');
-};
+}
+renderPatients(patients);
 
-window.filterPatients = function(q) {
-  const termo = q.toLowerCase();
-  window.renderPatients(todosOsPacientes.filter(p => (p.nome||'').toLowerCase().includes(termo)));
-};
+function filterPatients(q) {
+  const filtered = patients.filter(p => p.name.toLowerCase().includes(q.toLowerCase()));
+  renderPatients(filtered);
+}
 
 function addPatient() { closeModal('modal-paciente'); }
 
-
-
 // WEEK CALENDAR
 let weekOffset = 0;
-const appts = {
-  '2026-06-17': [
-    { time: '08:00', name: 'Ana Mendes', proc: 'Rotina', cls: 'green' },
-    { time: '11:00', name: 'Pedro Fontes', proc: 'Ortodontia', cls: '' },
-    { time: '14:00', name: 'Lúcia Costa', proc: 'Canal', cls: '' },
-    { time: '17:00', name: 'Thiago Melo', proc: 'Periodontia', cls: 'amber' },
-  ],
-  '2026-06-18': [{ time: '09:00', name: 'Roberto Braga', proc: 'Prótese', cls: '' }],
-  '2026-06-19': [{ time: '10:00', name: 'Juliana Neves', proc: 'Implante', cls: '' }, { time: '15:00', name: 'Fernanda Lima', proc: 'Rotina', cls: 'green' }],
-  '2026-06-20': [{ time: '08:30', name: 'Eduardo Santos', proc: 'Restauração', cls: '' }],
-  '2026-06-16': [{ time: '11:00', name: 'Carlos Silva', proc: 'Extração', cls: 'green' }, { time: '14:00', name: 'Mariana Oliveira', proc: 'Clareamento', cls: 'green' }],
-};
+const appts = {};
 
 const ptBR_days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
 const ptBR_months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const hours = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'];
 
 function getWeekStart(offset) {
-  const today = new Date();
+  const today = new Date(2026, 5, 17);
   const day = today.getDay();
   const monday = new Date(today);
   monday.setDate(today.getDate() - (day === 0 ? 6 : day - 1) + offset * 7);
@@ -882,7 +827,7 @@ function renderWeek() {
 
   let html = '<div style="background:var(--bg)"></div>';
   days.forEach(d => {
-    const isToday = dateStr(d) === '2026-06-17';
+    const isToday = dateStr(d) === dateStr(new Date());
     html += `<div class="week-day-header"><div>${ptBR_days[d.getDay()]}</div><div class="week-day-num ${isToday ? 'today' : ''}">${d.getDate()}</div></div>`;
   });
 
@@ -904,7 +849,7 @@ renderWeek();
 
 // MINI CALENDAR
 function renderMiniCal() {
-  const today = new Date();
+  const today = new Date(2026, 5, 17);
   const firstDay = new Date(2026, 5, 1).getDay();
   const daysInMonth = 30;
   const hasAppt = new Set([10,11,12,13,14,15,16,17,18,19,20]);
@@ -921,62 +866,6 @@ function renderMiniCal() {
   document.getElementById('mini-cal').innerHTML = html;
 }
 renderMiniCal();
-</script>
-
-<script type="module">
-import { db }   from './js/firebase.js';
-import { auth } from './js/firebase.js';
-import { getClinicaIdSessao } from './js/tenant.js';
-import { requireAuth, logout } from './js/auth.js';
-
-// Expõe logout para o script não-module
-window.fazerLogout = async function() {
-  if (!confirm('Deseja sair do sistema?')) return;
-  await logout();
-};
-import { collection, query, where, orderBy, getDocs, doc, getDoc }
-  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
-
-// ── Data de hoje no dashboard ─────────────────────────────────
-const diasSemana = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
-const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-const hoje = new Date();
-const elData = document.getElementById('data-hoje');
-if (elData) elData.textContent = `${diasSemana[hoje.getDay()]}, ${hoje.getDate()} de ${meses[hoje.getMonth()]} de ${hoje.getFullYear()}`;
-
-// ── Carrega usuário logado ────────────────────────────────────
-requireAuth(async ({ user, clinicaId, perfil, tenant }) => {
-  // Busca nome do usuário no Firestore
-  try {
-    const userSnap = await getDoc(doc(db, 'clinica', clinicaId, 'usuarios', user.uid));
-    const nome = userSnap.exists() ? userSnap.data().nome : (user.email || 'Usuário');
-    const partes = nome.split(' ');
-    const iniciais = partes.map(p => p[0]).join('').substring(0, 2).toUpperCase();
-    const perfilLabel = { admin: 'Administrador', dentista: 'Dentista', recepcao: 'Recepção', superadmin: 'Super Admin' }[perfil] || perfil;
-
-    document.getElementById('sidebar-avatar').textContent = iniciais;
-    document.getElementById('sidebar-nome').textContent   = nome;
-    document.getElementById('sidebar-perfil').textContent = perfilLabel;
-
-    // Atualiza saudação no topbar
-    const elSub = document.getElementById('topbar-sub');
-    if (elSub) elSub.textContent = `Bem-vindo de volta, ${partes[0]}`;
-  } catch(e) {
-    document.getElementById('sidebar-nome').textContent = user.email;
-  }
-
-  // ── Carrega pacientes do Firestore ────────────────────────
-  try {
-    const q    = query(collection(db,'clinica',clinicaId,'pacientes'), where('ativo','==',true), orderBy('nome'));
-    const snap = await getDocs(q);
-    window.todosOsPacientes = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    window.renderPatients(window.todosOsPacientes);
-  } catch(e) {
-    console.warn('Firestore pacientes:', e.message);
-    const el = document.getElementById('pacientes-count');
-    if (el) el.textContent = '0 cadastrados';
-  }
-});
 </script>
 </body>
 </html>
