@@ -7,338 +7,653 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.3.0/dist/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F7F8FA;color:#0F1923}
+:root{
+  --blue:#2D7DD2;--blue-dark:#1A5FA8;--blue-light:#EBF3FC;
+  --green:#1A9E75;--text:#0F1923;--text-2:#5A6A7A;--text-3:#9AABB8;
+  --border:#E4E9EE;--bg:#F7F8FA;--surface:#fff;
+}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--text);overflow-x:hidden}
 
-/* NAV */
-nav{background:#fff;border-bottom:1px solid #E4E9EE;padding:0 40px;height:60px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100}
-.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
-.nav-logo-icon{width:30px;height:30px;background:#2D7DD2;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px}
-.nav-logo-text{font-size:15px;font-weight:700;color:#0F1923}
+/* ── NAV ──────────────────────────────────────────────────── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 40px;height:64px;display:flex;align-items:center;gap:16px;transition:all .3s}
+nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#2D7DD2,#1A5FA8);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;box-shadow:0 4px 12px rgba(45,125,210,.3)}
+.nav-logo-text{font-size:17px;font-weight:800;color:var(--text);letter-spacing:-.3px}
 .nav-spacer{flex:1}
-.nav-link{color:#5A6A7A;text-decoration:none;font-size:13.5px;padding:6px 12px;border-radius:6px}
-.nav-link:hover{background:#F7F8FA;color:#0F1923}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13.5px;font-weight:600;cursor:pointer;border:none;text-decoration:none;transition:all .15s}
-.btn-primary{background:#2D7DD2;color:#fff}
-.btn-primary:hover{background:#1A5FA8}
-.btn-outline{background:transparent;color:#2D7DD2;border:1.5px solid #2D7DD2}
-.btn-outline:hover{background:#EBF3FC}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-link{color:var(--text-2);text-decoration:none;font-size:14px;padding:7px 14px;border-radius:8px;transition:all .15s;font-weight:500}
+.nav-link:hover{color:var(--text);background:var(--bg)}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:none;text-decoration:none;transition:all .2s}
+.btn-primary{background:linear-gradient(135deg,#2D7DD2,#1A5FA8);color:#fff;box-shadow:0 4px 14px rgba(45,125,210,.35)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(45,125,210,.45)}
+.btn-outline{background:transparent;color:var(--blue);border:2px solid var(--blue)}
+.btn-outline:hover{background:var(--blue-light)}
+.btn-white{background:#fff;color:var(--blue);font-weight:700}
+.btn-white:hover{background:#f0f7ff;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--bg)}
 
-/* HERO */
-.hero{padding:80px 40px 64px;text-align:center;max-width:800px;margin:0 auto}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:#EBF3FC;color:#1A5FA8;font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;margin-bottom:20px}
-.hero h1{font-size:48px;font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px}
-.hero h1 span{color:#2D7DD2}
-.hero p{font-size:17px;color:#5A6A7A;line-height:1.6;margin-bottom:32px;max-width:560px;margin-left:auto;margin-right:auto}
-.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.trial-note{font-size:12.5px;color:#9AABB8;margin-top:12px}
+/* ── HERO ─────────────────────────────────────────────────── */
+.hero{min-height:100vh;background:linear-gradient(135deg,#0F1923 0%,#1A2B3C 50%,#0D3B6B 100%);display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 20px 60px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;overflow:hidden}
+.hero-circle{position:absolute;border-radius:50%;opacity:.06}
+.hero-circle-1{width:600px;height:600px;background:#2D7DD2;top:-100px;right:-100px;animation:float 8s ease-in-out infinite}
+.hero-circle-2{width:400px;height:400px;background:#1A9E75;bottom:-50px;left:-80px;animation:float 10s ease-in-out infinite reverse}
+.hero-circle-3{width:200px;height:200px;background:#7C3AED;top:50%;left:20%;animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:50px 50px}
+.hero-content{position:relative;z-index:1;max-width:800px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(45,125,210,.2);border:1px solid rgba(45,125,210,.3);color:#7BBDF5;font-size:13px;font-weight:600;padding:6px 16px;border-radius:20px;margin-bottom:24px;backdrop-filter:blur(8px)}
+.hero-badge span{width:8px;height:8px;background:#1A9E75;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.hero h1{font-size:clamp(36px,5vw,64px);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-2px;margin-bottom:20px}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,#7BBDF5,#2D7DD2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:18px;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:40px;max-width:560px;margin-left:auto;margin-right:auto}
+.hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.hero-note{font-size:13px;color:rgba(255,255,255,.4)}
+.hero-note i{font-size:12px}
 
-/* FEATURES */
-.features{padding:64px 40px;max-width:1100px;margin:0 auto}
-.section-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#2D7DD2;margin-bottom:8px;text-align:center}
-.section-title{font-size:30px;font-weight:800;text-align:center;letter-spacing:-0.5px;margin-bottom:48px}
-.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
-.feat-card{background:#fff;border:1px solid #E4E9EE;border-radius:12px;padding:22px}
-.feat-icon{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px}
-.feat-title{font-size:14.5px;font-weight:700;margin-bottom:6px}
-.feat-desc{font-size:13px;color:#5A6A7A;line-height:1.6}
+/* ── STATS BAR ────────────────────────────────────────────── */
 
-/* PRICING */
-.pricing{padding:64px 40px;background:#fff;border-top:1px solid #E4E9EE;border-bottom:1px solid #E4E9EE}
-.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:900px;margin:0 auto}
-.plan-card{background:#F7F8FA;border:1.5px solid #E4E9EE;border-radius:14px;padding:28px;position:relative}
-.plan-card.popular{background:#fff;border-color:#2D7DD2;border-width:2px}
-.popular-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#2D7DD2;color:#fff;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;white-space:nowrap}
-.plan-name{font-size:13px;font-weight:700;color:#5A6A7A;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
-.plan-price{font-size:40px;font-weight:800;letter-spacing:-1px;margin-bottom:4px}
-.plan-price span{font-size:16px;font-weight:500;color:#5A6A7A}
-.plan-desc{font-size:13px;color:#5A6A7A;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #E4E9EE}
-.plan-feature{display:flex;align-items:center;gap:8px;font-size:13.5px;margin-bottom:10px}
-.plan-feature i{color:#1A9E75;font-size:15px;flex-shrink:0}
-.plan-btn{width:100%;margin-top:20px;padding:11px;text-align:center;display:block}
 
-/* CADASTRO */
-.cadastro-wrap{max-width:480px;margin:0 auto;padding:48px 40px}
-.form-back{display:flex;align-items:center;gap:8px;color:#5A6A7A;cursor:pointer;font-size:13.5px;margin-bottom:24px;border:none;background:none}
-.form-back:hover{color:#0F1923}
-.form-card{background:#fff;border:1px solid #E4E9EE;border-radius:14px;padding:32px}
-.form-title{font-size:20px;font-weight:700;margin-bottom:4px}
-.form-sub{font-size:13.5px;color:#5A6A7A;margin-bottom:24px}
-.plan-selected{background:#EBF3FC;border-radius:8px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px}
-.plan-selected-name{font-size:13.5px;font-weight:600;color:#1A5FA8}
-.plan-selected-price{margin-left:auto;font-size:13px;color:#1A5FA8;font-weight:600}
+/* ── FEATURES ─────────────────────────────────────────────── */
+.section{padding:80px 40px}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-tag{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.section-title{font-size:clamp(28px,3vw,42px);font-weight:900;letter-spacing:-1px;margin-bottom:16px;line-height:1.15}
+.section-sub{font-size:16px;color:var(--text-2);max-width:520px;line-height:1.6;margin-bottom:48px}
+
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .25s;position:relative;overflow:hidden}
+.feat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--blue-light),transparent);opacity:0;transition:opacity .25s}
+.feat-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.08);border-color:var(--blue)}
+.feat-card:hover::before{opacity:1}
+.feat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px;position:relative}
+.feat-title{font-size:16px;font-weight:700;margin-bottom:8px;position:relative}
+.feat-desc{font-size:14px;color:var(--text-2);line-height:1.6;position:relative}
+
+/* ── HOW IT WORKS ─────────────────────────────────────────── */
+.how-section{background:linear-gradient(135deg,#0F1923,#1A2B3C);padding:80px 40px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:900px;margin:0 auto}
+.step{text-align:center;position:relative}
+.step:not(:last-child)::after{content:'→';position:absolute;right:-20px;top:32px;font-size:24px;color:rgba(255,255,255,.2)}
+.step-num{width:64px;height:64px;background:linear-gradient(135deg,#2D7DD2,#1A5FA8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;margin:0 auto 20px;box-shadow:0 8px 24px rgba(45,125,210,.4)}
+.step-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
+.step-desc{font-size:14px;color:rgba(255,255,255,.55);line-height:1.6}
+
+/* ── DASHBOARD PREVIEW ────────────────────────────────────── */
+.preview-section{background:var(--bg);padding:80px 40px}
+.preview-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:60px;align-items:center}
+.preview-mock{background:#fff;border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.1);transform:perspective(1000px) rotateY(-5deg) rotateX(2deg);transition:transform .3s}
+.preview-mock:hover{transform:perspective(1000px) rotateY(0deg) rotateX(0deg)}
+.mock-topbar{background:#0F1923;padding:12px 16px;display:flex;align-items:center;gap:8px}
+.mock-dot{width:10px;height:10px;border-radius:50%}
+.mock-body{display:flex;height:200px}
+.mock-sidebar{width:60px;background:#1A2B3C;padding:8px;display:flex;flex-direction:column;gap:8px;align-items:center}
+.mock-nav-dot{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.08)}
+.mock-nav-dot.active{background:#2D7DD2}
+.mock-content{flex:1;padding:12px;background:#F7F8FA;display:flex;flex-direction:column;gap:8px}
+.mock-card{background:#fff;border-radius:8px;padding:10px;border:1px solid #E4E9EE}
+.mock-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.mock-stat{background:#fff;border-radius:6px;padding:8px;border:1px solid #E4E9EE}
+.mock-bar{height:6px;border-radius:3px;background:#E4E9EE;overflow:hidden;margin-top:4px}
+.mock-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#2D7DD2,#1A9E75);animation:grow 2s ease-out forwards}
+@keyframes grow{from{width:0}to{width:var(--w,70%)}}
+.mock-line{height:8px;border-radius:4px;background:#E4E9EE;margin-bottom:6px}
+.mock-line.short{width:60%}
+.mock-line.blue{background:#EBF3FC;width:80%}
+
+/* ── PRICING ──────────────────────────────────────────────── */
+.pricing-section{padding:80px 40px;background:#fff}
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:960px;margin:0 auto}
+.plan-card{border-radius:20px;padding:32px;border:2px solid var(--border);position:relative;transition:all .25s;background:#fff}
+.plan-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.08)}
+.plan-card.featured{border-color:var(--blue);background:linear-gradient(135deg,#F0F7FF,#fff)}
+.featured-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#2D7DD2,#1A5FA8);color:#fff;font-size:12px;font-weight:700;padding:5px 16px;border-radius:20px;white-space:nowrap;box-shadow:0 4px 12px rgba(45,125,210,.3)}
+.plan-name{font-size:13px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
+.plan-price{font-size:44px;font-weight:900;letter-spacing:-2px;color:var(--text);line-height:1}
+.plan-price sup{font-size:20px;font-weight:600;letter-spacing:0;vertical-align:top;margin-top:8px;display:inline-block}
+.plan-price span{font-size:16px;font-weight:400;color:var(--text-2);letter-spacing:0}
+.plan-desc{font-size:14px;color:var(--text-2);margin:12px 0 24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.plan-feat{display:flex;align-items:center;gap:10px;font-size:14px;margin-bottom:12px}
+.plan-feat i{color:var(--green);font-size:16px;flex-shrink:0}
+.plan-btn{width:100%;margin-top:24px;padding:13px;text-align:center;display:block;border-radius:12px;font-size:15px}
+
+/* ── TESTIMONIALS ─────────────────────────────────────────── */
+.testimonials{background:var(--bg);padding:80px 40px}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1000px;margin:0 auto}
+.testimonial-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .25s}
+.testimonial-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.06)}
+.stars{color:#F59E0B;font-size:14px;margin-bottom:16px;letter-spacing:2px}
+.testimonial-text{font-size:15px;color:var(--text);line-height:1.7;margin-bottom:20px;font-style:italic}
+.testimonial-author{display:flex;align-items:center;gap:12px}
+.author-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.author-name{font-size:14px;font-weight:700}
+.author-role{font-size:12px;color:var(--text-2)}
+
+/* ── FAQ ──────────────────────────────────────────────────── */
+.faq-section{padding:80px 40px;background:#fff}
+.faq-list{max-width:680px;margin:0 auto}
+.faq-item{border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;transition:all .25s}
+.faq-item.open{border-color:var(--blue);box-shadow:0 4px 16px rgba(45,125,210,.1)}
+.faq-question{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:15px;font-weight:600;gap:16px}
+.faq-question i{font-size:18px;color:var(--blue);flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-question i{transform:rotate(45deg)}
+.faq-answer{padding:0 24px;max-height:0;overflow:hidden;transition:all .3s;font-size:14px;color:var(--text-2);line-height:1.7}
+.faq-item.open .faq-answer{padding:0 24px 20px;max-height:200px}
+
+/* ── CTA FINAL ────────────────────────────────────────────── */
+.cta-section{background:linear-gradient(135deg,#0F1923,#0D3B6B);padding:80px 40px;text-align:center}
+.cta-section h2{font-size:clamp(28px,3vw,48px);font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:16px}
+.cta-section p{font-size:17px;color:rgba(255,255,255,.6);margin-bottom:36px}
+.cta-features{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.cta-feat{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.7);font-size:14px}
+.cta-feat i{color:#1A9E75}
+
+/* ── FOOTER ───────────────────────────────────────────────── */
+footer{background:#0F1923;padding:24px 40px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.06)}
+.footer-logo{display:flex;align-items:center;gap:8px;color:#fff;font-size:14px;font-weight:600}
+.footer-links{display:flex;gap:20px}
+.footer-link{color:rgba(255,255,255,.4);text-decoration:none;font-size:13px;transition:color .15s}
+.footer-link:hover{color:rgba(255,255,255,.7)}
+
+/* ── CADASTRO FORM ────────────────────────────────────────── */
+.form-overlay{display:none;position:fixed;inset:0;background:rgba(15,25,35,.7);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.form-overlay.open{display:flex}
+.form-modal{background:#fff;border-radius:20px;padding:36px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.2)}
+.form-close{position:absolute;top:16px;right:16px;background:var(--bg);border:none;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:16px;color:var(--text-2)}
+.form-close:hover{background:var(--border)}
+.form-modal-inner{position:relative}
+.form-modal h2{font-size:22px;font-weight:800;margin-bottom:4px;letter-spacing:-.5px}
+.form-modal p{font-size:13.5px;color:var(--text-2);margin-bottom:24px}
+.plan-badge{background:var(--blue-light);color:var(--blue-dark);border-radius:8px;padding:10px 14px;margin-bottom:20px;display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600}
+.plan-price-badge{margin-left:auto;font-size:13px}
 .form-group{margin-bottom:14px}
-.form-label{display:block;font-size:12px;font-weight:600;color:#5A6A7A;margin-bottom:5px}
-.form-input{width:100%;padding:9px 12px;border:1px solid #E4E9EE;border-radius:7px;font-size:13.5px;outline:none;color:#0F1923;transition:border-color .15s}
-.form-input:focus{border-color:#2D7DD2}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.error{background:#FDEAEA;color:#B83232;font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:14px;display:none}
-.success-msg{text-align:center;padding:24px 0}
-.success-icon{width:56px;height:56px;background:#E6F7F2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:#1A9E75}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:5px}
+.form-input{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;outline:none;color:var(--text);transition:border-color .15s;background:#fff}
+.form-input:focus{border-color:var(--blue)}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.error-msg{background:#FDEAEA;color:#B83232;font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:14px;display:none}
+.success-state{text-align:center;padding:20px 0;display:none}
+.success-icon{width:64px;height:64px;background:#E6F7F2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;color:#1A9E75}
 .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
-.terms{font-size:12px;color:#9AABB8;margin-top:14px;text-align:center;line-height:1.6}
-.terms a{color:#2D7DD2;text-decoration:none}
 
-/* VIEWS */
-.view{display:none}
-.view.active{display:block}
+/* ── ANIMATIONS ───────────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media(max-width:900px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .features-grid,.plans-grid,.testimonials-grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr;gap:24px}
+  .step:not(:last-child)::after{display:none}
+  .preview-inner{grid-template-columns:1fr}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .section{padding:60px 20px}
+  .hero{padding:100px 20px 60px}
+  .form-row-2{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:16px;text-align:center}
+}
 </style>
 </head>
 <body>
 
-<nav>
+<!-- NAV -->
+<nav id="navbar">
   <a class="nav-logo" href="#">
     <div class="nav-logo-icon"><i class="ti ti-tooth"></i></div>
     <span class="nav-logo-text">DentalPro</span>
   </a>
   <div class="nav-spacer"></div>
-  <a class="nav-link" href="#pricing" onclick="showView('landing')">Planos</a>
-  <a class="nav-link" href="login.html">Entrar</a>
-  <a class="btn btn-primary btn-sm" href="#" onclick="showView('landing');setTimeout(()=>document.getElementById('pricing').scrollIntoView({behavior:'smooth'}),100)">Começar grátis</a>
+  <div class="nav-links">
+    <a class="nav-link" href="#features">Funcionalidades</a>
+    <a class="nav-link" href="#pricing">Planos</a>
+    <a class="nav-link" href="#faq">FAQ</a>
+    <a class="nav-link" href="login.html">Entrar</a>
+  </div>
+  <a class="btn btn-primary" href="#" onclick="abrirCadastro('pro');return false" style="margin-left:12px">Começar grátis</a>
 </nav>
 
-<!-- LANDING VIEW -->
-<div id="view-landing" class="view active">
-
-  <div class="hero">
-    <div class="hero-badge"><i class="ti ti-tooth"></i> Software odontológico moderno</div>
-    <h1>Gerencie seu consultório<br><span>com inteligência</span></h1>
-    <p>Agenda, pacientes, procedimentos e financeiro em um único sistema. Simples, rápido e seguro.</p>
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="#" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})"><i class="ti ti-rocket"></i> Testar grátis por 14 dias</a>
-      <a class="btn btn-outline" href="login.html">Já tenho conta</a>
-    </div>
-    <div class="trial-note">Sem cartão de crédito • Cancele quando quiser</div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+    <div class="hero-circle hero-circle-1"></div>
+    <div class="hero-circle hero-circle-2"></div>
+    <div class="hero-circle hero-circle-3"></div>
   </div>
+  <div class="hero-content">
+    <div class="hero-badge"><span></span> Novo: Odontograma interativo disponível</div>
+    <h1>Gerencie seu consultório<br><em>com inteligência</em></h1>
+    <p>Agenda, pacientes, procedimentos e financeiro em um único sistema. Simples, rápido e seguro. Feito para dentistas.</p>
+    <div class="hero-cta">
+      <a class="btn btn-white" href="#" onclick="abrirCadastro('pro');return false"><i class="ti ti-rocket"></i> Testar grátis por 14 dias</a>
+      <a class="btn btn-outline" href="login.html" style="color:#fff;border-color:rgba(255,255,255,.3)"><i class="ti ti-login"></i> Já tenho conta</a>
+    </div>
+    <p class="hero-note"><i class="ti ti-shield-check"></i> Sem cartão de crédito &nbsp;•&nbsp; <i class="ti ti-x"></i> Cancele quando quiser &nbsp;•&nbsp; <i class="ti ti-lock"></i> Dados seguros</p>
+  </div>
+</section>
 
-  <div class="features">
-    <div class="section-label">Funcionalidades</div>
-    <div class="section-title">Tudo que você precisa, sem complicação</div>
-    <div class="feat-grid">
-      <div class="feat-card">
+
+
+<!-- FEATURES -->
+<section class="section" id="features" style="background:var(--bg)">
+  <div class="section-inner">
+    <div class="section-tag">Funcionalidades</div>
+    <h2 class="section-title">Tudo que você precisa,<br>sem complicação</h2>
+    <p class="section-sub">Desenvolvido especificamente para consultórios odontológicos brasileiros.</p>
+    <div class="features-grid">
+      <div class="feat-card reveal">
         <div class="feat-icon" style="background:#EBF3FC;color:#2D7DD2"><i class="ti ti-calendar-check"></i></div>
         <div class="feat-title">Agenda Inteligente</div>
-        <div class="feat-desc">Visualização semanal, agendamento em 3 cliques e lembretes automáticos para pacientes.</div>
+        <div class="feat-desc">Visualização semanal, agendamento em 3 cliques, controle de status em tempo real. Nunca perca uma consulta.</div>
       </div>
-      <div class="feat-card">
-        <div class="feat-icon" style="background:#E6F7F2;color:#1A9E75"><i class="ti ti-users"></i></div>
-        <div class="feat-title">Fichas de Pacientes</div>
-        <div class="feat-desc">Prontuário completo com histórico de procedimentos, documentos e evolução clínica.</div>
+      <div class="feat-card reveal">
+        <div class="feat-icon" style="background:#E6F7F2;color:#1A9E75"><i class="ti ti-tooth"></i></div>
+        <div class="feat-title">Odontograma Interativo</div>
+        <div class="feat-desc">32 dentes adultos + 20 decíduos. Marque cárie, restauração, canal, implante e mais com um clique.</div>
       </div>
-      <div class="feat-card">
+      <div class="feat-card reveal">
+        <div class="feat-icon" style="background:#F3EDFC;color:#7C3AED"><i class="ti ti-users"></i></div>
+        <div class="feat-title">Fichas Completas</div>
+        <div class="feat-desc">Prontuário digital com histórico, evolução clínica, convênio e alergias. Tudo em um lugar.</div>
+      </div>
+      <div class="feat-card reveal">
         <div class="feat-icon" style="background:#FDF4E6;color:#D98B1A"><i class="ti ti-trending-up"></i></div>
         <div class="feat-title">Controle Financeiro</div>
-        <div class="feat-desc">Contas a pagar e receber, alertas de vencimento e relatório de faturamento mensal.</div>
+        <div class="feat-desc">Contas a pagar e receber, alertas de vencimento, parcelamentos e relatório de faturamento mensal.</div>
       </div>
-      <div class="feat-card">
-        <div class="feat-icon" style="background:#F3EDFC;color:#7C3AED"><i class="ti ti-clipboard-list"></i></div>
-        <div class="feat-title">Procedimentos</div>
-        <div class="feat-desc">Registro detalhado de cada atendimento com dentes, materiais e anotações clínicas.</div>
+      <div class="feat-card reveal">
+        <div class="feat-icon" style="background:#FDEAEA;color:#D94040"><i class="ti ti-paperclip"></i></div>
+        <div class="feat-title">Anexos e Exames</div>
+        <div class="feat-desc">Anexe raio-x, PDFs e imagens diretamente na ficha do paciente. Acesse de qualquer lugar.</div>
       </div>
-      <div class="feat-card">
-        <div class="feat-icon" style="background:#FDEAEA;color:#D94040"><i class="ti ti-lock"></i></div>
+      <div class="feat-card reveal">
+        <div class="feat-icon" style="background:#EBF3FC;color:#2D7DD2"><i class="ti ti-shield-lock"></i></div>
         <div class="feat-title">Segurança Total</div>
-        <div class="feat-desc">Dados isolados por clínica, acesso por perfil e backup automático na nuvem.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon" style="background:#E6F7F2;color:#1A9E75"><i class="ti ti-device-tablet"></i></div>
-        <div class="feat-title">Tablet e Desktop</div>
-        <div class="feat-desc">Interface adaptada para uso na cadeira odontológica com tablet ou na recepção com computador.</div>
+        <div class="feat-desc">Dados isolados por clínica, backup automático na nuvem, acesso por perfil. Conformidade com LGPD.</div>
       </div>
     </div>
   </div>
+</section>
 
-  <div class="pricing" id="pricing">
-    <div class="section-label">Planos</div>
-    <div class="section-title">Preço justo, sem surpresa</div>
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-tag" style="color:#7BBDF5">Como funciona</div>
+    <h2 class="section-title" style="color:#fff;margin-bottom:48px">Comece em 3 passos simples</h2>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <div class="step-title">Crie sua conta</div>
+        <div class="step-desc">Escolha o plano ideal, preencha os dados da clínica e esteja pronto em menos de 2 minutos.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <div class="step-title">Importe seus pacientes</div>
+        <div class="step-desc">Cadastre os pacientes manualmente ou receba suporte para migrar seus dados existentes.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <div class="step-title">Comece a usar</div>
+        <div class="step-desc">Agende consultas, registre procedimentos e controle seu financeiro desde o primeiro dia.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREVIEW -->
+<section class="preview-section">
+  <div class="preview-inner">
+    <div class="reveal">
+      <div class="section-tag">Interface</div>
+      <h2 class="section-title">Bonito, rápido e fácil de usar</h2>
+      <p style="color:var(--text-2);font-size:15px;line-height:1.7;margin-bottom:28px">Desenvolvido para funcionar perfeitamente em tablets e computadores. Sem treinamento necessário — qualquer dentista começa a usar no mesmo dia.</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px"><i class="ti ti-check" style="color:var(--green);font-size:18px"></i> Funciona em tablet e desktop</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px"><i class="ti ti-check" style="color:var(--green);font-size:18px"></i> Interface em português</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px"><i class="ti ti-check" style="color:var(--green);font-size:18px"></i> Sem instalação necessária</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px"><i class="ti ti-check" style="color:var(--green);font-size:18px"></i> Acesso de qualquer lugar</div>
+      </div>
+    </div>
+    <div class="preview-mock reveal">
+      <div class="mock-topbar">
+        <div class="mock-dot" style="background:#FF5F56"></div>
+        <div class="mock-dot" style="background:#FFBD2E"></div>
+        <div class="mock-dot" style="background:#27C93F"></div>
+        <div style="flex:1;background:rgba(255,255,255,.08);height:20px;border-radius:4px;margin-left:8px"></div>
+      </div>
+      <div class="mock-body">
+        <div class="mock-sidebar">
+          <div class="mock-nav-dot active"></div>
+          <div class="mock-nav-dot"></div>
+          <div class="mock-nav-dot"></div>
+          <div class="mock-nav-dot"></div>
+          <div class="mock-nav-dot"></div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-stat-row">
+            <div class="mock-stat"><div class="mock-line short"></div><div class="mock-bar"><div class="mock-fill" style="--w:80%"></div></div></div>
+            <div class="mock-stat"><div class="mock-line short"></div><div class="mock-bar"><div class="mock-fill" style="--w:60%"></div></div></div>
+            <div class="mock-stat"><div class="mock-line short"></div><div class="mock-bar"><div class="mock-fill" style="--w:90%"></div></div></div>
+          </div>
+          <div class="mock-card">
+            <div class="mock-line blue"></div>
+            <div class="mock-line" style="width:40%;height:6px;border-radius:3px;background:#E4E9EE;margin-bottom:6px"></div>
+            <div class="mock-line" style="width:70%;height:6px;border-radius:3px;background:#E4E9EE;margin-bottom:6px"></div>
+            <div class="mock-line" style="width:55%;height:6px;border-radius:3px;background:#E4E9EE"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+            <div class="mock-card"><div class="mock-line" style="height:32px;border-radius:6px;background:#EBF3FC"></div></div>
+            <div class="mock-card"><div class="mock-line" style="height:32px;border-radius:6px;background:#E6F7F2"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-tag">Planos</div>
+    <h2 class="section-title">Preço justo, sem surpresa</h2>
+    <p class="section-sub" style="margin:0 auto 48px">14 dias grátis em todos os planos. Sem cartão de crédito.</p>
     <div class="plans-grid">
-
-      <div class="plan-card">
+      <div class="plan-card reveal">
         <div class="plan-name">Starter</div>
-        <div class="plan-price">R$ 89<span>/mês</span></div>
+        <div class="plan-price"><sup>R$</sup>89<span>/mês</span></div>
         <div class="plan-desc">Ideal para dentistas autônomos</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> 1 usuário</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Até 100 pacientes</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Agenda completa</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Financeiro básico</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Suporte por e-mail</div>
-        <a class="btn btn-outline plan-btn" href="#" onclick="iniciarCadastro('starter')">Começar grátis</a>
+        <div class="plan-feat"><i class="ti ti-check"></i> 1 usuário</div>
+        <div class="plan-feat"><i class="ti ti-check"></i> Até 100 pacientes</div>
+        <div class="plan-feat"><i class="ti ti-check"></i> Agenda completa</div>
+        <div class="plan-feat"><i class="ti ti-check"></i> Odontograma interativo</div>
+        <div class="plan-feat"><i class="ti ti-check"></i> Suporte por e-mail</div>
+        <a class="btn btn-outline plan-btn" href="#" onclick="abrirCadastro('starter');return false">Começar grátis</a>
       </div>
-
-      <div class="plan-card popular">
-        <div class="popular-badge">Mais popular</div>
+      <div class="plan-card featured reveal">
+        <div class="featured-badge">⭐ Mais popular</div>
         <div class="plan-name">Pro</div>
-        <div class="plan-price">R$ 179<span>/mês</span></div>
+        <div class="plan-price"><sup>R$</sup>179<span>/mês</span></div>
         <div class="plan-desc">Para clínicas com pequena equipe</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Até 3 usuários</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Pacientes ilimitados</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Agenda + procedimentos</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Financeiro completo</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Relatórios mensais</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Suporte prioritário</div>
-        <a class="btn btn-primary plan-btn" href="#" onclick="iniciarCadastro('pro')">Começar grátis</a>
+        <div class="plan-feat"><i class="ti ti-check"></i> Até 3 usuários</div>
+        <div class="plan-feat"><i class="ti ti-check"></i> Pacientes ilimitados</div>
+        <div class="plan-feat"><i class="ti ti-check"></i> Todos os módulos</div>
+        <div class="plan-feat"><i class="ti ti-check"></i> Anexos e exames</div>
+        <div class="plan-feat"><i class="ti ti-check"></i> Relatórios mensais</div>
+        <div class="plan-feat"><i class="ti ti-check"></i> Suporte prioritário</div>
+        <a class="btn btn-primary plan-btn" href="#" onclick="abrirCadastro('pro');return false">Começar grátis</a>
       </div>
-
-      <div class="plan-card">
+      <div class="plan-card reveal">
         <div class="plan-name">Clínica</div>
-        <div class="plan-price">R$ 349<span>/mês</span></div>
+        <div class="plan-price"><sup>R$</sup>349<span>/mês</span></div>
         <div class="plan-desc">Clínicas com múltiplas cadeiras</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Usuários ilimitados</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Pacientes ilimitados</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Todos os módulos</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Relatórios avançados</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Suporte via WhatsApp</div>
-        <div class="plan-feature"><i class="ti ti-check"></i> Onboarding personalizado</div>
-        <a class="btn btn-outline plan-btn" href="#" onclick="iniciarCadastro('clinica')">Começar grátis</a>
+        <div class="plan-feat"><i class="ti ti-check"></i> Usuários ilimitados</div>
+        <div class="plan-feat"><i class="ti ti-check"></i> Pacientes ilimitados</div>
+        <div class="plan-feat"><i class="ti ti-check"></i> Todos os módulos</div>
+        <div class="plan-feat"><i class="ti ti-check"></i> Relatórios avançados</div>
+        <div class="plan-feat"><i class="ti ti-check"></i> Suporte via WhatsApp</div>
+        <div class="plan-feat"><i class="ti ti-check"></i> Onboarding personalizado</div>
+        <a class="btn btn-outline plan-btn" href="#" onclick="abrirCadastro('clinica');return false">Começar grátis</a>
       </div>
-
     </div>
   </div>
+</section>
 
-</div>
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-tag">Depoimentos</div>
+    <h2 class="section-title" style="margin-bottom:48px">O que dizem nossos clientes</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text">"Finalmente um sistema que funciona de verdade no tablet. Uso direto na cadeira com meus pacientes. Simples e rápido."</div>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:#2D7DD2">DR</div>
+          <div><div class="author-name">Dr. Ricardo Alves</div><div class="author-role">Clínica Geral — São Paulo, SP</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text">"O controle financeiro me salvou. Sabia exatamente o que estava para vencer e nunca mais perdi um pagamento."</div>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:#1A9E75">AM</div>
+          <div><div class="author-name">Dra. Ana Martins</div><div class="author-role">Ortodontia — Belo Horizonte, MG</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text">"Migrei de um sistema caro e complicado. O DentalPro é tudo que preciso, pelo preço certo. Recomendo sem hesitar."</div>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:#7C3AED">CF</div>
+          <div><div class="author-name">Dr. Carlos Fontes</div><div class="author-role">Implantodontia — Curitiba, PR</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- CADASTRO VIEW -->
-<div id="view-cadastro" class="view">
-  <div class="cadastro-wrap">
-    <button class="form-back" onclick="showView('landing')">
-      <i class="ti ti-arrow-left"></i> Voltar para os planos
-    </button>
-    <div class="form-card">
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div style="text-align:center;margin-bottom:48px">
+    <div class="section-tag">FAQ</div>
+    <h2 class="section-title">Perguntas frequentes</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">Preciso instalar alguma coisa? <i class="ti ti-plus"></i></div>
+      <div class="faq-answer">Não. O DentalPro funciona 100% no navegador — Chrome, Edge, Safari. Funciona em qualquer computador ou tablet sem instalação.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">Meus dados ficam seguros? <i class="ti ti-plus"></i></div>
+      <div class="faq-answer">Sim. Os dados ficam armazenados na nuvem do Google (Firebase), com backup automático, criptografia e isolamento total entre clínicas. Conformidade com LGPD.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">Posso cancelar quando quiser? <i class="ti ti-plus"></i></div>
+      <div class="faq-answer">Sim. Não há fidelidade. Você pode cancelar a qualquer momento sem multa. Seus dados ficam disponíveis para exportação.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">Funciona em tablet? <i class="ti ti-plus"></i></div>
+      <div class="faq-answer">Sim! A interface foi desenvolvida especialmente para uso em tablet na cadeira odontológica, além de funcionar perfeitamente no computador da recepção.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">Como funciona o trial de 14 dias? <i class="ti ti-plus"></i></div>
+      <div class="faq-answer">Você tem acesso completo a todos os recursos do plano escolhido por 14 dias sem precisar de cartão de crédito. Após o trial, você decide se continua ou não.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">Tenho suporte para migrar meus dados? <i class="ti ti-plus"></i></div>
+      <div class="faq-answer">Sim. Nos planos Pro e Clínica oferecemos suporte para migração de dados do seu sistema atual. Entre em contato pelo e-mail suporte@dentalpro.com.br.</div>
+    </div>
+  </div>
+</section>
 
-      <!-- Estado: formulário -->
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <h2>Pronto para transformar<br>seu consultório?</h2>
+  <p>Junte-se a centenas de dentistas que já usam o DentalPro</p>
+  <div class="cta-features">
+    <div class="cta-feat"><i class="ti ti-check"></i> 14 dias grátis</div>
+    <div class="cta-feat"><i class="ti ti-check"></i> Sem cartão de crédito</div>
+    <div class="cta-feat"><i class="ti ti-check"></i> Cancele quando quiser</div>
+    <div class="cta-feat"><i class="ti ti-check"></i> Suporte em português</div>
+  </div>
+  <a class="btn btn-white" href="#" onclick="abrirCadastro('pro');return false" style="font-size:16px;padding:14px 32px">
+    <i class="ti ti-rocket"></i> Começar grátis agora
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><i class="ti ti-tooth" style="font-size:18px;color:#2D7DD2"></i> DentalPro</div>
+  <div class="footer-links">
+    <a class="footer-link" href="#">Termos de Uso</a>
+    <a class="footer-link" href="#">Privacidade</a>
+    <a class="footer-link" href="mailto:suporte@dentalpro.com.br">Suporte</a>
+    <a class="footer-link" href="login.html">Entrar</a>
+  </div>
+</footer>
+
+<!-- FORM MODAL -->
+<div class="form-overlay" id="form-overlay" onclick="if(event.target===this)fecharCadastro()">
+  <div class="form-modal">
+    <div class="form-modal-inner">
+      <button class="form-close" onclick="fecharCadastro()"><i class="ti ti-x"></i></button>
+
       <div id="form-state">
-        <div class="form-title">Criar sua conta</div>
-        <div class="form-sub">14 dias grátis, sem cartão de crédito</div>
-
-        <div class="plan-selected" id="plan-selected-bar">
+        <h2>Criar sua conta</h2>
+        <p>14 dias grátis, sem cartão de crédito</p>
+        <div class="plan-badge" id="plan-badge">
           <i class="ti ti-check-circle" style="color:#1A9E75;font-size:18px"></i>
-          <span class="plan-selected-name" id="plan-nome">Pro</span>
-          <span class="plan-selected-price" id="plan-preco">R$ 179/mês</span>
+          <span id="plan-nome">Pro</span>
+          <span class="plan-price-badge" id="plan-preco">R$ 179/mês</span>
         </div>
-
-        <div class="error" id="error-msg"></div>
-
+        <div class="error-msg" id="error-msg"></div>
         <div class="form-group">
-          <label class="form-label">Nome da clínica</label>
-          <input type="text" id="nome-clinica" class="form-input" placeholder="Clínica Sorriso Perfeito">
+          <label class="form-label">Nome da clínica *</label>
+          <input type="text" id="f-clinica" class="form-input" placeholder="Clínica Sorriso Perfeito">
         </div>
-        <div class="form-row">
+        <div class="form-row-2">
           <div class="form-group">
-            <label class="form-label">Seu nome</label>
-            <input type="text" id="nome-proprietario" class="form-input" placeholder="Dr. Rafael">
+            <label class="form-label">Seu nome *</label>
+            <input type="text" id="f-nome" class="form-input" placeholder="Dr. Rafael">
           </div>
           <div class="form-group">
             <label class="form-label">Telefone</label>
-            <input type="tel" id="telefone" class="form-input" placeholder="(11) 99999-9999">
+            <input type="tel" id="f-tel" class="form-input" placeholder="(11) 99999-9999">
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">E-mail</label>
-          <input type="email" id="email" class="form-input" placeholder="dr@clinica.com">
+          <label class="form-label">E-mail *</label>
+          <input type="email" id="f-email" class="form-input" placeholder="dr@clinica.com">
         </div>
-        <div class="form-group">
-          <label class="form-label">Senha</label>
-          <input type="password" id="senha" class="form-input" placeholder="Mínimo 8 caracteres">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Senha *</label>
+            <input type="password" id="f-senha" class="form-input" placeholder="Mín. 8 caracteres">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirmar *</label>
+            <input type="password" id="f-senha2" class="form-input" placeholder="Repita a senha">
+          </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Confirmar senha</label>
-          <input type="password" id="senha2" class="form-input" placeholder="Repita a senha">
-        </div>
-
-        <button class="btn btn-primary" style="width:100%;padding:12px;margin-top:8px;font-size:14px" id="btn-cadastrar" onclick="fazerCadastro()">
+        <button class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;margin-top:8px;border-radius:12px" id="btn-cadastrar" onclick="fazerCadastro()">
           <span id="btn-text">Criar conta e começar →</span>
         </button>
-        <div class="terms">
-          Ao criar sua conta você concorda com os <a href="#">Termos de Uso</a><br>e a <a href="#">Política de Privacidade</a>
-        </div>
-        <div style="text-align:center;margin-top:16px;font-size:13px;color:#9AABB8">
-          Já tem conta? <a href="login.html" style="color:#2D7DD2;text-decoration:none">Entrar</a>
-        </div>
+        <p style="font-size:12px;color:var(--text-3);text-align:center;margin-top:12px;line-height:1.6">
+          Ao criar sua conta você concorda com os <a href="#" style="color:var(--blue)">Termos de Uso</a><br>
+          Já tem conta? <a href="login.html" style="color:var(--blue)">Entrar</a>
+        </p>
       </div>
 
-      <!-- Estado: sucesso -->
-      <div id="success-state" style="display:none">
-        <div class="success-msg">
-          <div class="success-icon"><i class="ti ti-check"></i></div>
-          <div style="font-size:20px;font-weight:700;margin-bottom:8px">Conta criada!</div>
-          <div style="font-size:13.5px;color:#5A6A7A;line-height:1.6;margin-bottom:24px">
-            Seu consultório foi configurado.<br>
-            Seu trial de 14 dias começa agora.
-          </div>
-          <a href="index.html" class="btn btn-primary" style="padding:11px 28px">
-            <i class="ti ti-layout-dashboard"></i> Ir para o painel
-          </a>
-        </div>
+      <div class="success-state" id="success-state">
+        <div class="success-icon"><i class="ti ti-check"></i></div>
+        <h2 style="margin-bottom:8px">Conta criada! 🎉</h2>
+        <p style="color:var(--text-2);margin-bottom:24px">Seu consultório foi configurado. O trial de 14 dias começa agora.</p>
+        <a href="index.html" class="btn btn-primary" style="padding:12px 28px;font-size:15px"><i class="ti ti-layout-dashboard"></i> Ir para o painel</a>
       </div>
-
     </div>
   </div>
 </div>
 
-<script type="module">
-import { cadastrar } from "./js/auth.js";
-import { PLANOS }   from "./js/tenant.js";
-import { auth } from "./js/firebase.js";
+<script>
+// ── Nav scroll ────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+});
 
-let planoSelecionado = "pro";
+// ── Reveal on scroll ─────────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-window.showView = function(v) {
-  document.querySelectorAll(".view").forEach(el => el.classList.remove("active"));
-  document.getElementById("view-" + v).classList.add("active");
-  window.scrollTo(0, 0);
+
+
+// ── FAQ ────────────────────────────────────────────────────────
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ── Cadastro modal ────────────────────────────────────────────
+const PLANOS = {
+  starter: { nome: 'Starter', preco: 'R$ 89/mês' },
+  pro:     { nome: 'Pro',     preco: 'R$ 179/mês' },
+  clinica: { nome: 'Clínica', preco: 'R$ 349/mês' }
 };
+let planoSelecionado = 'pro';
 
-window.iniciarCadastro = function(plano) {
+window.abrirCadastro = function(plano) {
   planoSelecionado = plano;
   const p = PLANOS[plano];
-  document.getElementById("plan-nome").textContent  = p.nome;
-  document.getElementById("plan-preco").textContent = `R$ ${p.preco}/mês`;
-  showView("cadastro");
+  document.getElementById('plan-nome').textContent  = p.nome;
+  document.getElementById('plan-preco').textContent = p.preco;
+  document.getElementById('form-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
 };
 
+window.fecharCadastro = function() {
+  document.getElementById('form-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+};
+</script>
+
+<script type="module">
+import { cadastrar } from './js/auth.js';
+import { PLANOS }   from './js/tenant.js';
+
 window.fazerCadastro = async function() {
-  const nomeClinica       = document.getElementById("nome-clinica").value.trim();
-  const nomeProprietario  = document.getElementById("nome-proprietario").value.trim();
-  const telefone          = document.getElementById("telefone").value.trim();
-  const email             = document.getElementById("email").value.trim();
-  const senha             = document.getElementById("senha").value;
-  const senha2            = document.getElementById("senha2").value;
-  const btn               = document.getElementById("btn-cadastrar");
-  const txt               = document.getElementById("btn-text");
-  const err               = document.getElementById("error-msg");
+  const nomeClinica  = document.getElementById('f-clinica').value.trim();
+  const nome         = document.getElementById('f-nome').value.trim();
+  const telefone     = document.getElementById('f-tel').value.trim();
+  const email        = document.getElementById('f-email').value.trim();
+  const senha        = document.getElementById('f-senha').value;
+  const senha2       = document.getElementById('f-senha2').value;
+  const btn          = document.getElementById('btn-cadastrar');
+  const txt          = document.getElementById('btn-text');
+  const err          = document.getElementById('error-msg');
 
-  err.style.display = "none";
+  err.style.display = 'none';
 
-  if (!nomeClinica || !nomeProprietario || !email || !senha) {
-    err.textContent = "Preencha todos os campos obrigatórios.";
-    err.style.display = "block"; return;
+  if (!nomeClinica || !nome || !email || !senha) {
+    err.textContent = 'Preencha todos os campos obrigatórios.';
+    err.style.display = 'block'; return;
   }
   if (senha.length < 8) {
-    err.textContent = "A senha deve ter no mínimo 8 caracteres.";
-    err.style.display = "block"; return;
+    err.textContent = 'A senha deve ter no mínimo 8 caracteres.';
+    err.style.display = 'block'; return;
   }
   if (senha !== senha2) {
-    err.textContent = "As senhas não coincidem.";
-    err.style.display = "block"; return;
+    err.textContent = 'As senhas não coincidem.';
+    err.style.display = 'block'; return;
   }
 
   btn.disabled = true;
   txt.innerHTML = '<span class="spinner"></span> Criando sua conta...';
 
   try {
-    await cadastrar({ email, senha, nome: nomeProprietario, nomeClinica, telefone, plano: planoSelecionado });
-    document.getElementById("form-state").style.display    = "none";
-    document.getElementById("success-state").style.display = "block";
+    await cadastrar({ email, senha, nome, nomeClinica, telefone, plano: planoSelecionado });
+    document.getElementById('form-state').style.display   = 'none';
+    document.getElementById('success-state').style.display = 'block';
   } catch(e) {
     const msgs = {
-      "auth/email-already-in-use": "Este e-mail já está cadastrado.",
-      "auth/invalid-email":         "E-mail inválido.",
-      "auth/weak-password":         "Senha muito fraca. Use ao menos 8 caracteres."
+      'auth/email-already-in-use': 'Este e-mail já está cadastrado.',
+      'auth/invalid-email':         'E-mail inválido.',
+      'auth/weak-password':         'Senha muito fraca. Use ao menos 8 caracteres.',
+      'auth/network-request-failed':'Erro de conexão. Verifique sua internet.'
     };
-    err.textContent    = msgs[e.code] || e.message || "Erro ao criar conta. Tente novamente."; console.error("Erro cadastro:", e);
-    err.style.display  = "block";
-    btn.disabled       = false;
-    txt.textContent    = "Criar conta e começar →";
+    err.textContent   = msgs[e.code] || e.message || 'Erro ao criar conta. Tente novamente.';
+    err.style.display = 'block';
+    btn.disabled      = false;
+    txt.textContent   = 'Criar conta e começar →';
   }
 };
 </script>
