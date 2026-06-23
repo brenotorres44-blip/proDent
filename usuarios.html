@@ -311,7 +311,7 @@ import { auth, db }         from './js/firebase.js';
 import { requireAuth, logout } from './js/auth.js';
 import { carregarTenant, PLANOS, getClinicaIdSessao } from './js/tenant.js';
 import {
-  collection, getDocs, doc, getDoc, setDoc, deleteDoc, serverTimestamp
+  collection, getDocs, doc, getDoc, setDoc, deleteDoc, serverTimestamp, query, where, getCountFromServer
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 import {
   createUserWithEmailAndPassword
