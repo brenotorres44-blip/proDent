@@ -3,797 +3,868 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DentalPro — Gestão de Consultório</title>
+<title>DentalPro — Prontuário</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.3.0/dist/tabler-icons.min.css">
 <style>
-:root{--bg:#F7F8FA;--surface:#fff;--sidebar-bg:#0F1923;--sidebar-active:#1A2B3C;--sidebar-text:#8DA0B3;--accent:#2D7DD2;--accent-light:#EBF3FC;--accent-dark:#1A5FA8;--text:#0F1923;--text-2:#5A6A7A;--text-3:#9AABB8;--border:#E4E9EE;--success:#1A9E75;--success-bg:#E6F7F2;--danger:#D94040;--danger-bg:#FDEAEA;--warning:#D98B1A;--warning-bg:#FDF4E6;--radius:10px;--radius-sm:6px;--shadow:0 1px 3px rgba(0,0,0,.06);}
+:root{
+  --bg:#F7F8FA;--surface:#fff;--border:#E4E9EE;
+  --text:#0F1923;--text-2:#5A6A7A;--text-3:#9AABB8;
+  --accent:#2D7DD2;--accent-light:#EBF3FC;--accent-dark:#1A5FA8;
+  --success:#1A9E75;--success-bg:#E6F7F2;
+  --danger:#D94040;--danger-bg:#FDEAEA;
+  --warning:#D98B1A;--warning-bg:#FDF4E6;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.06);
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;display:flex;height:100vh;overflow:hidden}
-.sidebar{width:220px;min-width:220px;background:var(--sidebar-bg);display:flex;flex-direction:column;overflow:hidden}
-.sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:10px}
-.logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
-.logo-text{color:#fff;font-size:15px;font-weight:600}
-.logo-sub{color:var(--sidebar-text);font-size:11px;margin-top:1px}
-.sidebar-nav{flex:1;padding:12px 0;overflow-y:auto}
-.nav-section{padding:14px 20px 6px;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.25)}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;color:var(--sidebar-text);cursor:pointer;font-size:13.5px;transition:all .15s;position:relative}
-.nav-item:hover{color:#fff;background:rgba(255,255,255,.04)}
-.nav-item.active{color:#fff;background:var(--sidebar-active)}
-.nav-item.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);border-radius:0 2px 2px 0}
-.nav-item i{font-size:17px;width:20px}
-.nav-badge{margin-left:auto;background:var(--accent);color:#fff;font-size:10px;padding:1px 6px;border-radius:20px;font-weight:600}
-.sidebar-user{padding:14px 20px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:10px;cursor:pointer}
-.sidebar-user:hover{background:rgba(255,255,255,.04)}
-.user-avatar{width:32px;height:32px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600;flex-shrink:0}
-.user-name{color:#fff;font-size:12.5px;font-weight:500}
-.user-role{color:var(--sidebar-text);font-size:11px}
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px;height:58px;display:flex;align-items:center;gap:16px}
-.topbar-title{font-size:16px;font-weight:600}
-.topbar-sub{font-size:13px;color:var(--text-2);margin-top:1px}
-.topbar-spacer{flex:1}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s}
-.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-dark)}
-.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border)}.btn-ghost:hover{background:var(--bg)}
-.btn-sm{padding:5px 10px;font-size:12px}
-.content{flex:1;overflow-y:auto;padding:24px 28px}
-.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
-.stat-label{font-size:12px;color:var(--text-2);font-weight:500}
-.stat-value{font-size:26px;font-weight:700;margin:6px 0 4px;letter-spacing:-.5px}
-.stat-delta{font-size:12px;color:var(--success);font-weight:500}
-.stat-delta.down{color:var(--danger)}
-.stat-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
-.card-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
-.card-title{font-size:14px;font-weight:600}
-.card-title-sub{font-size:12px;color:var(--text-2)}
-.search-input{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 12px;font-size:13px;margin-left:auto}
-.search-input input{border:none;background:transparent;outline:none;font-size:13px;color:var(--text);width:180px}
-.search-input i{color:var(--text-3)}
-table{width:100%;border-collapse:collapse}
-th{padding:10px 16px;text-align:left;font-size:11.5px;font-weight:600;color:var(--text-2);letter-spacing:.4px;text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--bg)}
-td{padding:12px 16px;font-size:13.5px;border-bottom:1px solid var(--border)}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:#FAFBFD}
-.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:280px 1fr;gap:20px;padding:20px;max-width:1400px;margin:0 auto}
+
+/* SIDEBAR PACIENTE */
+.patient-sidebar{display:flex;flex-direction:column;gap:16px}
+.patient-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.back-btn{display:flex;align-items:center;gap:6px;color:var(--text-2);font-size:13px;cursor:pointer;border:none;background:none;padding:0;margin-bottom:16px}
+.back-btn:hover{color:var(--text)}
+.patient-avatar{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;margin:0 auto 12px}
+.patient-name{font-size:16px;font-weight:700;text-align:center;margin-bottom:4px}
+.patient-sub{font-size:12.5px;color:var(--text-2);text-align:center;margin-bottom:16px}
+.patient-info{border-top:1px solid var(--border);padding-top:14px;display:flex;flex-direction:column;gap:10px}
+.info-row{display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.info-label{color:var(--text-2);font-size:12px}
+.info-value{font-weight:500}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11.5px;font-weight:600}
 .badge-success{background:var(--success-bg);color:#0D7D5C}
-.badge-danger{background:var(--danger-bg);color:#B83232}
-.badge-warning{background:var(--warning-bg);color:#A86A0D}
-.badge-info{background:var(--accent-light);color:#1A5FA8}
-.badge-gray{background:#EEF0F4;color:#5A6A7A}
-.avatar{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;margin-right:8px;flex-shrink:0}
-.patient-cell{display:flex;align-items:center}
-.agenda-grid{display:grid;grid-template-columns:1fr 300px;gap:20px}
-.cal-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border)}
-.cal-nav{display:flex;gap:4px}
-.cal-nav button{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:5px 8px;cursor:pointer;color:var(--text-2)}
-.cal-month{font-size:14px;font-weight:600}
-.week-grid{display:grid;grid-template-columns:60px repeat(7,1fr)}
-.week-day-header{padding:10px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--text-2);border-bottom:1px solid var(--border)}
-.week-day-num{font-size:18px;font-weight:700;color:var(--text);margin-bottom:2px}
-.week-day-num.today{color:var(--accent)}
-.time-label{font-size:11px;color:var(--text-3);text-align:right;padding-right:10px;padding-top:8px}
-.week-cell{border-left:1px solid var(--border);border-bottom:1px solid #F0F2F5;min-height:44px;padding:4px;position:relative}
-.appt-block{background:var(--accent-light);border-left:3px solid var(--accent);border-radius:4px;padding:4px 7px;font-size:11px;color:var(--accent-dark);font-weight:500;margin-bottom:2px;cursor:pointer}
-.appt-block.green{background:var(--success-bg);border-color:var(--success);color:#0D7D5C}
-.appt-block.amber{background:var(--warning-bg);border-color:var(--warning);color:#A86A0D}
+.badge-info{background:var(--accent-light);color:var(--accent-dark)}
+
+/* TABS */
+.main-area{display:flex;flex-direction:column;gap:0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);border-radius:var(--radius) var(--radius) 0 0;overflow:hidden}
+.tab{padding:13px 18px;font-size:13px;font-weight:500;cursor:pointer;color:var(--text-2);border-bottom:2px solid transparent;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:all .15s}
+.tab:hover{color:var(--text);background:var(--bg)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--surface)}
+.tab-panel{display:none;padding:20px}
+.tab-panel.active{display:block}
+
+/* ODONTOGRAMA */
+.odonto-wrap{overflow-x:auto;padding-bottom:8px}
+.odonto-section{margin-bottom:24px}
+.odonto-label{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text-3);margin-bottom:10px;padding-left:4px}
+.odonto-row{display:flex;gap:4px;justify-content:center;flex-wrap:wrap}
+.tooth{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px;border-radius:6px;transition:background .15s;min-width:36px}
+.tooth:hover{background:var(--bg)}
+.tooth-num{font-size:10px;color:var(--text-3);font-weight:600;height:14px;display:flex;align-items:center}
+.tooth-svg{width:28px;height:32px}
+.tooth-label{font-size:9px;color:var(--text-3);text-align:center;line-height:1.2;min-height:20px;display:flex;align-items:center;justify-content:center}
+
+/* Cores dos dentes */
+.tooth-normal   .face{fill:#fff;stroke:#CBD4DC;stroke-width:1.5}
+.tooth-carie    .face{fill:#D94040;stroke:#B83232;stroke-width:1.5}
+.tooth-restaurado .face{fill:#2D7DD2;stroke:#1A5FA8;stroke-width:1.5}
+.tooth-extraido .face{fill:#5A6A7A;stroke:#3D4D5C;stroke-width:1.5}
+.tooth-protese  .face{fill:#7C3AED;stroke:#5B21B6;stroke-width:1.5}
+.tooth-canal    .face{fill:#D98B1A;stroke:#B06A0D;stroke-width:1.5}
+.tooth-implante .face{fill:#1A9E75;stroke:#0D7D5C;stroke-width:1.5}
+.tooth-ausente  .face{fill:#F0F2F5;stroke:#CBD4DC;stroke-width:1;stroke-dasharray:3 2}
+
+.tooth-leite .tooth-svg{width:22px;height:26px}
+
+/* LEGENDA */
+.legenda{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--text-2);cursor:pointer;padding:3px 8px;border-radius:5px;border:1.5px solid transparent;transition:all .15s}
+.leg-item:hover{background:var(--bg)}
+.leg-item.selected{border-color:var(--accent);background:var(--accent-light)}
+.leg-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+
+/* MODAL DENTE */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,25,35,.5);z-index:1000;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
-.modal{background:var(--surface);border-radius:14px;padding:28px;width:480px;max-width:95vw;box-shadow:0 4px 12px rgba(0,0,0,.08)}
-.modal-title{font-size:16px;font-weight:700;margin-bottom:20px}
-.form-group{margin-bottom:16px}
-.form-label{font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:6px;display:block}
-.form-input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13.5px;outline:none;background:var(--surface);color:var(--text);transition:border-color .15s}
+.modal{background:var(--surface);border-radius:14px;padding:28px;width:420px;max-width:95vw;box-shadow:0 8px 32px rgba(0,0,0,.12)}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:6px}
+.modal-sub{font-size:13px;color:var(--text-2);margin-bottom:20px}
+.cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.cond-btn{padding:10px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:500;transition:all .15s}
+.cond-btn:hover{border-color:var(--accent);background:var(--accent-light)}
+.cond-btn.selected{border-color:var(--accent);background:var(--accent-light);color:var(--accent-dark)}
+.cond-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.form-group{margin-bottom:14px}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:5px}
+.form-input{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:7px;font-size:13.5px;outline:none;color:var(--text)}
 .form-input:focus{border-color:var(--accent)}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px}
-.mini-cal{padding:16px}
-.mini-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.mini-cal-title{font-size:13px;font-weight:600}
-.mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
-.mini-cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;border-radius:50%;cursor:pointer;color:var(--text-2);position:relative}
-.mini-cal-day:hover{background:var(--bg)}
-.mini-cal-day.today{background:var(--accent);color:#fff;font-weight:600}
-.mini-cal-weekday{font-size:10px;font-weight:600;color:var(--text-3);text-align:center;padding:4px 0;text-transform:uppercase}
-.upcoming-list{padding:0 16px 16px}
-.upcoming-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
-.upcoming-item:last-child{border-bottom:none}
-.upcoming-time{font-size:12px;font-weight:600;color:var(--accent);min-width:40px}
-.upcoming-name{font-size:13px;font-weight:500}
-.upcoming-proc{font-size:11.5px;color:var(--text-2)}
-.page{display:none}
-.page.active{display:block}
-.tag{display:inline-flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:2px 10px;font-size:12px;color:var(--text-2)}
-.action-btn{background:transparent;border:none;padding:4px 6px;border-radius:4px;cursor:pointer;color:var(--text-3);font-size:16px}
-.action-btn:hover{background:var(--bg);color:var(--text-2)}
-.progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
-.progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .3s}
-.empty-row td{text-align:center;padding:32px;color:var(--text-3)}
-@media(max-width:900px){
-  .sidebar{width:60px;min-width:60px}
-  .logo-text,.logo-sub,.nav-section,.nav-item span,.user-name,.user-role,.nav-badge{display:none}
-  .nav-item{justify-content:center;padding:12px}
-  .stat-grid{grid-template-columns:repeat(2,1fr)}
-  .agenda-grid{grid-template-columns:1fr}
-  .form-row{grid-template-columns:1fr}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-dark)}
+.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--bg)}
+.btn-danger-sm{background:var(--danger-bg);color:var(--danger);border:1px solid #f9c4c4;padding:5px 10px;font-size:12px}
+
+/* HISTÓRICO ODONTOGRAMA */
+.odonto-log{margin-top:16px;border-top:1px solid var(--border);padding-top:16px}
+.log-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #F5F7FA}
+.log-item:last-child{border-bottom:none}
+.log-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.log-text{font-size:13px;flex:1}
+.log-date{font-size:11.5px;color:var(--text-3)}
+
+/* ANEXOS */
+.upload-area{border:2px dashed var(--border);border-radius:10px;padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg)}
+.upload-area:hover,.upload-area.drag{border-color:var(--accent);background:var(--accent-light)}
+.upload-area i{font-size:36px;color:var(--text-3);display:block;margin-bottom:10px}
+.upload-area p{font-size:13.5px;color:var(--text-2)}
+.upload-area span{font-size:12px;color:var(--text-3)}
+.upload-progress{margin-top:12px;display:none}
+.progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .2s}
+
+.files-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:16px}
+.file-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;transition:all .15s}
+.file-card:hover{border-color:var(--accent);background:var(--accent-light)}
+.file-icon{font-size:32px;color:var(--accent)}
+.file-icon.pdf{color:#D94040}
+.file-icon.img{color:#1A9E75}
+.file-icon.doc{color:#2D7DD2}
+.file-name{font-size:12px;font-weight:500;text-align:center;word-break:break-all;line-height:1.4;max-height:36px;overflow:hidden}
+.file-size{font-size:11px;color:var(--text-3)}
+.file-actions{display:flex;gap:6px;margin-top:4px}
+.file-btn{background:transparent;border:1px solid var(--border);border-radius:5px;padding:4px 8px;font-size:12px;cursor:pointer;color:var(--text-2);display:flex;align-items:center;gap:4px}
+.file-btn:hover{background:var(--surface);color:var(--text)}
+.file-btn.del:hover{background:var(--danger-bg);color:var(--danger);border-color:#f9c4c4}
+.file-thumb{width:100%;height:80px;object-fit:cover;border-radius:6px}
+
+/* PRONTUÁRIO TEXTO */
+.evolucao-list{display:flex;flex-direction:column;gap:12px}
+.evolucao-item{background:var(--bg);border-radius:8px;padding:14px 16px;border-left:3px solid var(--accent)}
+.evolucao-data{font-size:11.5px;color:var(--text-3);margin-bottom:4px}
+.evolucao-texto{font-size:13.5px;line-height:1.6}
+.nova-evolucao{margin-bottom:16px}
+textarea.form-input{resize:vertical;min-height:80px;font-family:inherit}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .layout{grid-template-columns:1fr}
+  .cond-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<aside class="sidebar">
-  <div class="sidebar-logo">
-    <div class="logo-icon"><i class="ti ti-tooth"></i></div>
-    <div><div class="logo-text">DentalPro</div><div class="logo-sub">Gestão Odontológica</div></div>
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="patient-sidebar">
+    <div class="patient-card">
+      <button class="back-btn" onclick="history.back()">
+        <i class="ti ti-arrow-left"></i> Voltar
+      </button>
+      <div class="patient-avatar" id="p-avatar" style="background:#2D7DD2">AM</div>
+      <div class="patient-name" id="p-nome">Ana Mendes</div>
+      <div class="patient-sub" id="p-sub">38 anos • F</div>
+      <div class="patient-info">
+        <div class="info-row">
+          <span class="info-label">CPF</span>
+          <span class="info-value" id="p-cpf">111.222.333-44</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Telefone</span>
+          <span class="info-value" id="p-tel">(11) 98765-4321</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Convênio</span>
+          <span class="info-value" id="p-conv">Unimed</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Status</span>
+          <span class="badge badge-success">Ativo</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Alergias</span>
+          <span class="info-value" id="p-alerg" style="color:var(--danger);font-size:12px">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESUMO -->
+    <div class="patient-card">
+      <div style="font-size:12px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Resumo</div>
+      <div class="info-row" style="margin-bottom:8px">
+        <span class="info-label">Consultas</span>
+        <span class="badge badge-info" id="r-consultas">12</span>
+      </div>
+      <div class="info-row" style="margin-bottom:8px">
+        <span class="info-label">Procedimentos</span>
+        <span class="badge badge-info" id="r-procs">8</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Anexos</span>
+        <span class="badge badge-info" id="r-anexos">3</span>
+      </div>
+    </div>
   </div>
-  <nav class="sidebar-nav">
-    <div class="nav-section">Principal</div>
-    <div class="nav-item active" onclick="showPage('dashboard')"><i class="ti ti-layout-dashboard"></i><span>Dashboard</span></div>
-    <div class="nav-item" onclick="showPage('agenda')"><i class="ti ti-calendar"></i><span>Agenda</span></div>
-    <div class="nav-section">Clínica</div>
-    <div class="nav-item" onclick="showPage('pacientes')"><i class="ti ti-users"></i><span>Pacientes</span></div>
-    <div class="nav-item" onclick="showPage('procedimentos')"><i class="ti ti-clipboard-list"></i><span>Procedimentos</span></div>
-    <div class="nav-section">Configurações</div>
-    <div class="nav-item" onclick="window.location.href='usuarios.html'"><i class="ti ti-user-cog"></i><span>Usuários</span></div>
-    <div class="nav-section">Financeiro</div>
-    <div class="nav-item" onclick="showPage('receber')"><i class="ti ti-trending-up"></i><span>Contas a Receber</span></div>
-    <div class="nav-item" onclick="showPage('pagar')"><i class="ti ti-trending-down"></i><span>Contas a Pagar</span></div>
-  </nav>
-  <div class="sidebar-user" onclick="fazerLogout()" title="Clique para sair">
-    <div class="user-avatar" id="sidebar-avatar">—</div>
-    <div style="flex:1"><div class="user-name" id="sidebar-nome">Carregando...</div><div class="user-role" id="sidebar-perfil">—</div></div>
-    <i class="ti ti-logout" style="color:#8DA0B3;font-size:16px;flex-shrink:0"></i>
-  </div>
-</aside>
 
-<div class="main">
-  <div class="topbar">
-    <div>
-      <div class="topbar-title" id="topbar-title">Dashboard</div>
-      <div class="topbar-sub" id="topbar-sub">Bem-vindo de volta</div>
-    </div>
-    <div class="topbar-spacer"></div>
-    <button class="btn btn-primary btn-sm" id="topbar-action" onclick="topbarAction()">
-      <i class="ti ti-plus"></i> <span id="topbar-action-label">Novo Agendamento</span>
-    </button>
-  </div>
+  <!-- MAIN -->
+  <div class="main-area">
+    <div class="card">
+      <div class="tabs">
+        <div class="tab active" onclick="showTab('odontograma')"><i class="ti ti-tooth"></i> Odontograma</div>
+        <div class="tab" onclick="showTab('evolucao')"><i class="ti ti-notes"></i> Evolução Clínica</div>
+        <div class="tab" onclick="showTab('anexos')"><i class="ti ti-paperclip"></i> Anexos <span id="anexos-count" style="background:var(--accent);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:2px">0</span></div>
+        <div class="tab" onclick="showTab('historico')"><i class="ti ti-history"></i> Histórico</div>
+      </div>
 
-  <div class="content">
+      <!-- ODONTOGRAMA -->
+      <div id="tab-odontograma" class="tab-panel active">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div>
+            <div style="font-size:15px;font-weight:700">Odontograma</div>
+            <div style="font-size:12.5px;color:var(--text-2)">Clique em um dente para registrar condição</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="salvarOdontograma()" style="padding:7px 14px;font-size:13px">
+            <i class="ti ti-device-floppy"></i> Salvar
+          </button>
+        </div>
 
-    <!-- DASHBOARD -->
-    <div id="page-dashboard" class="page active">
-      <div class="stat-grid">
-        <div class="stat-card">
-          <div class="stat-icon" style="background:#EBF3FC;color:var(--accent)"><i class="ti ti-calendar-check"></i></div>
-          <div class="stat-label">Consultas Hoje</div>
-          <div class="stat-value" id="stat-consultas">—</div>
-          <div class="stat-delta" id="stat-consultas-delta">carregando...</div>
+        <div class="odonto-wrap">
+          <!-- ADULTO SUPERIOR -->
+          <div class="odonto-section">
+            <div class="odonto-label">Adulto — Superior</div>
+            <div class="odonto-row" id="row-adulto-sup"></div>
+          </div>
+          <!-- ADULTO INFERIOR -->
+          <div class="odonto-section">
+            <div class="odonto-label">Adulto — Inferior</div>
+            <div class="odonto-row" id="row-adulto-inf"></div>
+          </div>
+
+          <div style="border-top:2px dashed var(--border);margin:20px 0;position:relative">
+            <span style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--surface);padding:0 12px;font-size:11px;color:var(--text-3);font-weight:600">DENTIÇÃO INFANTIL (DECÍDUA)</span>
+          </div>
+
+          <!-- INFANTIL SUPERIOR -->
+          <div class="odonto-section">
+            <div class="odonto-label">Infantil — Superior</div>
+            <div class="odonto-row" id="row-inf-sup"></div>
+          </div>
+          <!-- INFANTIL INFERIOR -->
+          <div class="odonto-section">
+            <div class="odonto-label">Infantil — Inferior</div>
+            <div class="odonto-row" id="row-inf-inf"></div>
+          </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="background:var(--success-bg);color:var(--success)"><i class="ti ti-currency-dollar"></i></div>
-          <div class="stat-label">Receita do Mês</div>
-          <div class="stat-value" id="stat-receita">R$ 0</div>
-          <div class="stat-delta">este mês</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="background:var(--warning-bg);color:var(--warning)"><i class="ti ti-clock-exclamation"></i></div>
-          <div class="stat-label">A Receber</div>
-          <div class="stat-value" id="stat-receber-val">R$ 0</div>
-          <div class="stat-delta down" id="stat-receber-delta">carregando...</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="background:#F3EDFC;color:#7C3AED"><i class="ti ti-users"></i></div>
-          <div class="stat-label">Pacientes Ativos</div>
-          <div class="stat-value" id="stat-pacientes">—</div>
-          <div class="stat-delta" id="stat-pacientes-delta">carregando...</div>
+
+        <!-- LEGENDA -->
+        <div class="legenda" id="legenda"></div>
+
+        <!-- LOG -->
+        <div class="odonto-log" id="odonto-log" style="display:none">
+          <div style="font-size:13px;font-weight:600;margin-bottom:10px">Histórico de alterações</div>
+          <div id="log-list"></div>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 340px;gap:20px">
-        <div class="card">
-          <div class="card-header">
-            <div><div class="card-title">Consultas de Hoje</div><div class="card-title-sub" id="data-hoje"></div></div>
-            <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="showPage('agenda')">Ver agenda completa</button>
+
+      <!-- EVOLUÇÃO CLÍNICA -->
+      <div id="tab-evolucao" class="tab-panel">
+        <div class="nova-evolucao">
+          <div style="font-size:14px;font-weight:600;margin-bottom:12px">Nova evolução</div>
+          <div class="form-group">
+            <label class="form-label">Anotação clínica</label>
+            <textarea class="form-input" id="nova-evolucao-txt" placeholder="Descreva o atendimento, observações clínicas, orientações ao paciente..."></textarea>
           </div>
-          <table>
-            <thead><tr><th>Horário</th><th>Paciente</th><th>Procedimento</th><th>Status</th><th></th></tr></thead>
-            <tbody id="consultas-hoje-tbody"><tr class="empty-row"><td colspan="5"><i class="ti ti-loader" style="font-size:20px;display:block;margin-bottom:8px"></i>Carregando...</td></tr></tbody>
-          </table>
+          <button class="btn btn-primary" onclick="salvarEvolucao()" style="font-size:13px;padding:8px 16px">
+            <i class="ti ti-plus"></i> Registrar
+          </button>
         </div>
-        <div style="display:flex;flex-direction:column;gap:20px">
-          <div class="card">
-            <div class="card-header"><div class="card-title">Alertas Financeiros</div></div>
-            <div id="alertas-financeiros" style="padding:12px 16px"><div style="text-align:center;padding:20px;color:var(--text-3);font-size:13px">Carregando...</div></div>
-          </div>
-          <div class="card">
-            <div class="card-header"><div class="card-title">Próximas Contas a Pagar</div></div>
-            <div id="proximas-contas" style="padding:0 16px 8px"><div style="text-align:center;padding:20px;color:var(--text-3);font-size:13px">Carregando...</div></div>
+        <div class="evolucao-list" id="evolucao-list">
+          <div style="text-align:center;padding:32px;color:var(--text-3)">
+            <i class="ti ti-notes" style="font-size:32px;display:block;margin-bottom:8px"></i>
+            Nenhuma evolução registrada
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- AGENDA -->
-    <div id="page-agenda" class="page">
-      <div class="agenda-grid">
-        <div class="card">
-          <div class="cal-header">
-            <div class="cal-nav">
-              <button onclick="changeWeek(-1)"><i class="ti ti-chevron-left"></i></button>
-              <button onclick="changeWeek(1)"><i class="ti ti-chevron-right"></i></button>
-            </div>
-            <span class="cal-month" id="cal-month-label"></span>
-            <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="goToday()">Hoje</button>
+      <!-- ANEXOS -->
+      <div id="tab-anexos" class="tab-panel">
+        <div class="upload-area" id="upload-area"
+          onclick="document.getElementById('file-input').click()"
+          ondragover="dragOver(event)"
+          ondragleave="dragLeave(event)"
+          ondrop="dropFile(event)">
+          <i class="ti ti-cloud-upload"></i>
+          <p><b>Clique para selecionar</b> ou arraste arquivos aqui</p>
+          <span>PDF, imagens, raio-x, documentos — qualquer formato</span>
+          <input type="file" id="file-input" multiple style="display:none" onchange="handleFiles(this.files)">
+        </div>
+
+        <div class="upload-progress" id="upload-progress">
+          <div style="font-size:13px;color:var(--text-2)" id="upload-status">Enviando...</div>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+        </div>
+
+        <div class="files-grid" id="files-grid">
+          <div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text-3)">
+            <i class="ti ti-paperclip" style="font-size:28px;display:block;margin-bottom:8px"></i>
+            Nenhum arquivo anexado
           </div>
-          <div style="overflow-x:auto">
-            <div class="week-grid" id="week-grid" style="min-width:500px"></div>
-          </div>
-        </div>
-        <div>
-          <div class="card" style="margin-bottom:20px"><div class="mini-cal" id="mini-cal"></div></div>
-          <div class="card">
-            <div class="card-header"><div class="card-title">Consultas de Hoje</div></div>
-            <div class="upcoming-list" id="upcoming-list"><div style="text-align:center;padding:20px;color:var(--text-3);font-size:13px">Carregando...</div></div>
-          </div>
         </div>
       </div>
-    </div>
 
-    <!-- PACIENTES -->
-    <div id="page-pacientes" class="page">
-      <div class="card">
-        <div class="card-header">
-          <div><div class="card-title">Pacientes</div><div class="card-title-sub" id="pacientes-count">Carregando...</div></div>
-          <div class="search-input"><i class="ti ti-search"></i><input type="text" placeholder="Buscar por nome..." oninput="filterPatients(this.value)"></div>
+      <!-- HISTÓRICO -->
+      <div id="tab-historico" class="tab-panel">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div style="font-size:14px;font-weight:600">Histórico de Procedimentos</div>
+          <button class="btn btn-primary btn-sm" onclick="abrirModalProcedimento()" style="padding:7px 14px;font-size:13px">
+            <i class="ti ti-plus"></i> Novo procedimento
+          </button>
         </div>
-        <table>
-          <thead><tr><th>Paciente</th><th>Idade</th><th>Telefone</th><th>Convênio</th><th>Última consulta</th><th>Status</th><th></th></tr></thead>
-          <tbody id="patients-tbody"><tr class="empty-row"><td colspan="7">Carregando...</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- PROCEDIMENTOS -->
-    <div id="page-procedimentos" class="page">
-      <div class="card">
-        <div class="card-header">
-          <div><div class="card-title">Histórico de Procedimentos</div><div class="card-title-sub" id="procs-count">Carregando...</div></div>
-          <div class="search-input"><i class="ti ti-search"></i><input type="text" placeholder="Buscar..."></div>
+        <div id="historico-list">
+          <div style="text-align:center;padding:32px;color:var(--text-3)">Carregando...</div>
         </div>
-        <table>
-          <thead><tr><th>Data</th><th>Paciente</th><th>Procedimento</th><th>Dente(s)</th><th>Valor</th><th>Situação</th><th></th></tr></thead>
-          <tbody id="procs-tbody"><tr class="empty-row"><td colspan="7">Carregando...</td></tr></tbody>
-        </table>
       </div>
-    </div>
 
-    <!-- CONTAS A RECEBER -->
-    <div id="page-receber" class="page">
-      <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
-        <div class="stat-card"><div class="stat-icon" style="background:var(--success-bg);color:var(--success)"><i class="ti ti-check"></i></div><div class="stat-label">Recebido no mês</div><div class="stat-value" id="receber-recebido">R$ 0</div></div>
-        <div class="stat-card"><div class="stat-icon" style="background:var(--warning-bg);color:var(--warning)"><i class="ti ti-clock"></i></div><div class="stat-label">A receber</div><div class="stat-value" id="receber-aberto">R$ 0</div></div>
-        <div class="stat-card"><div class="stat-icon" style="background:var(--danger-bg);color:var(--danger)"><i class="ti ti-alert-circle"></i></div><div class="stat-label">Em atraso</div><div class="stat-value" id="receber-atraso">R$ 0</div></div>
-      </div>
-      <div class="card">
-        <div class="card-header"><div class="card-title">Contas a Receber</div></div>
-        <table>
-          <thead><tr><th>Vencimento</th><th>Paciente</th><th>Descrição</th><th>Valor</th><th>Situação</th><th>Ação</th></tr></thead>
-          <tbody id="receber-tbody"><tr class="empty-row"><td colspan="6">Carregando...</td></tr></tbody>
-        </table>
-      </div>
     </div>
-
-    <!-- CONTAS A PAGAR -->
-    <div id="page-pagar" class="page">
-      <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
-        <div class="stat-card"><div class="stat-icon" style="background:var(--danger-bg);color:var(--danger)"><i class="ti ti-trending-down"></i></div><div class="stat-label">Pago no mês</div><div class="stat-value" id="pagar-pago">R$ 0</div></div>
-        <div class="stat-card"><div class="stat-icon" style="background:var(--warning-bg);color:var(--warning)"><i class="ti ti-clock"></i></div><div class="stat-label">A pagar</div><div class="stat-value" id="pagar-aberto">R$ 0</div></div>
-        <div class="stat-card"><div class="stat-icon" style="background:var(--bg);color:var(--text-2)"><i class="ti ti-calculator"></i></div><div class="stat-label">Total previsto</div><div class="stat-value" id="pagar-total">R$ 0</div></div>
-      </div>
-      <div class="card">
-        <div class="card-header"><div class="card-title">Contas a Pagar</div></div>
-        <table>
-          <thead><tr><th>Vencimento</th><th>Fornecedor / Descrição</th><th>Categoria</th><th>Valor</th><th>Situação</th><th>Ação</th></tr></thead>
-          <tbody id="pagar-tbody"><tr class="empty-row"><td colspan="6">Carregando...</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-
   </div>
 </div>
 
-<!-- MODAL AGENDAMENTO -->
-<div class="modal-overlay" id="modal-agenda">
+<!-- MODAL DENTE -->
+<div class="modal-overlay" id="modal-dente">
   <div class="modal">
-    <div class="modal-title">Novo Agendamento</div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Data</label><input type="date" id="ag-data" class="form-input"></div>
-      <div class="form-group"><label class="form-label">Horário</label><input type="time" id="ag-hora" class="form-input" value="09:00"></div>
+    <div class="modal-title" id="modal-dente-titulo">Dente 11</div>
+    <div class="modal-sub">Selecione a condição e adicione observações</div>
+
+    <div class="cond-grid" id="cond-grid"></div>
+
+    <div class="form-group">
+      <label class="form-label">Observações</label>
+      <textarea class="form-input" id="dente-obs" rows="2" placeholder="Ex: cárie na face vestibular..."></textarea>
     </div>
-    <div class="form-group"><label class="form-label">Paciente</label><select id="ag-paciente" class="form-input"><option value="">Selecione...</option></select></div>
-    <div class="form-group"><label class="form-label">Procedimento</label>
-      <select id="ag-proc" class="form-input"><option>Consulta de Rotina</option><option>Restauração</option><option>Extração</option><option>Canal</option><option>Clareamento</option><option>Ortodontia</option><option>Implante</option><option>Periodontia</option></select>
-    </div>
-    <div class="form-group"><label class="form-label">Observações</label><textarea class="form-input" rows="2" placeholder="Observações adicionais..."></textarea></div>
+
     <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('modal-agenda')">Cancelar</button>
-      <button class="btn btn-primary" onclick="salvarAgendamento()"><i class="ti ti-check"></i> Confirmar</button>
+      <button class="btn btn-ghost" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarCondicaoDente()"><i class="ti ti-check"></i> Salvar</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL PACIENTE -->
-<div class="modal-overlay" id="modal-paciente">
+<!-- MODAL PROCEDIMENTO -->
+<div class="modal-overlay" id="modal-proc">
   <div class="modal">
-    <div class="modal-title">Novo Paciente</div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Nome completo</label><input type="text" id="p-nome" class="form-input" placeholder="Nome do paciente"></div>
-      <div class="form-group"><label class="form-label">Data de Nascimento</label><input type="date" id="p-nasc" class="form-input"></div>
+    <div class="modal-title">Novo procedimento</div>
+    <div class="modal-sub">Registre um procedimento individualizado com data</div>
+
+    <div class="form-group">
+      <label class="form-label">Procedimento *</label>
+      <input class="form-input" id="proc-tipo" placeholder="Ex: Restauração em resina, Canal, Extração...">
     </div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">CPF</label><input type="text" id="p-cpf" class="form-input" placeholder="000.000.000-00"></div>
-      <div class="form-group"><label class="form-label">Telefone</label><input type="text" id="p-tel" class="form-input" placeholder="(11) 99999-9999"></div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">E-mail</label><input type="email" id="p-email" class="form-input" placeholder="email@exemplo.com"></div>
-      <div class="form-group"><label class="form-label">Convênio</label>
-        <select id="p-conv" class="form-input"><option value="">Sem convênio</option><option>Unimed</option><option>Bradesco Saúde</option><option>Amil</option><option>SulAmérica</option></select>
+
+    <div style="display:flex;gap:12px">
+      <div class="form-group" style="flex:1">
+        <label class="form-label">Data de realização *</label>
+        <input class="form-input" type="date" id="proc-data">
+      </div>
+      <div class="form-group" style="flex:1">
+        <label class="form-label">Valor (R$)</label>
+        <input class="form-input" type="number" id="proc-valor" min="0" step="0.01" placeholder="0,00">
       </div>
     </div>
-    <div class="form-group"><label class="form-label">Alergias / Observações</label><textarea id="p-alerg" class="form-input" rows="2" placeholder="Alergias a medicamentos..."></textarea></div>
+
+    <div style="display:flex;gap:12px">
+      <div class="form-group" style="flex:1">
+        <label class="form-label">Dentes envolvidos</label>
+        <input class="form-input" id="proc-dentes" placeholder="Ex: 11, 12, 21">
+      </div>
+      <div class="form-group" style="flex:1">
+        <label class="form-label">Status</label>
+        <select class="form-input" id="proc-status">
+          <option value="em_andamento">Em andamento</option>
+          <option value="concluido">Concluído</option>
+          <option value="parcial">Parcial</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Observações</label>
+      <textarea class="form-input" id="proc-obs" rows="2" placeholder="Detalhes do procedimento, materiais, orientações..."></textarea>
+    </div>
+
     <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('modal-paciente')">Cancelar</button>
-      <button class="btn btn-primary" onclick="salvarPaciente()"><i class="ti ti-check"></i> Cadastrar</button>
+      <button class="btn btn-ghost" onclick="fecharModalProcedimento()">Cancelar</button>
+      <button class="btn btn-primary" id="proc-salvar-btn" onclick="salvarProcedimento()"><i class="ti ti-check"></i> Registrar</button>
     </div>
   </div>
 </div>
-
-<!-- MODAL CONTA -->
-<div class="modal-overlay" id="modal-conta">
-  <div class="modal">
-    <div class="modal-title" id="modal-conta-title">Nova Conta</div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Vencimento</label><input type="date" id="c-venc" class="form-input"></div>
-      <div class="form-group"><label class="form-label">Valor (R$)</label><input type="number" id="c-valor" class="form-input" placeholder="0,00"></div>
-    </div>
-    <div class="form-group"><label class="form-label">Descrição</label><input type="text" id="c-desc" class="form-input" placeholder="Descrição..."></div>
-    <div class="form-group"><label class="form-label">Paciente / Fornecedor</label><input type="text" id="c-nome" class="form-input" placeholder="Nome..."></div>
-    <div class="form-group"><label class="form-label">Forma de pagamento</label>
-      <select id="c-forma" class="form-input"><option>Dinheiro</option><option>Pix</option><option>Cartão de débito</option><option>Cartão de crédito</option><option>Parcelado</option></select>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('modal-conta')">Cancelar</button>
-      <button class="btn btn-primary" onclick="salvarConta()"><i class="ti ti-check"></i> Salvar</button>
-    </div>
-  </div>
-</div>
-
-<script>
-// ── Navegação ─────────────────────────────────────────────────
-const pages = {
-  dashboard:     { title:'Dashboard',              sub:'Bem-vindo de volta', action:'modal-agenda',  label:'Novo Agendamento' },
-  agenda:        { title:'Agenda',                 sub:'Visualização semanal', action:'modal-agenda', label:'Novo Agendamento' },
-  pacientes:     { title:'Pacientes',              sub:'Cadastro e fichas',  action:'modal-paciente', label:'Novo Paciente' },
-  procedimentos: { title:'Procedimentos',          sub:'Histórico',          action:null,             label:'' },
-  receber:       { title:'Contas a Receber',       sub:'Controle de receitas', action:'modal-conta', label:'Nova Conta' },
-  pagar:         { title:'Contas a Pagar',         sub:'Controle de despesas', action:'modal-conta', label:'Nova Despesa' },
-};
-
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => { if (n.getAttribute('onclick') === `showPage('${id}')`) n.classList.add('active'); });
-  const cfg = pages[id];
-  document.getElementById('topbar-title').textContent = cfg.title;
-  const sub = document.getElementById('topbar-sub');
-  // Mantém o nome do usuário na saudação do dashboard
-  if (id === 'dashboard') {
-    const nome = document.getElementById('sidebar-nome').textContent;
-    sub.textContent = nome && nome !== 'Carregando...' ? `Bem-vindo de volta, ${nome.split(' ')[0]}` : 'Bem-vindo de volta';
-  } else {
-    sub.textContent = cfg.sub;
-  }
-  document.getElementById('topbar-action-label').textContent = cfg.label;
-  document.getElementById('topbar-action').dataset.modal = cfg.action || '';
-  document.getElementById('topbar-action').style.display = cfg.action ? '' : 'none';
-  if (id === 'receber') document.getElementById('modal-conta-title').textContent = 'Nova Conta a Receber';
-  if (id === 'pagar')   document.getElementById('modal-conta-title').textContent = 'Nova Conta a Pagar';
-  if (id === 'receber') carregarContasReceber();
-  if (id === 'pagar')   carregarContasPagar();
-  if (id === 'procedimentos') carregarProcedimentos();
-}
-
-function topbarAction() {
-  const modal = document.getElementById('topbar-action').dataset.modal;
-  if (modal) document.getElementById(modal).classList.add('open');
-}
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if (e.target===m) m.classList.remove('open'); }));
-
-// ── Calendário semanal ────────────────────────────────────────
-let weekOffset = 0;
-const ptBR_days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-const ptBR_months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-const hours = ['07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
-
-function pad(n) { return n < 10 ? '0'+n : n; }
-function dateStr(d) { return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
-
-function getWeekStart(offset) {
-  const today = new Date();
-  const day = today.getDay();
-  const monday = new Date(today);
-  monday.setDate(today.getDate() - (day===0?6:day-1) + offset*7);
-  monday.setHours(0,0,0,0);
-  return monday;
-}
-
-function renderWeek() {
-  const grid = document.getElementById('week-grid');
-  const monday = getWeekStart(weekOffset);
-  document.getElementById('cal-month-label').textContent = `${ptBR_months[monday.getMonth()]} ${monday.getFullYear()}`;
-  const days = [];
-  for (let i=0;i<7;i++) { const d=new Date(monday); d.setDate(monday.getDate()+i); days.push(d); }
-  let html = '<div style="background:var(--bg)"></div>';
-  days.forEach(d => {
-    const isToday = dateStr(d) === dateStr(new Date());
-    html += `<div class="week-day-header"><div>${ptBR_days[d.getDay()]}</div><div class="week-day-num ${isToday?'today':''}">${d.getDate()}</div></div>`;
-  });
-  hours.forEach(h => {
-    html += `<div class="time-label">${h}</div>`;
-    days.forEach(d => { html += `<div class="week-cell"></div>`; });
-  });
-  grid.innerHTML = html;
-}
-
-function changeWeek(dir) { weekOffset+=dir; renderWeek(); }
-function goToday() { weekOffset=0; renderWeek(); }
-renderWeek();
-
-// Mini cal
-function renderMiniCal() {
-  const hoje = new Date();
-  const ano = hoje.getFullYear(), mes = hoje.getMonth();
-  const firstDay = new Date(ano,mes,1).getDay();
-  const daysInMonth = new Date(ano,mes+1,0).getDate();
-  let html = `<div class="mini-cal-header"><span class="mini-cal-title">${ptBR_months[mes]} ${ano}</span></div><div class="mini-cal-grid">`;
-  ['D','S','T','Q','Q','S','S'].forEach(d => { html += `<div class="mini-cal-weekday">${d}</div>`; });
-  for (let i=0;i<firstDay;i++) html += '<div></div>';
-  for (let d=1;d<=daysInMonth;d++) html += `<div class="mini-cal-day ${d===hoje.getDate()?'today':''}">${d}</div>`;
-  html += '</div>';
-  document.getElementById('mini-cal').innerHTML = html;
-}
-renderMiniCal();
-
-// ── Helpers ───────────────────────────────────────────────────
-const CORES = ['#2D7DD2','#7C3AED','#D94040','#1A9E75','#D98B1A','#534AB7','#0F6E56','#993C1D'];
-function avatarCor(nome) { return CORES[(nome||'A').charCodeAt(0) % CORES.length]; }
-function iniciais(nome) { return (nome||'?').split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase(); }
-function calcIdade(dataNasc) { if(!dataNasc) return '—'; return (new Date().getFullYear()-new Date(dataNasc).getFullYear())+' anos'; }
-function brl(v) { return 'R$ '+(v||0).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0}); }
-
-let todosOsPacientes = [];
-
-window.renderPatients = function(list) {
-  const total = list.length;
-  const el = document.getElementById('pacientes-count');
-  if(el) el.textContent = total+' cadastrado'+(total!==1?'s':'');
-  const elS = document.getElementById('stat-pacientes');
-  if(elS) elS.textContent = total;
-  const elD = document.getElementById('stat-pacientes-delta');
-  if(elD) elD.textContent = total>0 ? 'pacientes ativos' : 'Nenhum cadastrado ainda';
-
-  const tbody = document.getElementById('patients-tbody');
-  tbody.innerHTML = list.length ? list.map(p => `
-    <tr data-id="${p.id}">
-      <td><div class="patient-cell"><div class="avatar" style="background:${avatarCor(p.nome)}">${iniciais(p.nome)}</div>${p.nome}</div></td>
-      <td>${calcIdade(p.dataNasc)}</td>
-      <td>${p.telefone||'—'}</td>
-      <td>${p.convenio||'Particular'}</td>
-      <td>${p.atualizadoEm?.toDate?.()?.toLocaleDateString('pt-BR')||'—'}</td>
-      <td><span class="badge ${p.ativo?'badge-success':'badge-gray'}">${p.ativo?'Ativo':'Inativo'}</span></td>
-      <td>
-        <button class="action-btn" onclick="window.location.href='prontuario.html?id=${p.id}'" title="Ver prontuário"><i class="ti ti-eye"></i></button>
-        <button class="action-btn" title="Editar"><i class="ti ti-edit"></i></button>
-      </td>
-    </tr>`).join('') : '<tr class="empty-row"><td colspan="7"><i class="ti ti-users" style="font-size:28px;display:block;margin-bottom:8px"></i>Nenhum paciente cadastrado ainda</td></tr>';
-};
-
-window.filterPatients = function(q) {
-  window.renderPatients(todosOsPacientes.filter(p=>(p.nome||'').toLowerCase().includes(q.toLowerCase())));
-};
-
-// Data de hoje no dashboard
-const diasSemana = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
-const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-const hoje = new Date();
-const elData = document.getElementById('data-hoje');
-if(elData) elData.textContent = `${diasSemana[hoje.getDay()]}, ${hoje.getDate()} de ${meses[hoje.getMonth()]} de ${hoje.getFullYear()}`;
-</script>
 
 <script type="module">
-import { db, auth }       from './js/firebase.js';
-import { requireAuth, logout } from './js/auth.js';
-import { getClinicaIdSessao }  from './js/tenant.js';
+import { requireAuth }   from "./js/auth.js";
+import { Procedimentos } from "./js/db.js";
+import { uploadAnexo, listarAnexos, excluirAnexo, iconeArquivo, formatarTamanho } from "./js/storage.js";
+import { db }            from "./js/firebase.js";
+import { getClinicaIdSessao } from "./js/tenant.js";
 import {
-  collection, query, where, orderBy, getDocs,
-  addDoc, doc, getDoc, serverTimestamp, Timestamp, limit
-} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+  doc, getDoc, setDoc, collection, addDoc,
+  getDocs, orderBy, query, serverTimestamp, Timestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ── Logout ────────────────────────────────────────────────────
-window.fazerLogout = async function() {
-  if (!confirm('Deseja sair do sistema?')) return;
-  await logout();
-};
+// ── Pega pacienteId da URL ────────────────────────────────────
+const params    = new URLSearchParams(location.search);
+const pacienteId = params.get("id") || "demo";
 
-// ── Inicializa após auth ──────────────────────────────────────
-requireAuth(async ({ user, clinicaId, perfil, tenant }) => {
+// ── Condições do odontograma ──────────────────────────────────
+const CONDICOES = [
+  { id: "normal",    label: "Normal / Sadio",  cor: "#fff",    stroke:"#CBD4DC" },
+  { id: "carie",     label: "Cárie",           cor: "#D94040", stroke:"#B83232" },
+  { id: "restaurado",label: "Restaurado",      cor: "#2D7DD2", stroke:"#1A5FA8" },
+  { id: "canal",     label: "Tratado (Canal)", cor: "#D98B1A", stroke:"#B06A0D" },
+  { id: "protese",   label: "Prótese",         cor: "#7C3AED", stroke:"#5B21B6" },
+  { id: "implante",  label: "Implante",        cor: "#1A9E75", stroke:"#0D7D5C" },
+  { id: "extraido",  label: "Extraído",        cor: "#5A6A7A", stroke:"#3D4D5C" },
+  { id: "ausente",   label: "Ausente/Não erup.",cor:"#F0F2F5", stroke:"#CBD4DC" },
+];
 
-  // Nome do usuário
-  try {
-    const rootSnap = await getDoc(doc(db,'usuarios',user.uid));
-    let nome = (rootSnap.exists()&&rootSnap.data().nome) ? rootSnap.data().nome : null;
-    if (!nome && clinicaId!=='superadmin') {
-      const cSnap = await getDoc(doc(db,'clinica',clinicaId,'usuarios',user.uid));
-      if (cSnap.exists()) nome = cSnap.data().nome;
-    }
-    if (!nome) nome = user.email||'Usuário';
-    const partes = nome.split(' ');
-    const ini = partes.map(p=>p[0]).join('').substring(0,2).toUpperCase();
-    const perfilLabel = {admin:'Administrador',dentista:'Dentista',recepcao:'Recepção',superadmin:'Super Admin'}[perfil]||perfil;
-    document.getElementById('sidebar-avatar').textContent = ini;
-    document.getElementById('sidebar-nome').textContent   = nome;
-    document.getElementById('sidebar-perfil').textContent = perfilLabel;
-    const elSub = document.getElementById('topbar-sub');
-    if (elSub) elSub.textContent = `Bem-vindo de volta, ${partes[0]}`;
-  } catch(e) { document.getElementById('sidebar-nome').textContent = user.email; }
+// ── Numeração FDI ─────────────────────────────────────────────
+const ADULTO_SUP = [18,17,16,15,14,13,12,11, 21,22,23,24,25,26,27,28];
+const ADULTO_INF = [48,47,46,45,44,43,42,41, 31,32,33,34,35,36,37,38];
+const LEITE_SUP  = [55,54,53,52,51, 61,62,63,64,65];
+const LEITE_INF  = [85,84,83,82,81, 71,72,73,74,75];
 
-  // ── Pacientes ─────────────────────────────────────────────
-  try {
-    const qP = query(collection(db,'clinica',clinicaId,'pacientes'),where('ativo','==',true),orderBy('nome'));
-    const sP = await getDocs(qP);
-    window.todosOsPacientes = sP.docs.map(d=>({id:d.id,...d.data()}));
-    window.renderPatients(window.todosOsPacientes);
-    // Popula select de agendamento
-    const sel = document.getElementById('ag-paciente');
-    if(sel) window.todosOsPacientes.forEach(p => { const o=document.createElement('option'); o.value=p.id; o.textContent=p.nome; sel.appendChild(o); });
-  } catch(e) { console.warn('Pacientes:',e.message); }
+// Estado do odontograma
+let odonto = {}; // { "11": { cond: "carie", obs: "..." }, ... }
+let denteAtual = null;
+let condAtual  = "normal";
+let clinicaId  = null;
 
-  // ── Consultas de hoje ─────────────────────────────────────
-  try {
-    const ini=new Date(); ini.setHours(0,0,0,0);
-    const fim=new Date(); fim.setHours(23,59,59,999);
-    const qA=query(collection(db,'clinica',clinicaId,'agendamentos'),where('dataHora','>=',Timestamp.fromDate(ini)),where('dataHora','<=',Timestamp.fromDate(fim)),orderBy('dataHora'));
-    const sA=await getDocs(qA);
-    const ag=sA.docs.map(d=>({id:d.id,...d.data()}));
-    const elC=document.getElementById('stat-consultas'); if(elC) elC.textContent=ag.length;
-    const elCD=document.getElementById('stat-consultas-delta'); if(elCD) elCD.textContent=ag.length+' consulta(s) hoje';
-    const sMap={agendado:'badge-gray',confirmado:'badge-warning',em_atendimento:'badge-info',concluido:'badge-success',faltou:'badge-danger',cancelado:'badge-danger'};
-    const sLbl={agendado:'Aguardando',confirmado:'Confirmado',em_atendimento:'Em atendimento',concluido:'Concluído',faltou:'Faltou',cancelado:'Cancelado'};
-    const tbody=document.getElementById('consultas-hoje-tbody');
-    tbody.innerHTML=ag.length?ag.map(a=>{
-      const h=a.dataHora?.toDate?.()?.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})||'--:--';
-      const cor=CORES[(a.pacienteNome||'A').charCodeAt(0)%CORES.length];
-      return `<tr><td><b>${h}</b></td><td><div class="patient-cell"><div class="avatar" style="background:${cor}">${(a.pacienteNome||'?')[0]}</div>${a.pacienteNome||'—'}</div></td><td>${a.procedimento||'—'}</td><td><span class="badge ${sMap[a.status]||'badge-gray'}">${sLbl[a.status]||a.status}</span></td><td><button class="action-btn" onclick="window.location.href='prontuario.html?id=${a.pacienteId}'"><i class="ti ti-eye"></i></button></td></tr>`;
-    }).join(''):'<tr class="empty-row"><td colspan="5">Nenhuma consulta agendada para hoje</td></tr>';
-    const upEl=document.getElementById('upcoming-list');
-    upEl.innerHTML=ag.length?ag.map(a=>{const h=a.dataHora?.toDate?.()?.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})||'--:--';return `<div class="upcoming-item"><div class="upcoming-time">${h}</div><div><div class="upcoming-name">${a.pacienteNome||'—'}</div><div class="upcoming-proc">${a.procedimento||'—'}</div></div><span class="badge ${sMap[a.status]||'badge-gray'}" style="margin-left:auto">${sLbl[a.status]||a.status}</span></div>`;}).join(''):'<div style="text-align:center;padding:20px;color:var(--text-3);font-size:13px">Nenhuma consulta hoje</div>';
-  } catch(e) { console.warn('Agendamentos:',e.message); }
-
-  // ── Alertas financeiros e contas a receber ────────────────
-  try {
-    const qR=query(collection(db,'clinica',clinicaId,'contas_receber'),where('status','in',['aberto','parcial','atrasado']),orderBy('vencimento'));
-    const sR=await getDocs(qR);
-    const cr=sR.docs.map(d=>({id:d.id,...d.data()}));
-    const total=cr.reduce((s,c)=>s+((c.valor||0)-(c.valorPago||0)),0);
-    const elR=document.getElementById('stat-receber-val'); if(elR) elR.textContent=brl(total);
-    const elRD=document.getElementById('stat-receber-delta'); if(elRD) elRD.textContent=cr.length+' fatura(s) em aberto';
-    const hoje2=new Date(); hoje2.setHours(0,0,0,0);
-    const amanha=new Date(hoje2); amanha.setDate(hoje2.getDate()+1);
-    const atrasadas=cr.filter(c=>c.vencimento?.toDate?.()<hoje2);
-    const vAmanha=cr.filter(c=>{const v=c.vencimento?.toDate?.();return v&&v>=hoje2&&v<new Date(amanha.getTime()+86400000);});
-    const aEl=document.getElementById('alertas-financeiros');
-    let html='';
-    vAmanha.forEach(c=>{html+=`<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--warning-bg);border-radius:8px;margin-bottom:8px"><i class="ti ti-alert-triangle" style="color:var(--warning);font-size:18px;flex-shrink:0"></i><div><div style="font-size:13px;font-weight:600;color:#7A5500">${brl(c.valor)} vence amanhã</div><div style="font-size:11.5px;color:var(--warning)">${c.descricao||''} — ${c.pacienteNome||''}</div></div></div>`;});
-    atrasadas.forEach(c=>{const dias=Math.floor((hoje2-c.vencimento.toDate())/86400000);html+=`<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--danger-bg);border-radius:8px;margin-bottom:8px"><i class="ti ti-alert-circle" style="color:var(--danger);font-size:18px;flex-shrink:0"></i><div><div style="font-size:13px;font-weight:600;color:#8B1A1A">${brl(c.valor)} em atraso (${dias}d)</div><div style="font-size:11.5px;color:var(--danger)">${c.descricao||''} — ${c.pacienteNome||''}</div></div></div>`;});
-    if(!html) html='<div style="text-align:center;padding:20px;color:var(--text-3);font-size:13px"><i class="ti ti-circle-check" style="color:var(--success)"></i> Sem alertas no momento</div>';
-    if(aEl) aEl.innerHTML=html;
-  } catch(e) { console.warn('ContasReceber:',e.message); }
-
-  // ── Próximas contas a pagar ───────────────────────────────
-  try {
-    const qPg=query(collection(db,'clinica',clinicaId,'contas_pagar'),where('status','==','aberto'),orderBy('vencimento'),limit(3));
-    const sPg=await getDocs(qPg);
-    const pg=sPg.docs.map(d=>({id:d.id,...d.data()}));
-    const pcEl=document.getElementById('proximas-contas');
-    if(pcEl) pcEl.innerHTML=pg.length?pg.map((c,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;${i<pg.length-1?'border-bottom:1px solid var(--border)':''}"><div><div style="font-size:13px;font-weight:500">${c.descricao||c.fornecedor||'—'}</div><div style="font-size:11.5px;color:var(--text-2)">Vence ${c.vencimento?.toDate?.()?.toLocaleDateString('pt-BR')||'—'}</div></div><div style="font-size:13px;font-weight:600">${brl(c.valor)}</div></div>`).join(''):'<div style="text-align:center;padding:20px;color:var(--text-3);font-size:13px">Nenhuma conta a pagar</div>';
-  } catch(e) { console.warn('ContasPagar:',e.message); }
-
-  // ── Salvar paciente ───────────────────────────────────────
-  window.salvarPaciente = async function() {
-    const nome = document.getElementById('p-nome').value.trim();
-    if (!nome) { alert('Informe o nome do paciente'); return; }
-
-    // Verifica limite do plano
-    try {
-      const tenantSnap = await getDoc(doc(db,'tenants',clinicaId));
-      if (tenantSnap.exists()) {
-        const t = tenantSnap.data();
-        const plano = PLANOS[t.plano] || PLANOS.starter;
-        const maxP = plano.maxPacientes;
-        if (maxP) {
-          const countSnap = await getCountFromServer(
-            query(collection(db,'clinica',clinicaId,'pacientes'), where('ativo','==',true))
-          );
-          if (countSnap.data().count >= maxP) {
-            closeModal('modal-paciente');
-            mostrarLimitePlano(plano, 'pacientes');
-            return;
-          }
-        }
-      }
-    } catch(e) { console.warn('Erro ao verificar limite:', e.message); }
-
-    try {
-      await addDoc(collection(db,'clinica',clinicaId,'pacientes'), {
-        nome, dataNasc: document.getElementById('p-nasc').value||null,
-        cpf: document.getElementById('p-cpf').value||'',
-        telefone: document.getElementById('p-tel').value||'',
-        email: document.getElementById('p-email').value||'',
-        convenio: document.getElementById('p-conv').value||'',
-        alergias: document.getElementById('p-alerg').value||'',
-        ativo: true, criadoEm: serverTimestamp(), atualizadoEm: serverTimestamp()
-      });
-      closeModal('modal-paciente');
-      ['p-nome','p-nasc','p-cpf','p-tel','p-email','p-alerg'].forEach(id => document.getElementById(id).value='');
-      const qP=query(collection(db,'clinica',clinicaId,'pacientes'),where('ativo','==',true),orderBy('nome'));
-      const sP=await getDocs(qP);
-      window.todosOsPacientes=sP.docs.map(d=>({id:d.id,...d.data()}));
-      window.renderPatients(window.todosOsPacientes);
-    } catch(e) { alert('Erro ao cadastrar: '+e.message); }
-  };
-
-  // Mostra modal de limite atingido
-  function mostrarLimitePlano(plano, tipo) {
-    const msgs = {
-      pacientes: `Seu plano <b>${plano.nome}</b> permite no máximo <b>${plano.maxPacientes} pacientes</b>.`,
-      usuarios:  `Seu plano <b>${plano.nome}</b> permite no máximo <b>${plano.maxUsuarios} usuários</b>.`
-    };
-    const el = document.getElementById('modal-limite-msg');
-    if (el) el.innerHTML = msgs[tipo] || 'Limite do plano atingido.';
-    document.getElementById('modal-limite').classList.add('open');
-  }
-  window.mostrarLimitePlano = mostrarLimitePlano;
-
-  // ── Salvar agendamento ────────────────────────────────────
-  window.salvarAgendamento = async function() {
-    const pacienteId = document.getElementById('ag-paciente').value;
-    const data = document.getElementById('ag-data').value;
-    const hora = document.getElementById('ag-hora').value;
-    if (!pacienteId || !data || !hora) { alert('Preencha paciente, data e horário'); return; }
-    const paciente = window.todosOsPacientes.find(p=>p.id===pacienteId);
-    const dataHora = new Date(`${data}T${hora}:00`);
-    try {
-      await addDoc(collection(db,'clinica',clinicaId,'agendamentos'), {
-        pacienteId, pacienteNome: paciente?.nome||'—',
-        procedimento: document.getElementById('ag-proc').value,
-        dataHora: Timestamp.fromDate(dataHora),
-        duracao: 60, status: 'agendado',
-        criadoEm: serverTimestamp(), atualizadoEm: serverTimestamp()
-      });
-      closeModal('modal-agenda');
-      alert('Agendamento salvo!');
-    } catch(e) { alert('Erro: '+e.message); }
-  };
-
-  // ── Salvar conta ──────────────────────────────────────────
-  let tipoConta = 'receber';
-  window.salvarConta = async function() {
-    const valor = parseFloat(document.getElementById('c-valor').value);
-    const venc  = document.getElementById('c-venc').value;
-    const desc  = document.getElementById('c-desc').value.trim();
-    if (!valor||!venc||!desc) { alert('Preencha todos os campos'); return; }
-    const col = tipoConta==='receber' ? 'contas_receber' : 'contas_pagar';
-    try {
-      await addDoc(collection(db,'clinica',clinicaId,col), {
-        descricao: desc, valor,
-        pacienteNome: document.getElementById('c-nome').value||'',
-        fornecedor: document.getElementById('c-nome').value||'',
-        formaPagamento: document.getElementById('c-forma').value,
-        vencimento: Timestamp.fromDate(new Date(venc+'T12:00:00')),
-        status: 'aberto', valorPago: 0,
-        criadoEm: serverTimestamp(), atualizadoEm: serverTimestamp()
-      });
-      closeModal('modal-conta');
-      if(tipoConta==='receber') carregarContasReceber();
-      else carregarContasPagar();
-    } catch(e) { alert('Erro: '+e.message); }
-  };
-
-  // ── Contas a receber (página) ─────────────────────────────
-  window.carregarContasReceber = async function() {
-    try {
-      tipoConta = 'receber';
-      const qR=query(collection(db,'clinica',clinicaId,'contas_receber'),orderBy('vencimento','desc'));
-      const sR=await getDocs(qR);
-      const cr=sR.docs.map(d=>({id:d.id,...d.data()}));
-      const recebido = cr.filter(c=>c.status==='pago').reduce((s,c)=>s+(c.valor||0),0);
-      const aberto   = cr.filter(c=>['aberto','parcial'].includes(c.status)).reduce((s,c)=>s+((c.valor||0)-(c.valorPago||0)),0);
-      const atraso   = cr.filter(c=>c.status==='atrasado'||(['aberto','parcial'].includes(c.status)&&c.vencimento?.toDate?.()<new Date())).reduce((s,c)=>s+(c.valor||0),0);
-      document.getElementById('receber-recebido').textContent = brl(recebido);
-      document.getElementById('receber-aberto').textContent   = brl(aberto);
-      document.getElementById('receber-atraso').textContent   = brl(atraso);
-      const sMap={aberto:'badge-info',pago:'badge-success',atrasado:'badge-danger',parcial:'badge-warning',cancelado:'badge-gray'};
-      const sLbl={aberto:'Em aberto',pago:'Pago',atrasado:'Atrasado',parcial:'Parcial',cancelado:'Cancelado'};
-      const tbody=document.getElementById('receber-tbody');
-      tbody.innerHTML=cr.length?cr.map(c=>{
-        const vd=c.vencimento?.toDate?.()?.toLocaleDateString('pt-BR')||'—';
-        const cor=CORES[(c.pacienteNome||'A').charCodeAt(0)%CORES.length];
-        const st=c.status==='aberto'&&c.vencimento?.toDate?.()<new Date()?'atrasado':c.status;
-        return `<tr><td>${vd}</td><td><div class="patient-cell"><div class="avatar" style="background:${cor};width:24px;height:24px;font-size:9px">${iniciais(c.pacienteNome||'?')}</div>${c.pacienteNome||'—'}</div></td><td>${c.descricao||'—'}</td><td><b>${brl(c.valor)}</b></td><td><span class="badge ${sMap[st]||'badge-gray'}">${sLbl[st]||st}</span></td><td>${c.status!=='pago'?`<button class="btn btn-ghost btn-sm">Registrar pagamento</button>`:'<span style="color:var(--text-3)">—</span>'}</td></tr>`;
-      }).join(''):'<tr class="empty-row"><td colspan="6">Nenhuma conta cadastrada</td></tr>';
-    } catch(e) { console.warn('ContasReceber pg:',e.message); }
-  };
-
-  // ── Contas a pagar (página) ───────────────────────────────
-  window.carregarContasPagar = async function() {
-    try {
-      tipoConta = 'pagar';
-      const qP=query(collection(db,'clinica',clinicaId,'contas_pagar'),orderBy('vencimento','desc'));
-      const sP=await getDocs(qP);
-      const cp=sP.docs.map(d=>({id:d.id,...d.data()}));
-      const pago   = cp.filter(c=>c.status==='pago').reduce((s,c)=>s+(c.valor||0),0);
-      const aberto = cp.filter(c=>c.status==='aberto').reduce((s,c)=>s+(c.valor||0),0);
-      document.getElementById('pagar-pago').textContent   = brl(pago);
-      document.getElementById('pagar-aberto').textContent = brl(aberto);
-      document.getElementById('pagar-total').textContent  = brl(pago+aberto);
-      const sMap={aberto:'badge-info',pago:'badge-success',cancelado:'badge-gray'};
-      const tbody=document.getElementById('pagar-tbody');
-      tbody.innerHTML=cp.length?cp.map(c=>{
-        const vd=c.vencimento?.toDate?.()?.toLocaleDateString('pt-BR')||'—';
-        const cat=c.categoria||'outros';
-        return `<tr><td>${vd}</td><td><b>${c.descricao||c.fornecedor||'—'}</b>${c.fornecedor&&c.descricao?`<br><span style="font-size:11.5px;color:var(--text-2)">${c.fornecedor}</span>`:''}</td><td><span class="tag">${cat}</span></td><td><b>${brl(c.valor)}</b></td><td><span class="badge ${sMap[c.status]||'badge-gray'}">${c.status==='aberto'?'Em aberto':c.status==='pago'?'Pago':'—'}</span></td><td>${c.status!=='pago'?`<button class="btn btn-ghost btn-sm">Marcar como pago</button>`:'<span style="color:var(--text-3)">—</span>'}</td></tr>`;
-      }).join(''):'<tr class="empty-row"><td colspan="6">Nenhuma conta cadastrada</td></tr>';
-    } catch(e) { console.warn('ContasPagar pg:',e.message); }
-  };
-
-  // ── Procedimentos ─────────────────────────────────────────
-  window.carregarProcedimentos = async function() {
-    try {
-      const qP=query(collection(db,'clinica',clinicaId,'procedimentos'),orderBy('criadoEm','desc'),limit(50));
-      const sP=await getDocs(qP);
-      const pr=sP.docs.map(d=>({id:d.id,...d.data()}));
-      const el=document.getElementById('procs-count'); if(el) el.textContent=pr.length+' procedimento(s)';
-      const sMap={concluido:'badge-success',em_andamento:'badge-info',parcial:'badge-warning'};
-      const sLbl={concluido:'Concluído',em_andamento:'Em andamento',parcial:'Parcial'};
-      const tbody=document.getElementById('procs-tbody');
-      tbody.innerHTML=pr.length?pr.map(p=>{
-        const dt=p.dataRealizacao?.toDate?.()?.toLocaleDateString('pt-BR')||p.criadoEm?.toDate?.()?.toLocaleDateString('pt-BR')||'—';
-        const cor=CORES[(p.pacienteNome||'A').charCodeAt(0)%CORES.length];
-        return `<tr><td>${dt}</td><td><div class="patient-cell"><div class="avatar" style="background:${cor};width:24px;height:24px;font-size:9px">${iniciais(p.pacienteNome||'?')}</div>${p.pacienteNome||'—'}</div></td><td>${p.tipo||'—'}</td><td>${(p.dentes||[]).join(', ')||'—'}</td><td>${brl(p.valor)}</td><td><span class="badge ${sMap[p.status]||'badge-gray'}">${sLbl[p.status]||p.status||'—'}</span></td><td><button class="action-btn" onclick="window.location.href='prontuario.html?id=${p.pacienteId}'"><i class="ti ti-eye"></i></button></td></tr>`;
-      }).join(''):'<tr class="empty-row"><td colspan="7">Nenhum procedimento registrado</td></tr>';
-    } catch(e) { console.warn('Procedimentos:',e.message); }
-  };
-
+requireAuth(({ clinicaId: cid }) => {
+  clinicaId = cid;
+  init();
 });
 
-const CORES=['#2D7DD2','#7C3AED','#D94040','#1A9E75','#D98B1A','#534AB7','#0F6E56','#993C1D'];
-function iniciais(nome){return (nome||'?').split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();}
-</script>
+async function init() {
+  await carregarPaciente();
+  renderOdontograma();
+  renderLegenda();
+  await carregarOdontograma();
+  await carregarEvolucoes();
+  await carregarAnexos();
+  await carregarHistorico();
+}
 
-<!-- MODAL LIMITE DO PLANO -->
-<div class="modal-overlay" id="modal-limite">
-  <div class="modal" style="text-align:center;max-width:400px">
-    <div style="width:56px;height:56px;background:#FDF4E6;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px">🔒</div>
-    <div style="font-size:17px;font-weight:700;margin-bottom:8px">Limite do plano atingido</div>
-    <p id="modal-limite-msg" style="font-size:14px;color:var(--text-2);margin-bottom:8px"></p>
-    <p style="font-size:13px;color:var(--text-3);margin-bottom:24px">Faça upgrade para continuar usando sem limites.</p>
-    <div style="display:flex;gap:10px;justify-content:center">
-      <button class="btn btn-ghost" onclick="closeModal('modal-limite')">Fechar</button>
-      <a class="btn btn-primary" href="cadastro.html#pricing"><i class="ti ti-arrow-up-circle"></i> Ver planos</a>
+// ── Carrega paciente ──────────────────────────────────────────
+async function carregarPaciente() {
+  if (pacienteId === "demo") return;
+  const snap = await getDoc(doc(db, "clinica", clinicaId, "pacientes", pacienteId));
+  if (!snap.exists()) return;
+  const p = snap.data();
+
+  const iniciais = p.nome.split(" ").map(n => n[0]).join("").substring(0,2).toUpperCase();
+  const cores = ["#2D7DD2","#7C3AED","#D94040","#1A9E75","#D98B1A","#534AB7"];
+  const cor   = cores[p.nome.charCodeAt(0) % cores.length];
+
+  document.getElementById("p-avatar").textContent   = iniciais;
+  document.getElementById("p-avatar").style.background = cor;
+  document.getElementById("p-nome").textContent     = p.nome;
+  document.getElementById("p-cpf").textContent      = p.cpf || "—";
+  document.getElementById("p-tel").textContent      = p.telefone || "—";
+  document.getElementById("p-conv").textContent     = p.convenio || "Particular";
+  document.getElementById("p-alerg").textContent    = p.alergias || "Nenhuma";
+
+  if (p.dataNasc) {
+    const nasc = new Date(p.dataNasc);
+    const idade = new Date().getFullYear() - nasc.getFullYear();
+    document.getElementById("p-sub").textContent = `${idade} anos`;
+  }
+  document.title = `DentalPro — ${p.nome}`;
+}
+
+// ── SVG de um dente ───────────────────────────────────────────
+function toothSVG(cond, isLeite) {
+  const cfg = CONDICOES.find(c => c.id === cond) || CONDICOES[0];
+  const w = isLeite ? 22 : 28;
+  const h = isLeite ? 26 : 32;
+  const dash = cond === "ausente" ? 'stroke-dasharray="3 2"' : '';
+  return `<svg width="${w}" height="${h}" viewBox="0 0 28 32" xmlns="http://www.w3.org/2000/svg">
+    <path class="face" d="M4 6 C4 2 10 1 14 1 C18 1 24 2 24 6 L26 22 C26 28 22 31 14 31 C6 31 2 28 2 22 Z"
+      fill="${cfg.cor}" stroke="${cfg.stroke}" stroke-width="1.5" ${dash}/>
+    ${cond==="extraido" ? '<line x1="8" y1="8" x2="20" y2="24" stroke="#fff" stroke-width="2"/><line x1="20" y1="8" x2="8" y2="24" stroke="#fff" stroke-width="2"/>' : ''}
+    ${cond==="canal" ? '<circle cx="14" cy="16" r="4" fill="none" stroke="#fff" stroke-width="1.5"/>' : ''}
+    ${cond==="implante" ? '<line x1="14" y1="6" x2="14" y2="26" stroke="#fff" stroke-width="2"/><line x1="9" y1="14" x2="19" y2="14" stroke="#fff" stroke-width="1.5"/>' : ''}
+  </svg>`;
+}
+
+// ── Renderiza linha de dentes ─────────────────────────────────
+function renderLinha(nums, containerId, isLeite) {
+  const c = document.getElementById(containerId);
+  c.innerHTML = "";
+  nums.forEach(num => {
+    const n = String(num);
+    const estado = odonto[n] || { cond: "normal", obs: "" };
+    const div = document.createElement("div");
+    div.className = `tooth${isLeite ? " tooth-leite" : ""}`;
+    div.innerHTML = `
+      <div class="tooth-num">${num}</div>
+      <div class="tooth-svg">${toothSVG(estado.cond, isLeite)}</div>
+      <div class="tooth-label">${estado.cond !== "normal" ? (CONDICOES.find(c=>c.id===estado.cond)?.label||"") : ""}</div>
+    `;
+    div.onclick = () => abrirModalDente(num, isLeite);
+    c.appendChild(div);
+  });
+}
+
+function renderOdontograma() {
+  renderLinha(ADULTO_SUP, "row-adulto-sup", false);
+  renderLinha(ADULTO_INF, "row-adulto-inf", false);
+  renderLinha(LEITE_SUP,  "row-inf-sup",    true);
+  renderLinha(LEITE_INF,  "row-inf-inf",    true);
+}
+
+// ── Legenda ───────────────────────────────────────────────────
+function renderLegenda() {
+  const c = document.getElementById("legenda");
+  c.innerHTML = CONDICOES.map(cond => `
+    <div class="leg-item" onclick="selecionarCondicao('${cond.id}', this)">
+      <div class="leg-dot" style="background:${cond.cor};border:1.5px solid ${cond.stroke}"></div>
+      ${cond.label}
     </div>
-  </div>
-</div>
+  `).join("");
+}
+
+window.selecionarCondicao = function(id, el) {
+  condAtual = id;
+  document.querySelectorAll(".leg-item").forEach(e => e.classList.remove("selected"));
+  el.classList.add("selected");
+};
+
+// ── Modal dente ───────────────────────────────────────────────
+window.abrirModalDente = function(num, isLeite) {
+  denteAtual = String(num);
+  const estado = odonto[denteAtual] || { cond: "normal", obs: "" };
+  document.getElementById("modal-dente-titulo").textContent =
+    `Dente ${num}${isLeite ? " (decíduo)" : ""}`;
+  document.getElementById("dente-obs").value = estado.obs || "";
+
+  const grid = document.getElementById("cond-grid");
+  grid.innerHTML = CONDICOES.map(c => `
+    <button class="cond-btn${estado.cond === c.id ? " selected" : ""}" onclick="selecionarCondModal('${c.id}', this)">
+      <div class="cond-dot" style="background:${c.cor};border:1.5px solid ${c.stroke}"></div>
+      ${c.label}
+    </button>
+  `).join("");
+
+  document.getElementById("modal-dente").classList.add("open");
+};
+
+window.selecionarCondModal = function(id, el) {
+  condAtual = id;
+  document.querySelectorAll(".cond-btn").forEach(b => b.classList.remove("selected"));
+  el.classList.add("selected");
+};
+
+window.fecharModal = function() {
+  document.getElementById("modal-dente").classList.remove("open");
+};
+
+window.salvarCondicaoDente = function() {
+  if (!denteAtual) return;
+  const obs = document.getElementById("dente-obs").value.trim();
+  odonto[denteAtual] = { cond: condAtual, obs };
+  fecharModal();
+  renderOdontograma();
+};
+
+// ── Salva odontograma no Firestore ────────────────────────────
+window.salvarOdontograma = async function() {
+  const ref = doc(db, "clinica", clinicaId, "pacientes", pacienteId, "odontograma", "atual");
+  await setDoc(ref, {
+    dentes: odonto,
+    atualizadoEm: serverTimestamp()
+  });
+
+  // Log de alteração
+  const logRef = collection(db, "clinica", clinicaId, "pacientes", pacienteId, "odontograma_log");
+  await addDoc(logRef, {
+    snapshot: odonto,
+    registradoEm: serverTimestamp()
+  });
+
+  mostrarToast("Odontograma salvo!");
+  await carregarLogOdontograma();
+};
+
+// ── Carrega odontograma salvo ─────────────────────────────────
+async function carregarOdontograma() {
+  if (pacienteId === "demo") return;
+  const snap = await getDoc(
+    doc(db, "clinica", clinicaId, "pacientes", pacienteId, "odontograma", "atual")
+  );
+  if (snap.exists()) {
+    odonto = snap.data().dentes || {};
+    renderOdontograma();
+  }
+  await carregarLogOdontograma();
+}
+
+async function carregarLogOdontograma() {
+  if (pacienteId === "demo") return;
+  const q = query(
+    collection(db, "clinica", clinicaId, "pacientes", pacienteId, "odontograma_log"),
+    orderBy("registradoEm", "desc")
+  );
+  const snap = await getDocs(q);
+  if (snap.empty) return;
+
+  document.getElementById("odonto-log").style.display = "block";
+  const list = document.getElementById("log-list");
+  list.innerHTML = snap.docs.slice(0, 5).map(d => {
+    const data = d.data();
+    const dt = data.registradoEm?.toDate?.()?.toLocaleDateString("pt-BR") || "—";
+    const alterados = Object.entries(data.snapshot || {})
+      .filter(([,v]) => v.cond !== "normal")
+      .map(([k,v]) => `${k}:${CONDICOES.find(c=>c.id===v.cond)?.label}`)
+      .join(", ") || "Sem alterações";
+    return `<div class="log-item">
+      <div class="log-dot" style="background:var(--accent)"></div>
+      <div class="log-text">${alterados}</div>
+      <div class="log-date">${dt}</div>
+    </div>`;
+  }).join("");
+}
+
+// ── Evolução clínica ──────────────────────────────────────────
+window.salvarEvolucao = async function() {
+  const txt = document.getElementById("nova-evolucao-txt").value.trim();
+  if (!txt) return;
+  await addDoc(
+    collection(db, "clinica", clinicaId, "pacientes", pacienteId, "evolucoes"),
+    { texto: txt, registradoEm: serverTimestamp() }
+  );
+  document.getElementById("nova-evolucao-txt").value = "";
+  await carregarEvolucoes();
+  mostrarToast("Evolução registrada!");
+};
+
+async function carregarEvolucoes() {
+  if (pacienteId === "demo") return;
+  const q = query(
+    collection(db, "clinica", clinicaId, "pacientes", pacienteId, "evolucoes"),
+    orderBy("registradoEm", "desc")
+  );
+  const snap = await getDocs(q);
+  const list  = document.getElementById("evolucao-list");
+  if (snap.empty) { list.innerHTML = '<div style="text-align:center;padding:32px;color:var(--text-3)">Nenhuma evolução registrada</div>'; return; }
+  list.innerHTML = snap.docs.map(d => {
+    const data = d.data();
+    const dt = data.registradoEm?.toDate?.()?.toLocaleDateString("pt-BR","pt-BR") || "—";
+    return `<div class="evolucao-item">
+      <div class="evolucao-data">${dt}</div>
+      <div class="evolucao-texto">${data.texto}</div>
+    </div>`;
+  }).join("");
+}
+
+// ── ANEXOS ────────────────────────────────────────────────────
+window.dragOver = function(e) {
+  e.preventDefault();
+  document.getElementById("upload-area").classList.add("drag");
+};
+window.dragLeave = function() {
+  document.getElementById("upload-area").classList.remove("drag");
+};
+window.dropFile = function(e) {
+  e.preventDefault();
+  document.getElementById("upload-area").classList.remove("drag");
+  handleFiles(e.dataTransfer.files);
+};
+
+window.handleFiles = async function(files) {
+  const prog = document.getElementById("upload-progress");
+  const fill  = document.getElementById("progress-fill");
+  const status = document.getElementById("upload-status");
+  prog.style.display = "block";
+
+  for (const file of files) {
+    status.textContent = `Enviando ${file.name}...`;
+    fill.style.width   = "0%";
+    await uploadAnexo(pacienteId, file, pct => { fill.style.width = pct + "%"; });
+  }
+
+  prog.style.display = "none";
+  mostrarToast(`${files.length} arquivo(s) enviado(s)!`);
+  await carregarAnexos();
+};
+
+async function carregarAnexos() {
+  if (pacienteId === "demo") return;
+  const anexos = await listarAnexos(pacienteId, clinicaId);
+  const grid   = document.getElementById("files-grid");
+  const count  = document.getElementById("anexos-count");
+  count.textContent = anexos.length;
+  document.getElementById("r-anexos").textContent = anexos.length;
+
+  if (!anexos.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text-3)">
+      <i class="ti ti-paperclip" style="font-size:28px;display:block;margin-bottom:8px"></i>Nenhum arquivo anexado</div>`;
+    return;
+  }
+
+  grid.innerHTML = anexos.map(a => {
+    const isImg = a.tipo?.startsWith("image/");
+    const icone = iconeArquivo(a.tipo);
+    const iconeCls = a.tipo?.includes("pdf") ? "pdf" : isImg ? "img" : a.tipo?.includes("word") ? "doc" : "";
+    return `<div class="file-card">
+      ${isImg
+        ? `<img src="${a.url}" class="file-thumb" alt="${a.nome}">`
+        : `<i class="ti ${icone} file-icon ${iconeCls}" style="font-size:36px"></i>`}
+      <div class="file-name" title="${a.nome}">${a.nome}</div>
+      <div class="file-size">${formatarTamanho(a.tamanho)}</div>
+      <div class="file-actions">
+        <a href="${a.url}" target="_blank" class="file-btn"><i class="ti ti-eye"></i> Ver</a>
+        <a href="${a.url}" download="${a.nome}" class="file-btn"><i class="ti ti-download"></i></a>
+        <button class="file-btn del" onclick="deletarAnexo('${a.id}','${a.publicId||""}')"><i class="ti ti-trash"></i></button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+window.deletarAnexo = async function(id, publicId) {
+  if (!confirm("Excluir este arquivo?")) return;
+  await excluirAnexo(pacienteId, id, publicId, clinicaId);
+  await carregarAnexos();
+};
+
+// ── Histórico de procedimentos ────────────────────────────────
+async function carregarHistorico() {
+  if (pacienteId === "demo") return;
+  const list = document.getElementById("historico-list");
+  let procs;
+  try {
+    procs = await Procedimentos.buscarPorPaciente(pacienteId, clinicaId);
+  } catch (e) {
+    console.error(e);
+    list.innerHTML = `<div style="text-align:center;padding:32px;color:var(--danger)">
+      Erro ao carregar. Se aparecer "requires an index" no console (F12),
+      clique no link que o Firebase mostra para criar o índice.</div>`;
+    return;
+  }
+  if (!procs.length) {
+    list.innerHTML = `<div style="text-align:center;padding:32px;color:var(--text-3)">Nenhum procedimento registrado</div>`;
+    return;
+  }
+  document.getElementById("r-procs").textContent = procs.length;
+  list.innerHTML = `<table style="width:100%;border-collapse:collapse">
+    <thead><tr>
+      <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--text-2);border-bottom:1px solid var(--border);background:var(--bg)">Data</th>
+      <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--text-2);border-bottom:1px solid var(--border);background:var(--bg)">Procedimento</th>
+      <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--text-2);border-bottom:1px solid var(--border);background:var(--bg)">Dentes</th>
+      <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--text-2);border-bottom:1px solid var(--border);background:var(--bg)">Valor</th>
+      <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--text-2);border-bottom:1px solid var(--border);background:var(--bg)">Status</th>
+    </tr></thead>
+    <tbody>${procs.map(p => {
+      const dt = p.dataRealizacao?.toDate?.()?.toLocaleDateString("pt-BR") || "—";
+      const statusCls = p.status === "concluido" ? "badge-success" : p.status === "em_andamento" ? "badge-info" : "badge-warning";
+      const statusLabel = { concluido:"Concluído", em_andamento:"Em andamento", parcial:"Parcial" }[p.status] || p.status;
+      return `<tr>
+        <td style="padding:12px;font-size:13px;border-bottom:1px solid var(--border)">${dt}</td>
+        <td style="padding:12px;font-size:13px;border-bottom:1px solid var(--border);font-weight:500">${p.tipo}</td>
+        <td style="padding:12px;font-size:13px;border-bottom:1px solid var(--border);color:var(--text-2)">${(p.dentes||[]).join(", ")||"—"}</td>
+        <td style="padding:12px;font-size:13px;border-bottom:1px solid var(--border);font-weight:600">R$ ${(p.valor||0).toLocaleString("pt-BR")}</td>
+        <td style="padding:12px;border-bottom:1px solid var(--border)"><span class="badge ${statusCls}">${statusLabel}</span></td>
+      </tr>`;
+    }).join("")}</tbody>
+  </table>`;
+}
+
+// ── Cadastro de procedimento ──────────────────────────────────
+window.abrirModalProcedimento = function() {
+  if (pacienteId === "demo") {
+    mostrarToast("Abra o prontuário de um paciente real para registrar.");
+    return;
+  }
+  document.getElementById("proc-tipo").value   = "";
+  document.getElementById("proc-valor").value  = "";
+  document.getElementById("proc-dentes").value = "";
+  document.getElementById("proc-obs").value    = "";
+  document.getElementById("proc-status").value = "em_andamento";
+  // Data padrão = hoje (formato yyyy-mm-dd respeitando o fuso local)
+  const hoje = new Date();
+  const off  = hoje.getTimezoneOffset();
+  document.getElementById("proc-data").value =
+    new Date(hoje.getTime() - off * 60000).toISOString().slice(0, 10);
+  document.getElementById("modal-proc").classList.add("open");
+};
+
+window.fecharModalProcedimento = function() {
+  document.getElementById("modal-proc").classList.remove("open");
+};
+
+window.salvarProcedimento = async function() {
+  const tipo    = document.getElementById("proc-tipo").value.trim();
+  const dataStr = document.getElementById("proc-data").value;
+  if (!tipo)    { mostrarToast("Informe o procedimento."); return; }
+  if (!dataStr) { mostrarToast("Informe a data."); return; }
+
+  const btn = document.getElementById("proc-salvar-btn");
+  btn.disabled = true;
+
+  // dataStr = "yyyy-mm-dd" → meio-dia local evita virar o dia anterior por fuso
+  const [ano, mes, dia] = dataStr.split("-").map(Number);
+  const dataRealizacao  = Timestamp.fromDate(new Date(ano, mes - 1, dia, 12, 0, 0));
+
+  const dentes = document.getElementById("proc-dentes").value
+    .split(",").map(s => s.trim()).filter(Boolean);
+
+  try {
+    await Procedimentos.criar({
+      pacienteId,
+      tipo,
+      dataRealizacao,
+      dentes,
+      valor:       parseFloat(document.getElementById("proc-valor").value) || 0,
+      status:      document.getElementById("proc-status").value,
+      observacoes: document.getElementById("proc-obs").value.trim()
+    }, clinicaId);
+
+    fecharModalProcedimento();
+    mostrarToast("Procedimento registrado!");
+    await carregarHistorico();
+  } catch (e) {
+    console.error(e);
+    mostrarToast("Erro ao registrar — veja o console (F12).");
+  } finally {
+    btn.disabled = false;
+  }
+};
+
+// Fecha modal de procedimento clicando fora
+document.getElementById("modal-proc").addEventListener("click", e => {
+  if (e.target === e.currentTarget) fecharModalProcedimento();
+});
+
+// ── Tabs ──────────────────────────────────────────────────────
+window.showTab = function(id) {
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  document.getElementById("tab-" + id).classList.add("active");
+  event.currentTarget.classList.add("active");
+};
+
+// ── Toast ─────────────────────────────────────────────────────
+function mostrarToast(msg) {
+  let t = document.getElementById("toast");
+  if (!t) {
+    t = document.createElement("div");
+    t.id = "toast";
+    t.style.cssText = "position:fixed;bottom:24px;right:24px;background:#0F1923;color:#fff;padding:12px 20px;border-radius:8px;font-size:13.5px;z-index:9999;transition:opacity .3s;box-shadow:0 4px 12px rgba(0,0,0,.2)";
+    document.body.appendChild(t);
+  }
+  t.textContent = "✓ " + msg;
+  t.style.opacity = "1";
+  setTimeout(() => { t.style.opacity = "0"; }, 2500);
+}
+
+// ── Fecha modal clicando fora ─────────────────────────────────
+document.getElementById("modal-dente").addEventListener("click", e => {
+  if (e.target === e.currentTarget) fecharModal();
+});
+</script>
 </body>
 </html>
