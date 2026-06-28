@@ -8,30 +8,30 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --blue:#2D7DD2;--blue-dark:#1A5FA8;--blue-light:#EBF3FC;
-  --green:#1A9E75;--text:#0F1923;--text-2:#5A6A7A;--text-3:#9AABB8;
-  --border:#E4E9EE;--bg:#F7F8FA;--surface:#fff;
+  --blue:#5B8CFF;--blue-dark:#3F6FD8;--blue-light:rgba(91,140,255,.15);
+  --green:#34D399;--text:#EAF0FA;--text-2:#8493AD;--text-3:#5E6B82;
+  --border:#232C40;--bg:#0D1320;--surface:#151D2E;color-scheme:dark;
 }
 html{scroll-behavior:smooth}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--text);overflow-x:hidden}
 
 /* ── NAV ──────────────────────────────────────────────────── */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 40px;height:64px;display:flex;align-items:center;gap:16px;transition:all .3s}
-nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+nav.scrolled{background:rgba(21,29,46,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.4)}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.nav-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#2D7DD2,#1A5FA8);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;box-shadow:0 4px 12px rgba(45,125,210,.3)}
+.nav-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#5B8CFF,#3F6FD8);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;box-shadow:0 4px 12px rgba(45,125,210,.3)}
 .nav-logo-text{font-size:17px;font-weight:800;color:var(--text);letter-spacing:-.3px}
 .nav-spacer{flex:1}
 .nav-links{display:flex;align-items:center;gap:4px}
 .nav-link{color:var(--text-2);text-decoration:none;font-size:14px;padding:7px 14px;border-radius:8px;transition:all .15s;font-weight:500}
 .nav-link:hover{color:var(--text);background:var(--bg)}
 .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:none;text-decoration:none;transition:all .2s}
-.btn-primary{background:linear-gradient(135deg,#2D7DD2,#1A5FA8);color:#fff;box-shadow:0 4px 14px rgba(45,125,210,.35)}
+.btn-primary{background:linear-gradient(135deg,#5B8CFF,#3F6FD8);color:#fff;box-shadow:0 4px 14px rgba(45,125,210,.35)}
 .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(45,125,210,.45)}
-.btn-outline{background:transparent;color:var(--blue);border:2px solid var(--blue)}
+.btn-outline{background:transparent;color:var(--blue);border:2px solid #5B8CFF}
 .btn-outline:hover{background:var(--blue-light)}
-.btn-white{background:#fff;color:var(--blue);font-weight:700}
-.btn-white:hover{background:#f0f7ff;transform:translateY(-1px)}
+.btn-white{background:var(--surface);color:var(--blue);font-weight:700}
+.btn-white:hover{background:rgba(91,140,255,.12);transform:translateY(-1px)}
 .btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border)}
 .btn-ghost:hover{background:var(--bg)}
 
@@ -39,7 +39,7 @@ nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-
 .hero{min-height:100vh;background:linear-gradient(135deg,#0F1923 0%,#1A2B3C 50%,#0D3B6B 100%);display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 20px 60px;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;overflow:hidden}
 .hero-circle{position:absolute;border-radius:50%;opacity:.06}
-.hero-circle-1{width:600px;height:600px;background:#2D7DD2;top:-100px;right:-100px;animation:float 8s ease-in-out infinite}
+.hero-circle-1{width:600px;height:600px;background:#5B8CFF;top:-100px;right:-100px;animation:float 8s ease-in-out infinite}
 .hero-circle-2{width:400px;height:400px;background:#1A9E75;bottom:-50px;left:-80px;animation:float 10s ease-in-out infinite reverse}
 .hero-circle-3{width:200px;height:200px;background:#7C3AED;top:50%;left:20%;animation:float 6s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
@@ -49,7 +49,7 @@ nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-
 .hero-badge span{width:8px;height:8px;background:#1A9E75;border-radius:50%;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
 .hero h1{font-size:clamp(36px,5vw,64px);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-2px;margin-bottom:20px}
-.hero h1 em{font-style:normal;background:linear-gradient(135deg,#7BBDF5,#2D7DD2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,#9DB8FF,#5B8CFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hero p{font-size:18px;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:40px;max-width:560px;margin-left:auto;margin-right:auto}
 .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
 .hero-note{font-size:13px;color:rgba(255,255,255,.4)}
@@ -66,9 +66,9 @@ nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-
 .section-sub{font-size:16px;color:var(--text-2);max-width:520px;line-height:1.6;margin-bottom:48px}
 
 .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.feat-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .25s;position:relative;overflow:hidden}
+.feat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .25s;position:relative;overflow:hidden}
 .feat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--blue-light),transparent);opacity:0;transition:opacity .25s}
-.feat-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.08);border-color:var(--blue)}
+.feat-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.35);border-color:var(--blue)}
 .feat-card:hover::before{opacity:1}
 .feat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px;position:relative}
 .feat-title{font-size:16px;font-weight:700;margin-bottom:8px;position:relative}
@@ -79,39 +79,39 @@ nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:900px;margin:0 auto}
 .step{text-align:center;position:relative}
 .step:not(:last-child)::after{content:'→';position:absolute;right:-20px;top:32px;font-size:24px;color:rgba(255,255,255,.2)}
-.step-num{width:64px;height:64px;background:linear-gradient(135deg,#2D7DD2,#1A5FA8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;margin:0 auto 20px;box-shadow:0 8px 24px rgba(45,125,210,.4)}
+.step-num{width:64px;height:64px;background:linear-gradient(135deg,#5B8CFF,#3F6FD8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;margin:0 auto 20px;box-shadow:0 8px 24px rgba(45,125,210,.4)}
 .step-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
 .step-desc{font-size:14px;color:rgba(255,255,255,.55);line-height:1.6}
 
 /* ── DASHBOARD PREVIEW ────────────────────────────────────── */
 .preview-section{background:var(--bg);padding:80px 40px}
 .preview-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:60px;align-items:center}
-.preview-mock{background:#fff;border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.1);transform:perspective(1000px) rotateY(-5deg) rotateX(2deg);transition:transform .3s}
+.preview-mock{background:var(--surface);border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);transform:perspective(1000px) rotateY(-5deg) rotateX(2deg);transition:transform .3s}
 .preview-mock:hover{transform:perspective(1000px) rotateY(0deg) rotateX(0deg)}
 .mock-topbar{background:#0F1923;padding:12px 16px;display:flex;align-items:center;gap:8px}
 .mock-dot{width:10px;height:10px;border-radius:50%}
 .mock-body{display:flex;height:200px}
 .mock-sidebar{width:60px;background:#1A2B3C;padding:8px;display:flex;flex-direction:column;gap:8px;align-items:center}
 .mock-nav-dot{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.08)}
-.mock-nav-dot.active{background:#2D7DD2}
-.mock-content{flex:1;padding:12px;background:#F7F8FA;display:flex;flex-direction:column;gap:8px}
-.mock-card{background:#fff;border-radius:8px;padding:10px;border:1px solid #E4E9EE}
+.mock-nav-dot.active{background:#5B8CFF}
+.mock-content{flex:1;padding:12px;background:var(--bg);display:flex;flex-direction:column;gap:8px}
+.mock-card{background:var(--surface);border-radius:8px;padding:10px;border:1px solid #232C40}
 .mock-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.mock-stat{background:#fff;border-radius:6px;padding:8px;border:1px solid #E4E9EE}
-.mock-bar{height:6px;border-radius:3px;background:#E4E9EE;overflow:hidden;margin-top:4px}
-.mock-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#2D7DD2,#1A9E75);animation:grow 2s ease-out forwards}
+.mock-stat{background:var(--surface);border-radius:6px;padding:8px;border:1px solid #232C40}
+.mock-bar{height:6px;border-radius:3px;background:#232C40;overflow:hidden;margin-top:4px}
+.mock-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#5B8CFF,#34D399);animation:grow 2s ease-out forwards}
 @keyframes grow{from{width:0}to{width:var(--w,70%)}}
-.mock-line{height:8px;border-radius:4px;background:#E4E9EE;margin-bottom:6px}
+.mock-line{height:8px;border-radius:4px;background:#232C40;margin-bottom:6px}
 .mock-line.short{width:60%}
-.mock-line.blue{background:#EBF3FC;width:80%}
+.mock-line.blue{background:rgba(91,140,255,.15);width:80%}
 
 /* ── PRICING ──────────────────────────────────────────────── */
-.pricing-section{padding:80px 40px;background:#fff}
+.pricing-section{padding:80px 40px;background:var(--surface)}
 .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:960px;margin:0 auto}
-.plan-card{border-radius:20px;padding:32px;border:2px solid var(--border);position:relative;transition:all .25s;background:#fff}
-.plan-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.08)}
-.plan-card.featured{border-color:var(--blue);background:linear-gradient(135deg,#F0F7FF,#fff)}
-.featured-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#2D7DD2,#1A5FA8);color:#fff;font-size:12px;font-weight:700;padding:5px 16px;border-radius:20px;white-space:nowrap;box-shadow:0 4px 12px rgba(45,125,210,.3)}
+.plan-card{border-radius:20px;padding:32px;border:2px solid var(--border);position:relative;transition:all .25s;background:var(--surface)}
+.plan-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.plan-card.featured{border-color:var(--blue);background:linear-gradient(135deg,rgba(91,140,255,.1),var(--surface))}
+.featured-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#5B8CFF,#3F6FD8);color:#fff;font-size:12px;font-weight:700;padding:5px 16px;border-radius:20px;white-space:nowrap;box-shadow:0 4px 12px rgba(45,125,210,.3)}
 .plan-name{font-size:13px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
 .plan-price{font-size:44px;font-weight:900;letter-spacing:-2px;color:var(--text);line-height:1}
 .plan-price sup{font-size:20px;font-weight:600;letter-spacing:0;vertical-align:top;margin-top:8px;display:inline-block}
@@ -124,7 +124,7 @@ nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-
 /* ── TESTIMONIALS ─────────────────────────────────────────── */
 .testimonials{background:var(--bg);padding:80px 40px}
 .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1000px;margin:0 auto}
-.testimonial-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .25s}
+.testimonial-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .25s}
 .testimonial-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.06)}
 .stars{color:#F59E0B;font-size:14px;margin-bottom:16px;letter-spacing:2px}
 .testimonial-text{font-size:15px;color:var(--text);line-height:1.7;margin-bottom:20px;font-style:italic}
@@ -134,10 +134,10 @@ nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-
 .author-role{font-size:12px;color:var(--text-2)}
 
 /* ── FAQ ──────────────────────────────────────────────────── */
-.faq-section{padding:80px 40px;background:#fff}
+.faq-section{padding:80px 40px;background:var(--surface)}
 .faq-list{max-width:680px;margin:0 auto}
 .faq-item{border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;transition:all .25s}
-.faq-item.open{border-color:var(--blue);box-shadow:0 4px 16px rgba(45,125,210,.1)}
+.faq-item.open{border-color:var(--blue);box-shadow:0 4px 16px rgba(91,140,255,.15)}
 .faq-question{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:15px;font-weight:600;gap:16px}
 .faq-question i{font-size:18px;color:var(--blue);flex-shrink:0;transition:transform .25s}
 .faq-item.open .faq-question i{transform:rotate(45deg)}
@@ -162,7 +162,7 @@ footer{background:#0F1923;padding:24px 40px;display:flex;align-items:center;just
 /* ── CADASTRO FORM ────────────────────────────────────────── */
 .form-overlay{display:none;position:fixed;inset:0;background:rgba(15,25,35,.7);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 .form-overlay.open{display:flex}
-.form-modal{background:#fff;border-radius:20px;padding:36px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.2)}
+.form-modal{background:var(--surface);border-radius:20px;padding:36px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.2)}
 .form-close{position:absolute;top:16px;right:16px;background:var(--bg);border:none;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:16px;color:var(--text-2)}
 .form-close:hover{background:var(--border)}
 .form-modal-inner{position:relative}
@@ -172,12 +172,12 @@ footer{background:#0F1923;padding:24px 40px;display:flex;align-items:center;just
 .plan-price-badge{margin-left:auto;font-size:13px}
 .form-group{margin-bottom:14px}
 .form-label{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:5px}
-.form-input{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;outline:none;color:var(--text);transition:border-color .15s;background:#fff}
+.form-input{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;outline:none;color:var(--text);transition:border-color .15s;background:#1B2435}
 .form-input:focus{border-color:var(--blue)}
 .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.error-msg{background:#FDEAEA;color:#B83232;font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:14px;display:none}
+.error-msg{background:rgba(244,115,107,.15);color:#F4736B;font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:14px;display:none}
 .success-state{text-align:center;padding:20px 0;display:none}
-.success-icon{width:64px;height:64px;background:#E6F7F2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;color:#1A9E75}
+.success-icon{width:64px;height:64px;background:rgba(52,211,153,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;color:#1A9E75}
 .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -186,9 +186,11 @@ footer{background:#0F1923;padding:24px 40px;display:flex;align-items:center;just
 .reveal.visible{opacity:1;transform:translateY(0)}
 
 /* ── RESPONSIVE ───────────────────────────────────────────── */
+.mobile-menu-btn{display:none;background:transparent;border:none;color:#fff;font-size:24px;cursor:pointer}
 @media(max-width:900px){
   nav{padding:0 20px}
   .nav-links{display:none}
+  .mobile-menu-btn{display:block}
   .features-grid,.plans-grid,.testimonials-grid{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr;gap:24px}
   .step:not(:last-child)::after{display:none}
@@ -198,6 +200,15 @@ footer{background:#0F1923;padding:24px 40px;display:flex;align-items:center;just
   .hero{padding:100px 20px 60px}
   .form-row-2{grid-template-columns:1fr}
   footer{flex-direction:column;gap:16px;text-align:center}
+  .plan-card{padding:24px}
+  .faq-question{padding:16px 20px;font-size:14px}
+}
+@media(max-width:420px){
+  .hero h1{font-size:28px}
+  .hero-cta{flex-direction:column;align-items:stretch}
+  .hero-cta .btn{justify-content:center}
+  .plan-price{font-size:36px}
+  .stats-inner{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -249,32 +260,32 @@ footer{background:#0F1923;padding:24px 40px;display:flex;align-items:center;just
     <p class="section-sub">Desenvolvido especificamente para consultórios odontológicos brasileiros.</p>
     <div class="features-grid">
       <div class="feat-card reveal">
-        <div class="feat-icon" style="background:#EBF3FC;color:#2D7DD2"><i class="ti ti-calendar-check"></i></div>
+        <div class="feat-icon" style="background:rgba(91,140,255,.15);color:#5B8CFF"><i class="ti ti-calendar-check"></i></div>
         <div class="feat-title">Agenda Inteligente</div>
         <div class="feat-desc">Visualização semanal, agendamento em 3 cliques, controle de status em tempo real. Nunca perca uma consulta.</div>
       </div>
       <div class="feat-card reveal">
-        <div class="feat-icon" style="background:#E6F7F2;color:#1A9E75"><i class="ti ti-tooth"></i></div>
+        <div class="feat-icon" style="background:rgba(52,211,153,.15);color:#1A9E75"><i class="ti ti-tooth"></i></div>
         <div class="feat-title">Odontograma Interativo</div>
         <div class="feat-desc">32 dentes adultos + 20 decíduos. Marque cárie, restauração, canal, implante e mais com um clique.</div>
       </div>
       <div class="feat-card reveal">
-        <div class="feat-icon" style="background:#F3EDFC;color:#7C3AED"><i class="ti ti-users"></i></div>
+        <div class="feat-icon" style="background:rgba(155,139,214,.15);color:#7C3AED"><i class="ti ti-users"></i></div>
         <div class="feat-title">Fichas Completas</div>
         <div class="feat-desc">Prontuário digital com histórico, evolução clínica, convênio e alergias. Tudo em um lugar.</div>
       </div>
       <div class="feat-card reveal">
-        <div class="feat-icon" style="background:#FDF4E6;color:#D98B1A"><i class="ti ti-trending-up"></i></div>
+        <div class="feat-icon" style="background:rgba(240,176,70,.15);color:#F0B046"><i class="ti ti-trending-up"></i></div>
         <div class="feat-title">Controle Financeiro</div>
         <div class="feat-desc">Contas a pagar e receber, alertas de vencimento, parcelamentos e relatório de faturamento mensal.</div>
       </div>
       <div class="feat-card reveal">
-        <div class="feat-icon" style="background:#FDEAEA;color:#D94040"><i class="ti ti-paperclip"></i></div>
+        <div class="feat-icon" style="background:rgba(244,115,107,.15);color:#F4736B"><i class="ti ti-paperclip"></i></div>
         <div class="feat-title">Anexos e Exames</div>
         <div class="feat-desc">Anexe raio-x, PDFs e imagens diretamente na ficha do paciente. Acesse de qualquer lugar.</div>
       </div>
       <div class="feat-card reveal">
-        <div class="feat-icon" style="background:#EBF3FC;color:#2D7DD2"><i class="ti ti-shield-lock"></i></div>
+        <div class="feat-icon" style="background:rgba(91,140,255,.15);color:#5B8CFF"><i class="ti ti-shield-lock"></i></div>
         <div class="feat-title">Segurança Total</div>
         <div class="feat-desc">Dados isolados por clínica, backup automático na nuvem, acesso por perfil. Conformidade com LGPD.</div>
       </div>
@@ -344,13 +355,13 @@ footer{background:#0F1923;padding:24px 40px;display:flex;align-items:center;just
           </div>
           <div class="mock-card">
             <div class="mock-line blue"></div>
-            <div class="mock-line" style="width:40%;height:6px;border-radius:3px;background:#E4E9EE;margin-bottom:6px"></div>
-            <div class="mock-line" style="width:70%;height:6px;border-radius:3px;background:#E4E9EE;margin-bottom:6px"></div>
-            <div class="mock-line" style="width:55%;height:6px;border-radius:3px;background:#E4E9EE"></div>
+            <div class="mock-line" style="width:40%;height:6px;border-radius:3px;background:#232C40;margin-bottom:6px"></div>
+            <div class="mock-line" style="width:70%;height:6px;border-radius:3px;background:#232C40;margin-bottom:6px"></div>
+            <div class="mock-line" style="width:55%;height:6px;border-radius:3px;background:#232C40"></div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-            <div class="mock-card"><div class="mock-line" style="height:32px;border-radius:6px;background:#EBF3FC"></div></div>
-            <div class="mock-card"><div class="mock-line" style="height:32px;border-radius:6px;background:#E6F7F2"></div></div>
+            <div class="mock-card"><div class="mock-line" style="height:32px;border-radius:6px;background:rgba(91,140,255,.15)"></div></div>
+            <div class="mock-card"><div class="mock-line" style="height:32px;border-radius:6px;background:rgba(52,211,153,.15)"></div></div>
           </div>
         </div>
       </div>
@@ -415,7 +426,7 @@ footer{background:#0F1923;padding:24px 40px;display:flex;align-items:center;just
         <div class="stars">★★★★★</div>
         <div class="testimonial-text">"Finalmente um sistema que funciona de verdade no tablet. Uso direto na cadeira com meus pacientes. Simples e rápido."</div>
         <div class="testimonial-author">
-          <div class="author-avatar" style="background:#2D7DD2">DR</div>
+          <div class="author-avatar" style="background:#5B8CFF">DR</div>
           <div><div class="author-name">Dr. Ricardo Alves</div><div class="author-role">Clínica Geral — São Paulo, SP</div></div>
         </div>
       </div>
@@ -490,7 +501,7 @@ footer{background:#0F1923;padding:24px 40px;display:flex;align-items:center;just
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo"><i class="ti ti-tooth" style="font-size:18px;color:#2D7DD2"></i> DentalPro</div>
+  <div class="footer-logo"><i class="ti ti-tooth" style="font-size:18px;color:#5B8CFF"></i> DentalPro</div>
   <div class="footer-links">
     <a class="footer-link" href="#">Termos de Uso</a>
     <a class="footer-link" href="#">Privacidade</a>
