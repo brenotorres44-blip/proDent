@@ -3,77 +3,545 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DentalPro — Conta Suspensa</title>
+<title>DentalPro — Usuários</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.3.0/dist/tabler-icons.min.css">
 <style>
+:root{--bg:#0D1320;--surface:#151D2E;--sidebar-bg:#0A0F1A;--sidebar-active:#16202F;--sidebar-text:#8493AD;--accent:#5B8CFF;--accent-light:rgba(91,140,255,.15);--accent-dark:#3F6FD8;--accent-2:#33D7C0;--text:#EAF0FA;--text-2:#8493AD;--text-3:#5E6B82;--border:#232C40;--success:#34D399;--success-bg:rgba(52,211,153,.14);--danger:#F4736B;--danger-bg:rgba(244,115,107,.14);--warning:#F0B046;--warning-bg:rgba(240,176,70,.14);--radius:12px;--shadow:0 2px 10px rgba(0,0,0,.35);color-scheme:dark;}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0D1320;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;color-scheme:dark}
-.card{background:#151D2E;border-radius:16px;padding:48px 40px;text-align:center;max-width:420px;border:1px solid #232C40}
-.icon{width:64px;height:64px;background:rgba(244,115,107,.14);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:30px;color:#F4736B}
-h1{font-size:22px;font-weight:700;color:#EAF0FA;margin-bottom:8px}
-p{font-size:14px;color:#8493AD;line-height:1.6;margin-bottom:24px}
-.info-box{background:#1B2435;border-radius:10px;padding:16px;margin-bottom:24px;font-size:13px;color:#EAF0FA;line-height:1.8;text-align:left;border:1px solid #232C40}
-.info-box span{color:#8493AD;font-size:12px}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;text-decoration:none;transition:all .15s}
-.btn-primary{background:linear-gradient(135deg,#5B8CFF,#3F6FD8);color:#fff}
-.btn-primary:hover{box-shadow:0 4px 16px rgba(91,140,255,.35)}
-.btn-ghost{background:transparent;color:#8493AD;border:1px solid #232C40}
-.btn-ghost:hover{background:#1B2435}
-.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-@media(max-width:420px){.card{padding:32px 22px}}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;display:flex;height:100vh;overflow:hidden}
+
+/* Sidebar */
+.sidebar{width:220px;min-width:220px;background:var(--sidebar-bg);display:flex;flex-direction:column}
+.sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
+.logo-text{color:#fff;font-size:15px;font-weight:600}
+.logo-sub{color:var(--sidebar-text);font-size:11px;margin-top:1px}
+.sidebar-nav{flex:1;padding:12px 0;overflow-y:auto}
+.nav-section{padding:14px 20px 6px;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.25)}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;color:var(--sidebar-text);cursor:pointer;font-size:13.5px;transition:all .15s;position:relative;text-decoration:none}
+.nav-item:hover{color:#fff;background:rgba(255,255,255,.04)}
+.nav-item.active{color:#fff;background:var(--sidebar-active)}
+.nav-item.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);border-radius:0 2px 2px 0}
+.nav-item i{font-size:17px;width:20px}
+.sidebar-user{padding:14px 20px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:10px;cursor:pointer}
+.sidebar-user:hover{background:rgba(255,255,255,.04)}
+.user-avatar{width:32px;height:32px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600;flex-shrink:0}
+.user-name{color:#fff;font-size:12.5px;font-weight:500}
+.user-role{color:var(--sidebar-text);font-size:11px}
+
+/* Main */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px;height:58px;display:flex;align-items:center;gap:16px}
+.topbar-title{font-size:16px;font-weight:600}
+.topbar-sub{font-size:13px;color:var(--text-2);margin-top:1px}
+.topbar-spacer{flex:1}
+.content{flex:1;overflow-y:auto;padding:24px 28px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-dark)}
+.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border)}.btn-ghost:hover{background:var(--bg)}
+.btn-danger{background:var(--danger-bg);color:var(--danger);border:1px solid #f9c4c4}
+.btn-sm{padding:5px 10px;font-size:12px}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
+.card-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.card-title{font-size:14px;font-weight:600}
+.card-sub{font-size:12px;color:var(--text-2)}
+
+/* Plan banner */
+.plan-banner{background:linear-gradient(135deg,#0F1923,#1A2B3C);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:20px}
+.plan-info{flex:1}
+.plan-name{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
+.plan-desc{font-size:13px;color:rgba(255,255,255,.55)}
+.plan-limit{display:flex;align-items:center;gap:16px}
+.limit-item{text-align:center}
+.limit-num{font-size:24px;font-weight:800;color:#fff;line-height:1}
+.limit-label{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px}
+.limit-bar{width:80px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;margin-top:6px;overflow:hidden}
+.limit-fill{height:100%;border-radius:2px;background:var(--accent);transition:width .3s}
+.limit-fill.warn{background:var(--warning)}
+.limit-fill.full{background:var(--danger)}
+
+/* User grid */
+.users-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:20px}
+.user-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:20px;transition:all .2s;position:relative}
+.user-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(45,125,210,.1)}
+.user-card.owner{border-color:var(--accent);background:var(--accent-light)}
+.user-card-avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;margin-bottom:12px}
+.user-card-name{font-size:15px;font-weight:700;margin-bottom:2px}
+.user-card-email{font-size:12.5px;color:var(--text-2);margin-bottom:12px}
+.user-card-footer{display:flex;align-items:center;justify-content:space-between}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600}
+.badge-admin{background:rgba(91,140,255,.15);color:#9DB8FF}
+.badge-dentista{background:rgba(52,211,153,.15);color:#34D399}
+.badge-recepcao{background:rgba(240,176,70,.15);color:#F0B046}
+.badge-owner{background:var(--accent);color:#fff}
+.owner-crown{position:absolute;top:12px;right:12px;font-size:18px}
+
+/* Add user card */
+.add-user-card{background:var(--bg);border:2px dashed var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;min-height:160px;gap:10px}
+.add-user-card:hover{border-color:var(--accent);background:var(--accent-light)}
+.add-user-card i{font-size:32px;color:var(--text-3)}
+.add-user-card p{font-size:13.5px;color:var(--text-2);font-weight:500}
+.add-user-card.disabled{opacity:.5;cursor:not-allowed}
+.add-user-card.disabled:hover{border-color:var(--border);background:var(--bg)}
+
+/* Perfis info */
+.perfis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.perfil-card{border-radius:12px;padding:20px;border:1.5px solid var(--border)}
+.perfil-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px}
+.perfil-name{font-size:14px;font-weight:700;margin-bottom:6px}
+.perfil-desc{font-size:13px;color:var(--text-2);line-height:1.5;margin-bottom:14px}
+.perfil-perms{display:flex;flex-direction:column;gap:6px}
+.perm-item{display:flex;align-items:center;gap:7px;font-size:12.5px}
+.perm-item i{font-size:14px;flex-shrink:0}
+.perm-yes{color:var(--success)}
+.perm-no{color:var(--text-3)}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,25,35,.5);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:14px;padding:28px;width:440px;max-width:95vw;box-shadow:0 8px 32px rgba(0,0,0,.12)}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:4px}
+.modal-sub{font-size:13px;color:var(--text-2);margin-bottom:24px}
+.form-group{margin-bottom:14px}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:5px}
+.form-input{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13.5px;outline:none;color:var(--text);transition:border-color .15s}
+.form-input:focus{border-color:var(--accent)}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+.perfil-select{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}
+.perfil-opt{border:1.5px solid var(--border);border-radius:8px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .15s}
+.perfil-opt:hover{border-color:var(--accent);background:var(--accent-light)}
+.perfil-opt.selected{border-color:var(--accent);background:var(--accent-light)}
+.perfil-opt i{font-size:20px;display:block;margin-bottom:4px}
+.perfil-opt span{font-size:12px;font-weight:600}
+.error-msg{background:var(--danger-bg);color:#F4736B;font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:14px;display:none}
+.success-msg{background:var(--success-bg);color:#34D399;font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:14px;display:none}
+.spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.menu-toggle{display:none;background:transparent;border:none;color:var(--text);font-size:22px;cursor:pointer;padding:4px 8px;margin-right:2px;line-height:1}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:90}
+.sidebar-overlay.open{display:block}
+@media(max-width:1024px){
+  .perfis-grid{grid-template-columns:1fr!important}
+  .users-grid{grid-template-columns:1fr!important}
+}
+@media(max-width:768px){
+  body{overflow:auto}
+  .menu-toggle{display:inline-flex}
+  .sidebar{position:fixed;top:0;left:0;bottom:0;width:264px;min-width:264px;z-index:100;transform:translateX(-100%);transition:transform .25s ease;box-shadow:0 0 40px rgba(0,0,0,.5)}
+  .sidebar.open{transform:translateX(0)}
+  .main{width:100%}
+  .topbar{padding:0 14px;height:54px}
+  .perfis-grid{grid-template-columns:1fr!important}
+  .users-grid{grid-template-columns:1fr!important}
+  .modal{padding:20px;max-width:95vw}
+}
 </style>
 </head>
 <body>
-<div class="card">
-  <div class="icon"><i class="ti ti-lock"></i></div>
-  <h1>Acesso suspenso</h1>
-  <p>Sua clínica está com o acesso temporariamente suspenso. Verifique a situação do seu plano para reativar.</p>
 
-  <div class="info-box" id="info-box">
-    <span>Clínica</span><br>
-    <strong id="nome-clinica">—</strong><br><br>
-    <span>Plano</span><br>
-    <strong id="plano">—</strong><br><br>
-    <span>Status</span><br>
-    <strong id="status" style="color:#F4736B">—</strong>
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon"><i class="ti ti-tooth"></i></div>
+    <div><div class="logo-text">DentalPro</div><div class="logo-sub">Gestão Odontológica</div></div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">Principal</div>
+    <a class="nav-item" href="index.html"><i class="ti ti-layout-dashboard"></i><span>Dashboard</span></a>
+    <a class="nav-item" href="index.html"><i class="ti ti-calendar"></i><span>Agenda</span></a>
+    <div class="nav-section">Clínica</div>
+    <a class="nav-item" href="index.html"><i class="ti ti-users"></i><span>Pacientes</span></a>
+    <a class="nav-item" href="index.html"><i class="ti ti-clipboard-list"></i><span>Procedimentos</span></a>
+    <div class="nav-section">Configurações</div>
+    <a class="nav-item active" href="usuarios.html"><i class="ti ti-user-cog"></i><span>Usuários</span></a>
+    <div class="nav-section">Financeiro</div>
+    <a class="nav-item" href="index.html"><i class="ti ti-trending-up"></i><span>Contas a Receber</span></a>
+    <a class="nav-item" href="index.html"><i class="ti ti-trending-down"></i><span>Contas a Pagar</span></a>
+  </nav>
+  <div class="sidebar-user" onclick="fazerLogout()" title="Sair">
+    <div class="user-avatar" id="sidebar-avatar">—</div>
+    <div style="flex:1"><div class="user-name" id="sidebar-nome">Carregando...</div><div class="user-role" id="sidebar-perfil">—</div></div>
+    <i class="ti ti-logout" style="color:#8DA0B3;font-size:16px;flex-shrink:0"></i>
+  </div>
+</aside>
+
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<div class="main">
+  <div class="topbar">
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Abrir menu"><i class="ti ti-menu-2"></i></button>
+    <div>
+      <div class="topbar-title">Usuários da Clínica</div>
+      <div class="topbar-sub" id="topbar-sub">Gerencie quem tem acesso ao sistema</div>
+    </div>
+    <div class="topbar-spacer"></div>
+    <button class="btn btn-primary" id="btn-convidar" onclick="abrirConvite()">
+      <i class="ti ti-user-plus"></i> Convidar usuário
+    </button>
   </div>
 
-  <div class="actions">
-    <a href="mailto:suporte@dentalpro.com.br?subject=Reativação de conta" class="btn btn-primary">
-      <i class="ti ti-mail"></i> Falar com suporte
-    </a>
-    <button class="btn btn-ghost" onclick="sair()">
-      <i class="ti ti-logout"></i> Sair
-    </button>
+  <div class="content">
+
+    <!-- PLANO BANNER -->
+    <div class="plan-banner" id="plan-banner">
+      <div class="plan-info">
+        <div class="plan-name" id="plano-nome">Carregando...</div>
+        <div class="plan-desc" id="plano-desc">Verificando seu plano...</div>
+      </div>
+      <div class="plan-limit">
+        <div class="limit-item">
+          <div class="limit-num" id="limit-usuarios">—</div>
+          <div class="limit-label">Usuários</div>
+          <div class="limit-bar"><div class="limit-fill" id="limit-bar-usuarios" style="width:0%"></div></div>
+        </div>
+      </div>
+      <button class="btn btn-ghost btn-sm" style="color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.2)" onclick="window.location.href='cadastro.html#pricing'">
+        <i class="ti ti-arrow-up-circle"></i> Fazer upgrade
+      </button>
+    </div>
+
+    <!-- USUÁRIOS -->
+    <div class="card">
+      <div class="card-header">
+        <div><div class="card-title">Membros da equipe</div><div class="card-sub" id="membros-sub">Carregando...</div></div>
+      </div>
+      <div style="padding:20px">
+        <div class="users-grid" id="users-grid">
+          <div style="text-align:center;padding:32px;color:var(--text-3);grid-column:1/-1">
+            <i class="ti ti-loader" style="font-size:24px;display:block;margin-bottom:8px"></i>Carregando usuários...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERFIS -->
+    <div class="card">
+      <div class="card-header">
+        <div><div class="card-title">Tipos de perfil</div><div class="card-sub">Entenda o que cada perfil pode fazer no sistema</div></div>
+      </div>
+      <div style="padding:20px">
+        <div class="perfis-grid">
+
+          <div class="perfil-card" style="border-color:#2D7DD2;background:rgba(91,140,255,.12)">
+            <div class="perfil-icon" style="background:rgba(91,140,255,.15);color:#2D7DD2"><i class="ti ti-shield-check"></i></div>
+            <div class="perfil-name">Administrador</div>
+            <div class="perfil-desc">Acesso total ao sistema. Ideal para o proprietário da clínica.</div>
+            <div class="perfil-perms">
+              <div class="perm-item"><i class="ti ti-check perm-yes"></i> Ver e editar pacientes</div>
+              <div class="perm-item"><i class="ti ti-check perm-yes"></i> Registrar procedimentos</div>
+              <div class="perm-item"><i class="ti ti-check perm-yes"></i> Contas a pagar e receber</div>
+              <div class="perm-item"><i class="ti ti-check perm-yes"></i> Gerenciar usuários</div>
+              <div class="perm-item"><i class="ti ti-check perm-yes"></i> Agenda completa</div>
+            </div>
+          </div>
+
+          <div class="perfil-card" style="border-color:#1A9E75;background:rgba(52,211,153,.12)">
+            <div class="perfil-icon" style="background:rgba(52,211,153,.15);color:#1A9E75"><i class="ti ti-stethoscope"></i></div>
+            <div class="perfil-name">Dentista</div>
+            <div class="perfil-desc">Acesso clínico completo, mas sem gerenciar usuários ou ver contas a pagar.</div>
+            <div class="perfil-perms">
+              <div class="perm-item"><i class="ti ti-check perm-yes"></i> Ver e editar pacientes</div>
+              <div class="perm-item"><i class="ti ti-check perm-yes"></i> Registrar procedimentos</div>
+              <div class="perm-item"><i class="ti ti-check perm-yes"></i> Contas a receber</div>
+              <div class="perm-item"><i class="ti ti-x perm-no"></i> Contas a pagar</div>
+              <div class="perm-item"><i class="ti ti-x perm-no"></i> Gerenciar usuários</div>
+            </div>
+          </div>
+
+          <div class="perfil-card" style="border-color:#D98B1A;background:rgba(240,176,70,.12)">
+            <div class="perfil-icon" style="background:rgba(240,176,70,.15);color:#D98B1A"><i class="ti ti-headset"></i></div>
+            <div class="perfil-name">Recepção</div>
+            <div class="perfil-desc">Acesso à agenda e pacientes para agendamento. Sem acesso ao financeiro ou procedimentos.</div>
+            <div class="perfil-perms">
+              <div class="perm-item"><i class="ti ti-check perm-yes"></i> Ver pacientes</div>
+              <div class="perm-item"><i class="ti ti-check perm-yes"></i> Gerenciar agenda</div>
+              <div class="perm-item"><i class="ti ti-x perm-no"></i> Procedimentos clínicos</div>
+              <div class="perm-item"><i class="ti ti-x perm-no"></i> Financeiro</div>
+              <div class="perm-item"><i class="ti ti-x perm-no"></i> Gerenciar usuários</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
+<!-- MODAL CONVIDAR -->
+<div class="modal-overlay" id="modal-convite">
+  <div class="modal">
+    <div class="modal-title">Convidar usuário</div>
+    <div class="modal-sub">O usuário receberá as credenciais de acesso por e-mail</div>
+
+    <div class="error-msg" id="convite-error"></div>
+    <div class="success-msg" id="convite-success"></div>
+
+    <div class="form-group">
+      <label class="form-label">Nome completo</label>
+      <input type="text" id="c-nome" class="form-input" placeholder="Dr. Nome Sobrenome">
+    </div>
+    <div class="form-group">
+      <label class="form-label">E-mail</label>
+      <input type="email" id="c-email" class="form-input" placeholder="email@clinica.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Senha inicial</label>
+      <input type="password" id="c-senha" class="form-input" placeholder="Mínimo 8 caracteres">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Perfil de acesso</label>
+      <div class="perfil-select">
+        <div class="perfil-opt" onclick="selecionarPerfil('admin', this)">
+          <i class="ti ti-shield-check" style="color:#2D7DD2"></i>
+          <span>Admin</span>
+        </div>
+        <div class="perfil-opt selected" onclick="selecionarPerfil('dentista', this)">
+          <i class="ti ti-stethoscope" style="color:#1A9E75"></i>
+          <span>Dentista</span>
+        </div>
+        <div class="perfil-opt" onclick="selecionarPerfil('recepcao', this)">
+          <i class="ti ti-headset" style="color:#D98B1A"></i>
+          <span>Recepção</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="fecharConvite()">Cancelar</button>
+      <button class="btn btn-primary" id="btn-salvar-convite" onclick="salvarConvite()">
+        <span id="convite-btn-text"><i class="ti ti-user-plus"></i> Convidar</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleSidebar(){
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+</script>
 <script type="module">
-import { logout } from "./js/auth.js";
-import { carregarTenant, PLANOS, diasRestantesTrial } from "./js/tenant.js";
-import { getClinicaIdSessao } from "./js/tenant.js";
-import { auth } from "./js/firebase.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { auth, db }         from './js/firebase.js';
+import { requireAuth, logout } from './js/auth.js';
+import { carregarTenant, PLANOS, getClinicaIdSessao } from './js/tenant.js';
+import {
+  collection, getDocs, doc, getDoc, setDoc, deleteDoc, serverTimestamp, query, where, getCountFromServer
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import {
+  createUserWithEmailAndPassword
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 
-onAuthStateChanged(auth, async user => {
-  if (!user) { window.location.href = "login.html"; return; }
-  const clinicaId = getClinicaIdSessao();
-  if (!clinicaId) return;
-  const tenant = await carregarTenant(clinicaId);
-  if (!tenant) return;
+const CORES = ['#2D7DD2','#7C3AED','#D94040','#1A9E75','#D98B1A','#534AB7'];
+function avatarCor(nome) { return CORES[(nome||'A').charCodeAt(0)%CORES.length]; }
+function iniciais(nome) { return (nome||'?').split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase(); }
 
-  document.getElementById("nome-clinica").textContent = tenant.nome;
-  document.getElementById("plano").textContent = PLANOS[tenant.plano]?.nome || tenant.plano;
+let clinicaId, perfilAtual, usuarioAtualUid, tenantData, usuariosLista = [];
+let perfilSelecionado = 'dentista';
 
-  const statusMap = {
-    trial:     `Trial — ${diasRestantesTrial(tenant)} dias restantes`,
-    suspenso:  "Suspenso",
-    cancelado: "Cancelado"
-  };
-  document.getElementById("status").textContent = statusMap[tenant.status] || tenant.status;
+window.fazerLogout = async () => { await logout(); };
+
+requireAuth(async ({ user, clinicaId: cid, perfil, tenant }) => {
+  clinicaId      = cid;
+  perfilAtual    = perfil;
+  usuarioAtualUid = user.uid;
+  tenantData     = tenant;
+
+  // Sidebar
+  try {
+    const rootSnap = await getDoc(doc(db,'usuarios',user.uid));
+    let nome = rootSnap.exists()&&rootSnap.data().nome ? rootSnap.data().nome : user.email;
+    document.getElementById('sidebar-avatar').textContent = iniciais(nome);
+    document.getElementById('sidebar-nome').textContent   = nome;
+    document.getElementById('sidebar-perfil').textContent = {admin:'Administrador',dentista:'Dentista',recepcao:'Recepção',superadmin:'Super Admin'}[perfil]||perfil;
+  } catch(e){}
+
+  // Verifica se é admin
+  if (perfil !== 'admin' && perfil !== 'superadmin') {
+    document.getElementById('btn-convidar').style.display = 'none';
+  }
+
+  await carregarPlano();
+  await carregarUsuarios();
 });
 
-window.sair = async function() { await logout(); };
+async function carregarPlano() {
+  const tenant = await carregarTenant(clinicaId);
+  if (!tenant) return;
+  tenantData = tenant;
+  const plano = PLANOS[tenant.plano] || PLANOS.starter;
+  const maxU  = plano.maxUsuarios;
+
+  document.getElementById('plano-nome').textContent = `Plano ${plano.nome}`;
+  document.getElementById('plano-desc').textContent = plano.descricao;
+
+  const snap = await getDocs(collection(db,'clinica',clinicaId,'usuarios'));
+  const total = snap.size;
+  const max   = maxU || '∞';
+  document.getElementById('limit-usuarios').textContent = `${total}/${max}`;
+
+  if (maxU) {
+    const pct = Math.min((total/maxU)*100, 100);
+    const fill = document.getElementById('limit-bar-usuarios');
+    fill.style.width = pct+'%';
+    if (pct >= 100) fill.classList.add('full');
+    else if (pct >= 80) fill.classList.add('warn');
+  } else {
+    document.getElementById('limit-bar-usuarios').style.width = '30%';
+  }
+}
+
+async function carregarUsuarios() {
+  const snap = await getDocs(collection(db,'clinica',clinicaId,'usuarios'));
+  usuariosLista = snap.docs.map(d=>({id:d.id,...d.data()}));
+
+  document.getElementById('membros-sub').textContent = `${usuariosLista.length} membro(s) com acesso`;
+
+  const plano  = PLANOS[tenantData?.plano] || PLANOS.starter;
+  const maxU   = plano.maxUsuarios;
+  const podeCriar = !maxU || usuariosLista.length < maxU;
+
+  const grid = document.getElementById('users-grid');
+  const perfilBadge = { admin:'badge-admin', dentista:'badge-dentista', recepcao:'badge-recepcao' };
+  const perfilLabel = { admin:'Administrador', dentista:'Dentista', recepcao:'Recepção' };
+  const perfilIcon  = { admin:'ti-shield-check', dentista:'ti-stethoscope', recepcao:'ti-headset' };
+
+  let html = usuariosLista.map(u => {
+    const isMe    = u.uid === usuarioAtualUid;
+    const isOwner = u.perfil === 'admin' && isMe;
+    return `
+    <div class="user-card ${isOwner?'owner':''}">
+      ${isOwner?'<div class="owner-crown">👑</div>':''}
+      <div class="user-card-avatar" style="background:${avatarCor(u.nome||u.email)}">${iniciais(u.nome||u.email)}</div>
+      <div class="user-card-name">${u.nome||'—'} ${isMe?'<span style="font-size:11px;color:var(--text-3)">(você)</span>':''}</div>
+      <div class="user-card-email">${u.email||'—'}</div>
+      <div class="user-card-footer">
+        <span class="badge ${perfilBadge[u.perfil]||'badge-admin'}">
+          <i class="ti ${perfilIcon[u.perfil]||'ti-user'}" style="font-size:11px"></i>
+          ${perfilLabel[u.perfil]||u.perfil}
+        </span>
+        ${!isMe && perfilAtual==='admin' ? `<button class="btn btn-ghost btn-sm" onclick="removerUsuario('${u.uid}','${u.nome||u.email}')"><i class="ti ti-trash" style="color:var(--danger)"></i></button>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  // Card de adicionar
+  if (perfilAtual === 'admin' || perfilAtual === 'superadmin') {
+    if (podeCriar) {
+      html += `<div class="add-user-card" onclick="abrirConvite()">
+        <i class="ti ti-user-plus"></i>
+        <p>Convidar novo usuário</p>
+        <span style="font-size:12px;color:var(--text-3)">${maxU ? `${usuariosLista.length}/${maxU} vagas usadas` : 'Ilimitado'}</span>
+      </div>`;
+    } else {
+      html += `<div class="add-user-card disabled">
+        <i class="ti ti-lock"></i>
+        <p>Limite do plano atingido</p>
+        <span style="font-size:12px;color:var(--text-3)">Faça upgrade para adicionar mais</span>
+        <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="window.location.href='cadastro.html#pricing'">Fazer upgrade</button>
+      </div>`;
+    }
+  }
+  grid.innerHTML = html;
+}
+
+window.selecionarPerfil = function(perfil, el) {
+  perfilSelecionado = perfil;
+  document.querySelectorAll('.perfil-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+};
+
+window.abrirConvite = function() {
+  const plano = PLANOS[tenantData?.plano] || PLANOS.starter;
+  const maxU  = plano.maxUsuarios;
+  if (maxU && usuariosLista.length >= maxU) {
+    alert(`Seu plano ${plano.nome} permite no máximo ${maxU} usuários. Faça upgrade para adicionar mais.`);
+    return;
+  }
+  document.getElementById('convite-error').style.display = 'none';
+  document.getElementById('convite-success').style.display = 'none';
+  document.getElementById('c-nome').value = '';
+  document.getElementById('c-email').value = '';
+  document.getElementById('c-senha').value = '';
+  document.getElementById('modal-convite').classList.add('open');
+};
+
+window.fecharConvite = function() {
+  document.getElementById('modal-convite').classList.remove('open');
+};
+
+window.salvarConvite = async function() {
+  const nome  = document.getElementById('c-nome').value.trim();
+  const email = document.getElementById('c-email').value.trim();
+  const senha = document.getElementById('c-senha').value;
+  const err   = document.getElementById('convite-error');
+  const suc   = document.getElementById('convite-success');
+  const btn   = document.getElementById('convite-btn-text');
+
+  err.style.display = 'none';
+  suc.style.display = 'none';
+
+  if (!nome||!email||!senha) { err.textContent='Preencha todos os campos.'; err.style.display='block'; return; }
+  if (senha.length<8) { err.textContent='Senha deve ter no mínimo 8 caracteres.'; err.style.display='block'; return; }
+
+  btn.innerHTML = '<span class="spinner"></span> Criando...';
+  document.getElementById('btn-salvar-convite').disabled = true;
+
+  try {
+    // Cria usuário no Firebase Auth
+    const cred = await createUserWithEmailAndPassword(auth, email, senha);
+    const uid  = cred.user.uid;
+
+    // Grava mapeamento raiz
+    await setDoc(doc(db,'usuarios',uid), {
+      uid, email, clinicaId, perfil: perfilSelecionado, nome, criadoEm: serverTimestamp()
+    });
+
+    // Grava dentro da clínica
+    await setDoc(doc(db,'clinica',clinicaId,'usuarios',uid), {
+      uid, nome, email, perfil: perfilSelecionado, ativo: true, criadoEm: serverTimestamp()
+    });
+
+    suc.textContent = `✓ ${nome} foi adicionado com sucesso!`;
+    suc.style.display = 'block';
+    btn.innerHTML = '<i class="ti ti-user-plus"></i> Convidar';
+    document.getElementById('btn-salvar-convite').disabled = false;
+
+    await carregarPlano();
+    await carregarUsuarios();
+
+    setTimeout(() => fecharConvite(), 1500);
+  } catch(e) {
+    const msgs = {
+      'auth/email-already-in-use':'Este e-mail já está cadastrado no sistema.',
+      'auth/invalid-email':'E-mail inválido.',
+      'auth/weak-password':'Senha muito fraca.'
+    };
+    err.textContent = msgs[e.code] || e.message;
+    err.style.display = 'block';
+    btn.innerHTML = '<i class="ti ti-user-plus"></i> Convidar';
+    document.getElementById('btn-salvar-convite').disabled = false;
+  }
+};
+
+window.removerUsuario = async function(uid, nome) {
+  if (!confirm(`Remover ${nome} da clínica? O acesso será revogado imediatamente.`)) return;
+  try {
+    await deleteDoc(doc(db,'clinica',clinicaId,'usuarios',uid));
+    await deleteDoc(doc(db,'usuarios',uid));
+    await carregarPlano();
+    await carregarUsuarios();
+  } catch(e) { alert('Erro ao remover: '+e.message); }
+};
+
+document.getElementById('modal-convite').addEventListener('click', e => {
+  if(e.target===e.currentTarget) fecharConvite();
+});
 </script>
 </body>
 </html>
