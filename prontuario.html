@@ -7,13 +7,13 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.3.0/dist/tabler-icons.min.css">
 <style>
 :root{
-  --bg:#F7F8FA;--surface:#fff;--border:#E4E9EE;
-  --text:#0F1923;--text-2:#5A6A7A;--text-3:#9AABB8;
-  --accent:#2D7DD2;--accent-light:#EBF3FC;--accent-dark:#1A5FA8;
-  --success:#1A9E75;--success-bg:#E6F7F2;
-  --danger:#D94040;--danger-bg:#FDEAEA;
-  --warning:#D98B1A;--warning-bg:#FDF4E6;
-  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.06);
+  --bg:#0D1320;--surface:#151D2E;--border:#232C40;
+  --text:#EAF0FA;--text-2:#8493AD;--text-3:#5E6B82;
+  --accent:#5B8CFF;--accent-light:rgba(91,140,255,.15);--accent-dark:#3F6FD8;
+  --success:#34D399;--success-bg:rgba(52,211,153,.14);
+  --danger:#F4736B;--danger-bg:rgba(244,115,107,.14);
+  --warning:#F0B046;--warning-bg:rgba(240,176,70,.14);
+  --radius:12px;--shadow:0 2px 10px rgba(0,0,0,.35);color-scheme:dark;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
@@ -34,7 +34,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .info-label{color:var(--text-2);font-size:12px}
 .info-value{font-weight:500}
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11.5px;font-weight:600}
-.badge-success{background:var(--success-bg);color:#0D7D5C}
+.badge-success{background:var(--success-bg);color:#34D399}
 .badge-info{background:var(--accent-light);color:var(--accent-dark)}
 
 /* TABS */
@@ -59,12 +59,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tooth-label{font-size:9px;color:var(--text-3);text-align:center;line-height:1.2;min-height:20px;display:flex;align-items:center;justify-content:center}
 
 /* Cores dos dentes */
-.tooth-normal   .face{fill:#fff;stroke:#CBD4DC;stroke-width:1.5}
-.tooth-carie    .face{fill:#D94040;stroke:#B83232;stroke-width:1.5}
-.tooth-restaurado .face{fill:#2D7DD2;stroke:#1A5FA8;stroke-width:1.5}
+.tooth-normal   .face{fill:#2A3548;stroke:#4A5568;stroke-width:1.5}
+.tooth-carie    .face{fill:#F4736B;stroke:#D94040;stroke-width:1.5}
+.tooth-restaurado .face{fill:#5B8CFF;stroke:#3F6FD8;stroke-width:1.5}
 .tooth-extraido .face{fill:#5A6A7A;stroke:#3D4D5C;stroke-width:1.5}
 .tooth-protese  .face{fill:#7C3AED;stroke:#5B21B6;stroke-width:1.5}
-.tooth-canal    .face{fill:#D98B1A;stroke:#B06A0D;stroke-width:1.5}
+.tooth-canal    .face{fill:#F0B046;stroke:#C88F2A;stroke-width:1.5}
 .tooth-implante .face{fill:#1A9E75;stroke:#0D7D5C;stroke-width:1.5}
 .tooth-ausente  .face{fill:#F0F2F5;stroke:#CBD4DC;stroke-width:1;stroke-dasharray:3 2}
 
@@ -145,6 +145,10 @@ textarea.form-input{resize:vertical;min-height:80px;font-family:inherit}
 @media(max-width:768px){
   .layout{grid-template-columns:1fr}
   .cond-grid{grid-template-columns:1fr}
+  .patient-sidebar{border-right:none;border-bottom:1px solid var(--border)}
+  .patient-main{padding:16px}
+  .form-row{grid-template-columns:1fr}
+  .modal{padding:20px;max-width:95vw}
 }
 </style>
 </head>
@@ -311,7 +315,12 @@ textarea.form-input{resize:vertical;min-height:80px;font-family:inherit}
 
       <!-- HISTÓRICO -->
       <div id="tab-historico" class="tab-panel">
-        <div style="font-size:14px;font-weight:600;margin-bottom:16px">Histórico de Procedimentos</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div style="font-size:14px;font-weight:600">Histórico de Procedimentos</div>
+          <button class="btn btn-primary btn-sm" onclick="abrirModalProcedimento()" style="padding:7px 14px;font-size:13px">
+            <i class="ti ti-plus"></i> Novo procedimento
+          </button>
+        </div>
         <div id="historico-list">
           <div style="text-align:center;padding:32px;color:var(--text-3)">Carregando...</div>
         </div>
@@ -341,6 +350,55 @@ textarea.form-input{resize:vertical;min-height:80px;font-family:inherit}
   </div>
 </div>
 
+<!-- MODAL PROCEDIMENTO -->
+<div class="modal-overlay" id="modal-proc">
+  <div class="modal">
+    <div class="modal-title">Novo procedimento</div>
+    <div class="modal-sub">Registre um procedimento individualizado com data</div>
+
+    <div class="form-group">
+      <label class="form-label">Procedimento *</label>
+      <input class="form-input" id="proc-tipo" placeholder="Ex: Restauração em resina, Canal, Extração...">
+    </div>
+
+    <div style="display:flex;gap:12px">
+      <div class="form-group" style="flex:1">
+        <label class="form-label">Data de realização *</label>
+        <input class="form-input" type="date" id="proc-data">
+      </div>
+      <div class="form-group" style="flex:1">
+        <label class="form-label">Valor (R$)</label>
+        <input class="form-input" type="number" id="proc-valor" min="0" step="0.01" placeholder="0,00">
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px">
+      <div class="form-group" style="flex:1">
+        <label class="form-label">Dentes envolvidos</label>
+        <input class="form-input" id="proc-dentes" placeholder="Ex: 11, 12, 21">
+      </div>
+      <div class="form-group" style="flex:1">
+        <label class="form-label">Status</label>
+        <select class="form-input" id="proc-status">
+          <option value="em_andamento">Em andamento</option>
+          <option value="concluido">Concluído</option>
+          <option value="parcial">Parcial</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Observações</label>
+      <textarea class="form-input" id="proc-obs" rows="2" placeholder="Detalhes do procedimento, materiais, orientações..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="fecharModalProcedimento()">Cancelar</button>
+      <button class="btn btn-primary" id="proc-salvar-btn" onclick="salvarProcedimento()"><i class="ti ti-check"></i> Registrar</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import { requireAuth }   from "./js/auth.js";
 import { Procedimentos } from "./js/db.js";
@@ -349,7 +407,7 @@ import { db }            from "./js/firebase.js";
 import { getClinicaIdSessao } from "./js/tenant.js";
 import {
   doc, getDoc, setDoc, collection, addDoc,
-  getDocs, orderBy, query, serverTimestamp
+  getDocs, orderBy, query, serverTimestamp, Timestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ── Pega pacienteId da URL ────────────────────────────────────
@@ -390,6 +448,7 @@ async function init() {
   renderOdontograma();
   renderLegenda();
   await carregarOdontograma();
+  await carregarEvolucoes();
   await carregarAnexos();
   await carregarHistorico();
 }
@@ -679,8 +738,17 @@ window.deletarAnexo = async function(id, publicId) {
 // ── Histórico de procedimentos ────────────────────────────────
 async function carregarHistorico() {
   if (pacienteId === "demo") return;
-  const procs = await Procedimentos.buscarPorPaciente(pacienteId, clinicaId);
-  const list  = document.getElementById("historico-list");
+  const list = document.getElementById("historico-list");
+  let procs;
+  try {
+    procs = await Procedimentos.buscarPorPaciente(pacienteId, clinicaId);
+  } catch (e) {
+    console.error(e);
+    list.innerHTML = `<div style="text-align:center;padding:32px;color:var(--danger)">
+      Erro ao carregar. Se aparecer "requires an index" no console (F12),
+      clique no link que o Firebase mostra para criar o índice.</div>`;
+    return;
+  }
   if (!procs.length) {
     list.innerHTML = `<div style="text-align:center;padding:32px;color:var(--text-3)">Nenhum procedimento registrado</div>`;
     return;
@@ -708,6 +776,72 @@ async function carregarHistorico() {
     }).join("")}</tbody>
   </table>`;
 }
+
+// ── Cadastro de procedimento ──────────────────────────────────
+window.abrirModalProcedimento = function() {
+  if (pacienteId === "demo") {
+    mostrarToast("Abra o prontuário de um paciente real para registrar.");
+    return;
+  }
+  document.getElementById("proc-tipo").value   = "";
+  document.getElementById("proc-valor").value  = "";
+  document.getElementById("proc-dentes").value = "";
+  document.getElementById("proc-obs").value    = "";
+  document.getElementById("proc-status").value = "em_andamento";
+  // Data padrão = hoje (formato yyyy-mm-dd respeitando o fuso local)
+  const hoje = new Date();
+  const off  = hoje.getTimezoneOffset();
+  document.getElementById("proc-data").value =
+    new Date(hoje.getTime() - off * 60000).toISOString().slice(0, 10);
+  document.getElementById("modal-proc").classList.add("open");
+};
+
+window.fecharModalProcedimento = function() {
+  document.getElementById("modal-proc").classList.remove("open");
+};
+
+window.salvarProcedimento = async function() {
+  const tipo    = document.getElementById("proc-tipo").value.trim();
+  const dataStr = document.getElementById("proc-data").value;
+  if (!tipo)    { mostrarToast("Informe o procedimento."); return; }
+  if (!dataStr) { mostrarToast("Informe a data."); return; }
+
+  const btn = document.getElementById("proc-salvar-btn");
+  btn.disabled = true;
+
+  // dataStr = "yyyy-mm-dd" → meio-dia local evita virar o dia anterior por fuso
+  const [ano, mes, dia] = dataStr.split("-").map(Number);
+  const dataRealizacao  = Timestamp.fromDate(new Date(ano, mes - 1, dia, 12, 0, 0));
+
+  const dentes = document.getElementById("proc-dentes").value
+    .split(",").map(s => s.trim()).filter(Boolean);
+
+  try {
+    await Procedimentos.criar({
+      pacienteId,
+      tipo,
+      dataRealizacao,
+      dentes,
+      valor:       parseFloat(document.getElementById("proc-valor").value) || 0,
+      status:      document.getElementById("proc-status").value,
+      observacoes: document.getElementById("proc-obs").value.trim()
+    }, clinicaId);
+
+    fecharModalProcedimento();
+    mostrarToast("Procedimento registrado!");
+    await carregarHistorico();
+  } catch (e) {
+    console.error(e);
+    mostrarToast("Erro ao registrar — veja o console (F12).");
+  } finally {
+    btn.disabled = false;
+  }
+};
+
+// Fecha modal de procedimento clicando fora
+document.getElementById("modal-proc").addEventListener("click", e => {
+  if (e.target === e.currentTarget) fecharModalProcedimento();
+});
 
 // ── Tabs ──────────────────────────────────────────────────────
 window.showTab = function(id) {
