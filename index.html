@@ -560,14 +560,29 @@ function renderMiniCal() {
   let html = `<div class="mini-cal-header"><span class="mini-cal-title">${ptBR_months[mes]} ${ano}</span></div><div class="mini-cal-grid">`;
   ['D','S','T','Q','Q','S','S'].forEach(d => { html += `<div class="mini-cal-weekday">${d}</div>`; });
   for (let i=0;i<firstDay;i++) html += '<div></div>';
-  for (let d=1;d<=daysInMonth;d++) html += `<div class="mini-cal-day ${d===hoje.getDate()?'today':''}">${d}</div>`;
+  for (let d=1;d<=daysInMonth;d++) html += `<div class="mini-cal-day ${d===hoje.getDate()?'today':''}" onclick="irParaDia(${ano},${mes},${d})" style="cursor:pointer">${d}</div>`;
   html += '</div>';
   document.getElementById('mini-cal').innerHTML = html;
 }
 renderMiniCal();
 
+// Navegar para o dia clicado no mini-calendário
+window.irParaDia = function(ano, mes, dia) {
+  const target = new Date(ano, mes, dia);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diff = Math.floor((target - today) / 86400000);
+  const todayDow = today.getDay();
+  const todayMonday = -(todayDow === 0 ? 6 : todayDow - 1);
+  const targetDow = target.getDay();
+  const targetMonday = -(targetDow === 0 ? 6 : targetDow - 1);
+  weekOffset = Math.round((diff + targetMonday - todayMonday) / 7);
+  renderWeek();
+  // Mostra a página de agenda se estiver em outra
+  if (typeof showPage === 'function') showPage('agenda');
+};
+
 // ── Helpers ───────────────────────────────────────────────────
-const CORES = ['#2D7DD2','#7C3AED','#D94040','#1A9E75','#D98B1A','#534AB7','#0F6E56','#993C1D'];
+const CORES = ['#5B8CFF','#7C3AED','#F4736B','#34D399','#F0B046','#534AB7','#33D7C0','#B9A7F0'];
 function avatarCor(nome) { return CORES[(nome||'A').charCodeAt(0) % CORES.length]; }
 function iniciais(nome) { return (nome||'?').split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase(); }
 function calcIdade(dataNasc) { if(!dataNasc) return '—'; return (new Date().getFullYear()-new Date(dataNasc).getFullYear())+' anos'; }
