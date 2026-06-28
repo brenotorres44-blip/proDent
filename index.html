@@ -74,7 +74,8 @@ tr:hover td{background:#1A2334}
 .week-day-num{font-size:18px;font-weight:700;color:var(--text);margin-bottom:2px}
 .week-day-num.today{color:var(--accent)}
 .time-label{font-size:11px;color:var(--text-3);text-align:right;padding-right:10px;padding-top:8px}
-.week-cell{border-left:1px solid var(--border);border-bottom:1px solid #1E2638;min-height:44px;padding:4px;position:relative}
+.week-cell{border-left:1px solid var(--border);border-bottom:1px solid #1E2638;min-height:44px;padding:4px;position:relative;cursor:pointer;transition:background .15s}
+.week-cell:hover{background:rgba(91,140,255,.08)}
 .appt-block{background:var(--accent-light);border-left:3px solid var(--accent);border-radius:4px;padding:4px 7px;font-size:11px;color:var(--accent-dark);font-weight:500;margin-bottom:2px;cursor:pointer}
 .appt-block.green{background:var(--success-bg);border-color:var(--success);color:#34D399}
 .appt-block.amber{background:var(--warning-bg);border-color:var(--warning);color:#F0B046}
@@ -542,10 +543,22 @@ function renderWeek() {
   });
   hours.forEach(h => {
     html += `<div class="time-label">${h}</div>`;
-    days.forEach(d => { html += `<div class="week-cell"></div>`; });
+    days.forEach(d => {
+      const ds = dateStr(d);
+      html += `<div class="week-cell" onclick="agendarNaCelula('${ds}','${h}')" title="Clique para agendar"></div>`;
+    });
   });
   grid.innerHTML = html;
 }
+
+// Clique na célula do calendário → abre modal com data/hora preenchidos
+window.agendarNaCelula = function(data, hora) {
+  document.getElementById('ag-data').value = data;
+  document.getElementById('ag-hora').value = hora;
+  document.getElementById('modal-agenda').classList.add('open');
+  // Foca no select de paciente pra agilizar
+  setTimeout(() => document.getElementById('ag-paciente')?.focus(), 200);
+};
 
 function changeWeek(dir) { weekOffset+=dir; renderWeek(); }
 function goToday() { weekOffset=0; renderWeek(); }
