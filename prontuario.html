@@ -550,7 +550,7 @@ function iniciarCanvas() {
   canvasDoc=document.getElementById("signature-canvas"); if(!canvasDoc)return;
   const rect=canvasDoc.getBoundingClientRect();
   canvasDoc.width=rect.width*window.devicePixelRatio; canvasDoc.height=180*window.devicePixelRatio;
-  ctxDoc=canvasDoc.getContext("2d"); ctxDoc.scale(window.devicePixelRatio,window.devicePixelRatio);
+  ctxDoc=canvasDoc.getContext("2d",{willReadFrequently:true}); ctxDoc.scale(window.devicePixelRatio,window.devicePixelRatio);
   ctxDoc.strokeStyle="#0F1923"; ctxDoc.lineWidth=2.5; ctxDoc.lineCap="round"; ctxDoc.lineJoin="round";
   const getPos=(e)=>{const r=canvasDoc.getBoundingClientRect();return e.touches?{x:e.touches[0].clientX-r.left,y:e.touches[0].clientY-r.top}:{x:e.clientX-r.left,y:e.clientY-r.top};};
   canvasDoc.onmousedown=(e)=>{assinando=true;posAnterior=getPos(e);};
@@ -588,10 +588,21 @@ async function carregarDocumentos() {
     const icones={termo_imagem:"ti-camera",contrato:"ti-file-text",orcamento:"ti-receipt",distrato:"ti-file-x"};
     list.innerHTML=snap.empty?'<div style="text-align:center;padding:32px;color:var(--text-3)"><i class="ti ti-file-certificate" style="font-size:32px;display:block;margin-bottom:8px"></i>Nenhum documento assinado ainda</div>':
       snap.docs.map(d=>{const data=d.data(),dt=data.assinadoEm?.toDate?.()?.toLocaleDateString("pt-BR")||"—",cor=cores[data.tipo]||"#2D7DD2",ico=icones[data.tipo]||"ti-file";
-        return`<div class="doc-salvo-item"><div style="width:40px;height:40px;border-radius:8px;background:${cor}20;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ${ico}" style="color:${cor};font-size:18px"></i></div><div style="flex:1"><div style="font-size:13.5px;font-weight:600">${data.titulo}</div><div style="font-size:12px;color:var(--text-2)">Assinado em ${dt}</div></div><button class="btn btn-ghost" style="font-size:12px;padding:5px 10px" onclick="verDocumento('${d.id}')"><i class="ti ti-eye"></i> Ver</button></div>`;
+        return`<div class="doc-salvo-item"><div style="width:40px;height:40px;border-radius:8px;background:${cor}20;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ${ico}" style="color:${cor};font-size:18px"></i></div><div style="flex:1"><div style="font-size:13.5px;font-weight:600">${data.titulo}</div><div style="font-size:12px;color:var(--text-2)">Assinado em ${dt}</div></div><div style="display:flex;gap:6px">
+        <button class="btn btn-ghost" style="font-size:12px;padding:5px 10px" onclick="verDocumento('${d.id}')"><i class="ti ti-eye"></i> Ver</button>
+        <button class="btn btn-ghost" style="font-size:12px;padding:5px 10px;color:var(--danger);border-color:#f9c4c4" onclick="excluirDocumento('${d.id}')"><i class="ti ti-trash"></i></button>
+      </div></div>`;
       }).join("");
   } catch(e){console.warn("Documentos:",e.message);}
 }
+
+window.excluirDocumento = async function(docId) {
+  if(!confirm("Excluir este documento assinado?")) return;
+  const { deleteDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+  await deleteDoc(doc(db,"clinica",clinicaId,"pacientes",pacienteId,"documentos",docId));
+  mostrarToast("Documento excluído!");
+  await carregarDocumentos();
+};
 
 window.verDocumento = async function(docId) {
   const snap=await getDoc(doc(db,"clinica",clinicaId,"pacientes",pacienteId,"documentos",docId));
