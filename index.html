@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DentalPro — Gestão de Consultório</title>
+<title>ProDent — Gestão de Consultório</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.3.0/dist/tabler-icons.min.css">
 <style>
-:root{--bg:#0D1320;--surface:#151D2E;--sidebar-bg:#0A0F1A;--sidebar-active:#16202F;--sidebar-text:#8493AD;--accent:#5B8CFF;--accent-light:rgba(91,140,255,.15);--accent-dark:#3F6FD8;--accent-2:#33D7C0;--text:#EAF0FA;--text-2:#8493AD;--text-3:#5E6B82;--border:#232C40;--success:#34D399;--success-bg:rgba(52,211,153,.14);--danger:#F4736B;--danger-bg:rgba(244,115,107,.14);--warning:#F0B046;--warning-bg:rgba(240,176,70,.14);--radius:12px;--radius-sm:8px;--shadow:0 2px 10px rgba(0,0,0,.35);color-scheme:dark;}
+:root{--bg:#F7F8FA;--surface:#fff;--sidebar-bg:#0F1923;--sidebar-active:#1A2B3C;--sidebar-text:#8DA0B3;--accent:#2D7DD2;--accent-light:#EBF3FC;--accent-dark:#1A5FA8;--text:#0F1923;--text-2:#5A6A7A;--text-3:#9AABB8;--border:#E4E9EE;--success:#1A9E75;--success-bg:#E6F7F2;--danger:#D94040;--danger-bg:#FDEAEA;--warning:#D98B1A;--warning-bg:#FDF4E6;--radius:10px;--radius-sm:6px;--shadow:0 1px 3px rgba(0,0,0,.06);}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;display:flex;height:100vh;overflow:hidden}
 .sidebar{width:220px;min-width:220px;background:var(--sidebar-bg);display:flex;flex-direction:column;overflow:hidden}
@@ -55,13 +55,13 @@ table{width:100%;border-collapse:collapse}
 th{padding:10px 16px;text-align:left;font-size:11.5px;font-weight:600;color:var(--text-2);letter-spacing:.4px;text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--bg)}
 td{padding:12px 16px;font-size:13.5px;border-bottom:1px solid var(--border)}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:#1A2334}
+tr:hover td{background:#FAFBFD}
 .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600}
-.badge-success{background:var(--success-bg);color:#34D399}
-.badge-danger{background:var(--danger-bg);color:#F4736B}
-.badge-warning{background:var(--warning-bg);color:#F0B046}
-.badge-info{background:var(--accent-light);color:#9DB8FF}
-.badge-gray{background:#222C40;color:#9FB0C6}
+.badge-success{background:var(--success-bg);color:#0D7D5C}
+.badge-danger{background:var(--danger-bg);color:#B83232}
+.badge-warning{background:var(--warning-bg);color:#A86A0D}
+.badge-info{background:var(--accent-light);color:#1A5FA8}
+.badge-gray{background:#EEF0F4;color:#5A6A7A}
 .avatar{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;margin-right:8px;flex-shrink:0}
 .patient-cell{display:flex;align-items:center}
 .agenda-grid{display:grid;grid-template-columns:1fr 300px;gap:20px}
@@ -74,11 +74,10 @@ tr:hover td{background:#1A2334}
 .week-day-num{font-size:18px;font-weight:700;color:var(--text);margin-bottom:2px}
 .week-day-num.today{color:var(--accent)}
 .time-label{font-size:11px;color:var(--text-3);text-align:right;padding-right:10px;padding-top:8px}
-.week-cell{border-left:1px solid var(--border);border-bottom:1px solid #1E2638;min-height:44px;padding:4px;position:relative;cursor:pointer;transition:background .15s}
-.week-cell:hover{background:rgba(91,140,255,.08)}
+.week-cell{border-left:1px solid var(--border);border-bottom:1px solid #F0F2F5;min-height:44px;padding:4px;position:relative}
 .appt-block{background:var(--accent-light);border-left:3px solid var(--accent);border-radius:4px;padding:4px 7px;font-size:11px;color:var(--accent-dark);font-weight:500;margin-bottom:2px;cursor:pointer}
-.appt-block.green{background:var(--success-bg);border-color:var(--success);color:#34D399}
-.appt-block.amber{background:var(--warning-bg);border-color:var(--warning);color:#F0B046}
+.appt-block.green{background:var(--success-bg);border-color:var(--success);color:#0D7D5C}
+.appt-block.amber{background:var(--warning-bg);border-color:var(--warning);color:#A86A0D}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,25,35,.5);z-index:1000;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
 .modal{background:var(--surface);border-radius:14px;padding:28px;width:480px;max-width:95vw;box-shadow:0 4px 12px rgba(0,0,0,.08)}
@@ -88,12 +87,6 @@ tr:hover td{background:#1A2334}
 .form-input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13.5px;outline:none;background:var(--surface);color:var(--text);transition:border-color .15s}
 .form-input:focus{border-color:var(--accent)}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.combo{position:relative}
-.combo-list{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);box-shadow:0 4px 12px rgba(0,0,0,.1);max-height:220px;overflow-y:auto;z-index:10;display:none}
-.combo-list.open{display:block}
-.combo-item{padding:9px 12px;font-size:13.5px;cursor:pointer}
-.combo-item:hover{background:var(--accent-light)}
-.combo-empty{padding:10px 12px;font-size:12.5px;color:var(--text-3)}
 .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px}
 .mini-cal{padding:16px}
 .mini-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -117,31 +110,13 @@ tr:hover td{background:#1A2334}
 .progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
 .progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .3s}
 .empty-row td{text-align:center;padding:32px;color:var(--text-3)}
-.menu-toggle{display:none;background:transparent;border:none;color:var(--text);font-size:22px;cursor:pointer;padding:4px 8px;margin-right:2px;line-height:1}
-.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:90}
-.sidebar-overlay.open{display:block}
-@media(max-width:1024px){
+@media(max-width:900px){
+  .sidebar{width:60px;min-width:60px}
+  .logo-text,.logo-sub,.nav-section,.nav-item span,.user-name,.user-role,.nav-badge{display:none}
+  .nav-item{justify-content:center;padding:12px}
   .stat-grid{grid-template-columns:repeat(2,1fr)}
   .agenda-grid{grid-template-columns:1fr}
-}
-@media(max-width:768px){
-  body{overflow:auto}
-  .menu-toggle{display:inline-flex}
-  .sidebar{position:fixed;top:0;left:0;bottom:0;width:264px;min-width:264px;z-index:100;transform:translateX(-100%);transition:transform .25s ease;box-shadow:0 0 40px rgba(0,0,0,.5)}
-  .sidebar.open{transform:translateX(0)}
-  .main{width:100%}
-  .content{padding:16px}
-  .topbar{padding:0 14px;height:54px}
-  .stat-grid{grid-template-columns:1fr;gap:12px}
   .form-row{grid-template-columns:1fr}
-  .card{overflow-x:auto}
-  #topbar-action-label{display:none}
-  .topbar-title{font-size:15px}
-  .search-input{display:none}
-  .modal{padding:20px}
-}
-@media(max-width:420px){
-  .stat-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -150,7 +125,7 @@ tr:hover td{background:#1A2334}
 <aside class="sidebar">
   <div class="sidebar-logo">
     <div class="logo-icon"><i class="ti ti-tooth"></i></div>
-    <div><div class="logo-text">DentalPro</div><div class="logo-sub">Gestão Odontológica</div></div>
+    <div><div class="logo-text">ProDent</div><div class="logo-sub">Gestão Odontológica</div></div>
   </div>
   <nav class="sidebar-nav">
     <div class="nav-section">Principal</div>
@@ -172,11 +147,8 @@ tr:hover td{background:#1A2334}
   </div>
 </aside>
 
-<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
-
 <div class="main">
   <div class="topbar">
-    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Abrir menu"><i class="ti ti-menu-2"></i></button>
     <div>
       <div class="topbar-title" id="topbar-title">Dashboard</div>
       <div class="topbar-sub" id="topbar-sub">Bem-vindo de volta</div>
@@ -193,7 +165,7 @@ tr:hover td{background:#1A2334}
     <div id="page-dashboard" class="page active">
       <div class="stat-grid">
         <div class="stat-card">
-          <div class="stat-icon" style="background:rgba(91,140,255,.15);color:var(--accent)"><i class="ti ti-calendar-check"></i></div>
+          <div class="stat-icon" style="background:#EBF3FC;color:var(--accent)"><i class="ti ti-calendar-check"></i></div>
           <div class="stat-label">Consultas Hoje</div>
           <div class="stat-value" id="stat-consultas">—</div>
           <div class="stat-delta" id="stat-consultas-delta">carregando...</div>
@@ -211,7 +183,7 @@ tr:hover td{background:#1A2334}
           <div class="stat-delta down" id="stat-receber-delta">carregando...</div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon" style="background:rgba(155,139,214,.18);color:#B9A7F0"><i class="ti ti-users"></i></div>
+          <div class="stat-icon" style="background:#F3EDFC;color:#7C3AED"><i class="ti ti-users"></i></div>
           <div class="stat-label">Pacientes Ativos</div>
           <div class="stat-value" id="stat-pacientes">—</div>
           <div class="stat-delta" id="stat-pacientes-delta">carregando...</div>
@@ -396,46 +368,13 @@ tr:hover td{background:#1A2334}
   </div>
 </div>
 
-<!-- MODAL PROCEDIMENTO -->
-<div class="modal-overlay" id="modal-procedimento">
-  <div class="modal">
-    <div class="modal-title">Novo Procedimento</div>
-    <div class="form-group">
-      <label class="form-label">Paciente</label>
-      <div class="combo">
-        <input type="text" id="proc-paciente-busca" class="form-input" placeholder="Buscar paciente cadastrado..." autocomplete="off">
-        <input type="hidden" id="proc-paciente">
-        <input type="hidden" id="proc-paciente-nome">
-        <div class="combo-list" id="proc-paciente-lista"></div>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Procedimento</label><input type="text" id="proc-tipo" class="form-input" placeholder="Ex: Restauração, Canal, Extração..."></div>
-      <div class="form-group"><label class="form-label">Data de realização</label><input type="date" id="proc-data" class="form-input"></div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Dentes envolvidos</label><input type="text" id="proc-dentes" class="form-input" placeholder="Ex: 11, 12, 21"></div>
-      <div class="form-group"><label class="form-label">Valor (R$)</label><input type="number" id="proc-valor" class="form-input" placeholder="0,00" min="0" step="0.01"></div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Situação</label>
-      <select id="proc-status" class="form-input"><option value="em_andamento">Em andamento</option><option value="concluido">Concluído</option><option value="parcial">Parcial</option></select>
-    </div>
-    <div class="form-group"><label class="form-label">Observações</label><textarea id="proc-obs" class="form-input" rows="2" placeholder="Detalhes do procedimento..."></textarea></div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('modal-procedimento')">Cancelar</button>
-      <button class="btn btn-primary" id="proc-salvar-btn" onclick="salvarProcedimento()"><i class="ti ti-check"></i> Registrar</button>
-    </div>
-  </div>
-</div>
-
 <script>
 // ── Navegação ─────────────────────────────────────────────────
 const pages = {
   dashboard:     { title:'Dashboard',              sub:'Bem-vindo de volta', action:'modal-agenda',  label:'Novo Agendamento' },
   agenda:        { title:'Agenda',                 sub:'Visualização semanal', action:'modal-agenda', label:'Novo Agendamento' },
   pacientes:     { title:'Pacientes',              sub:'Cadastro e fichas',  action:'modal-paciente', label:'Novo Paciente' },
-  procedimentos: { title:'Procedimentos',          sub:'Histórico',          action:'modal-procedimento', label:'Novo Procedimento' },
+  procedimentos: { title:'Procedimentos',          sub:'Histórico',          action:null,             label:'' },
   receber:       { title:'Contas a Receber',       sub:'Controle de receitas', action:'modal-conta', label:'Nova Conta' },
   pagar:         { title:'Contas a Pagar',         sub:'Controle de despesas', action:'modal-conta', label:'Nova Despesa' },
 };
@@ -472,46 +411,6 @@ function topbarAction() {
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if (e.target===m) m.classList.remove('open'); }));
 
-// ── Menu lateral (gaveta no celular) ──────────────────────────
-function toggleSidebar(){
-  document.querySelector('.sidebar').classList.toggle('open');
-  document.getElementById('sidebar-overlay').classList.toggle('open');
-}
-window.toggleSidebar = toggleSidebar;
-document.querySelectorAll('.nav-item').forEach(n => n.addEventListener('click', () => {
-  if (window.innerWidth <= 768){
-    document.querySelector('.sidebar').classList.remove('open');
-    document.getElementById('sidebar-overlay').classList.remove('open');
-  }
-}));
-
-// ── Busca de paciente (modal procedimento) ────────────────────
-(function(){
-  const busca = document.getElementById('proc-paciente-busca');
-  const lista = document.getElementById('proc-paciente-lista');
-  const hidId = document.getElementById('proc-paciente');
-  const hidNome = document.getElementById('proc-paciente-nome');
-  if(!busca) return;
-  function render(filtro){
-    const termo = (filtro||'').toLowerCase().trim();
-    const todos = window.todosOsPacientes || [];
-    if(!todos.length){ lista.innerHTML = '<div class="combo-empty">Nenhum paciente cadastrado ainda</div>'; lista.classList.add('open'); return; }
-    const res = termo ? todos.filter(p => (p.nome||'').toLowerCase().includes(termo)) : todos;
-    if(!res.length){ lista.innerHTML = '<div class="combo-empty">Nenhum paciente encontrado</div>'; lista.classList.add('open'); return; }
-    lista.innerHTML = res.slice(0,50).map(p =>
-      `<div class="combo-item" data-id="${p.id}" data-nome="${(p.nome||'').replace(/"/g,'&quot;')}">${p.nome||'—'}</div>`).join('');
-    lista.classList.add('open');
-  }
-  busca.addEventListener('focus', () => render(busca.value));
-  busca.addEventListener('input', () => { hidId.value=''; hidNome.value=''; render(busca.value); });
-  lista.addEventListener('click', e => {
-    const item = e.target.closest('.combo-item'); if(!item) return;
-    hidId.value = item.dataset.id; hidNome.value = item.dataset.nome;
-    busca.value = item.dataset.nome; lista.classList.remove('open');
-  });
-  document.addEventListener('click', e => { if(!e.target.closest('.combo')) lista.classList.remove('open'); });
-})();
-
 // ── Calendário semanal ────────────────────────────────────────
 let weekOffset = 0;
 const ptBR_days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
@@ -543,22 +442,10 @@ function renderWeek() {
   });
   hours.forEach(h => {
     html += `<div class="time-label">${h}</div>`;
-    days.forEach(d => {
-      const ds = dateStr(d);
-      html += `<div class="week-cell" onclick="agendarNaCelula('${ds}','${h}')" title="Clique para agendar"></div>`;
-    });
+    days.forEach(d => { html += `<div class="week-cell"></div>`; });
   });
   grid.innerHTML = html;
 }
-
-// Clique na célula do calendário → abre modal com data/hora preenchidos
-window.agendarNaCelula = function(data, hora) {
-  document.getElementById('ag-data').value = data;
-  document.getElementById('ag-hora').value = hora;
-  document.getElementById('modal-agenda').classList.add('open');
-  // Foca no select de paciente pra agilizar
-  setTimeout(() => document.getElementById('ag-paciente')?.focus(), 200);
-};
 
 function changeWeek(dir) { weekOffset+=dir; renderWeek(); }
 function goToday() { weekOffset=0; renderWeek(); }
@@ -573,29 +460,14 @@ function renderMiniCal() {
   let html = `<div class="mini-cal-header"><span class="mini-cal-title">${ptBR_months[mes]} ${ano}</span></div><div class="mini-cal-grid">`;
   ['D','S','T','Q','Q','S','S'].forEach(d => { html += `<div class="mini-cal-weekday">${d}</div>`; });
   for (let i=0;i<firstDay;i++) html += '<div></div>';
-  for (let d=1;d<=daysInMonth;d++) html += `<div class="mini-cal-day ${d===hoje.getDate()?'today':''}" onclick="irParaDia(${ano},${mes},${d})" style="cursor:pointer">${d}</div>`;
+  for (let d=1;d<=daysInMonth;d++) html += `<div class="mini-cal-day ${d===hoje.getDate()?'today':''}">${d}</div>`;
   html += '</div>';
   document.getElementById('mini-cal').innerHTML = html;
 }
 renderMiniCal();
 
-// Navegar para o dia clicado no mini-calendário
-window.irParaDia = function(ano, mes, dia) {
-  const target = new Date(ano, mes, dia);
-  const today = new Date(); today.setHours(0,0,0,0);
-  const diff = Math.floor((target - today) / 86400000);
-  const todayDow = today.getDay();
-  const todayMonday = -(todayDow === 0 ? 6 : todayDow - 1);
-  const targetDow = target.getDay();
-  const targetMonday = -(targetDow === 0 ? 6 : targetDow - 1);
-  weekOffset = Math.round((diff + targetMonday - todayMonday) / 7);
-  renderWeek();
-  // Mostra a página de agenda se estiver em outra
-  if (typeof showPage === 'function') showPage('agenda');
-};
-
 // ── Helpers ───────────────────────────────────────────────────
-const CORES = ['#5B8CFF','#7C3AED','#F4736B','#34D399','#F0B046','#534AB7','#33D7C0','#B9A7F0'];
+const CORES = ['#2D7DD2','#7C3AED','#D94040','#1A9E75','#D98B1A','#534AB7','#0F6E56','#993C1D'];
 function avatarCor(nome) { return CORES[(nome||'A').charCodeAt(0) % CORES.length]; }
 function iniciais(nome) { return (nome||'?').split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase(); }
 function calcIdade(dataNasc) { if(!dataNasc) return '—'; return (new Date().getFullYear()-new Date(dataNasc).getFullYear())+' anos'; }
@@ -643,10 +515,10 @@ if(elData) elData.textContent = `${diasSemana[hoje.getDay()]}, ${hoje.getDate()}
 <script type="module">
 import { db, auth }       from './js/firebase.js';
 import { requireAuth, logout } from './js/auth.js';
-import { getClinicaIdSessao, PLANOS }  from './js/tenant.js';
+import { getClinicaIdSessao }  from './js/tenant.js';
 import {
   collection, query, where, orderBy, getDocs,
-  addDoc, doc, getDoc, serverTimestamp, Timestamp, limit, getCountFromServer
+  addDoc, doc, getDoc, serverTimestamp, Timestamp, limit
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 // ── Logout ────────────────────────────────────────────────────
@@ -686,9 +558,6 @@ requireAuth(async ({ user, clinicaId, perfil, tenant }) => {
     // Popula select de agendamento
     const sel = document.getElementById('ag-paciente');
     if(sel) window.todosOsPacientes.forEach(p => { const o=document.createElement('option'); o.value=p.id; o.textContent=p.nome; sel.appendChild(o); });
-    // Popula select de procedimento + data padrão = hoje
-    const dProc = document.getElementById('proc-data');
-    if(dProc){ const h=new Date(), off=h.getTimezoneOffset(); dProc.value=new Date(h.getTime()-off*60000).toISOString().slice(0,10); }
   } catch(e) { console.warn('Pacientes:',e.message); }
 
   // ── Consultas de hoje ─────────────────────────────────────
@@ -726,8 +595,8 @@ requireAuth(async ({ user, clinicaId, perfil, tenant }) => {
     const vAmanha=cr.filter(c=>{const v=c.vencimento?.toDate?.();return v&&v>=hoje2&&v<new Date(amanha.getTime()+86400000);});
     const aEl=document.getElementById('alertas-financeiros');
     let html='';
-    vAmanha.forEach(c=>{html+=`<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--warning-bg);border-radius:8px;margin-bottom:8px"><i class="ti ti-alert-triangle" style="color:var(--warning);font-size:18px;flex-shrink:0"></i><div><div style="font-size:13px;font-weight:600;color:#F0B046">${brl(c.valor)} vence amanhã</div><div style="font-size:11.5px;color:var(--warning)">${c.descricao||''} — ${c.pacienteNome||''}</div></div></div>`;});
-    atrasadas.forEach(c=>{const dias=Math.floor((hoje2-c.vencimento.toDate())/86400000);html+=`<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--danger-bg);border-radius:8px;margin-bottom:8px"><i class="ti ti-alert-circle" style="color:var(--danger);font-size:18px;flex-shrink:0"></i><div><div style="font-size:13px;font-weight:600;color:#F4736B">${brl(c.valor)} em atraso (${dias}d)</div><div style="font-size:11.5px;color:var(--danger)">${c.descricao||''} — ${c.pacienteNome||''}</div></div></div>`;});
+    vAmanha.forEach(c=>{html+=`<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--warning-bg);border-radius:8px;margin-bottom:8px"><i class="ti ti-alert-triangle" style="color:var(--warning);font-size:18px;flex-shrink:0"></i><div><div style="font-size:13px;font-weight:600;color:#7A5500">${brl(c.valor)} vence amanhã</div><div style="font-size:11.5px;color:var(--warning)">${c.descricao||''} — ${c.pacienteNome||''}</div></div></div>`;});
+    atrasadas.forEach(c=>{const dias=Math.floor((hoje2-c.vencimento.toDate())/86400000);html+=`<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--danger-bg);border-radius:8px;margin-bottom:8px"><i class="ti ti-alert-circle" style="color:var(--danger);font-size:18px;flex-shrink:0"></i><div><div style="font-size:13px;font-weight:600;color:#8B1A1A">${brl(c.valor)} em atraso (${dias}d)</div><div style="font-size:11.5px;color:var(--danger)">${c.descricao||''} — ${c.pacienteNome||''}</div></div></div>`;});
     if(!html) html='<div style="text-align:center;padding:20px;color:var(--text-3);font-size:13px"><i class="ti ti-circle-check" style="color:var(--success)"></i> Sem alertas no momento</div>';
     if(aEl) aEl.innerHTML=html;
   } catch(e) { console.warn('ContasReceber:',e.message); }
@@ -907,49 +776,6 @@ requireAuth(async ({ user, clinicaId, perfil, tenant }) => {
     } catch(e) { console.warn('Procedimentos:',e.message); }
   };
 
-  // ── Cadastrar procedimento ────────────────────────────────
-  window.salvarProcedimento = async function() {
-    const pacienteId = document.getElementById('proc-paciente').value;
-    const pacienteNome = document.getElementById('proc-paciente-nome').value;
-    const tipo = document.getElementById('proc-tipo').value.trim();
-    const dataStr = document.getElementById('proc-data').value;
-    if (!pacienteId) { alert('Selecione um paciente da lista.'); return; }
-    if (!tipo)       { alert('Informe o procedimento.'); return; }
-    if (!dataStr)    { alert('Informe a data.'); return; }
-
-    const [ano,mes,dia] = dataStr.split('-').map(Number);
-    const dataRealizacao = Timestamp.fromDate(new Date(ano, mes-1, dia, 12, 0, 0));
-    const dentes = document.getElementById('proc-dentes').value.split(',').map(s=>s.trim()).filter(Boolean);
-
-    const btn = document.getElementById('proc-salvar-btn');
-    btn.disabled = true;
-    try {
-      await addDoc(collection(db,'clinica',clinicaId,'procedimentos'), {
-        pacienteId, pacienteNome, tipo, dentes,
-        valor: parseFloat(document.getElementById('proc-valor').value)||0,
-        status: document.getElementById('proc-status').value,
-        observacoes: document.getElementById('proc-obs').value.trim(),
-        dataRealizacao,
-        criadoEm: serverTimestamp(),
-        atualizadoEm: serverTimestamp()
-      });
-      closeModal('modal-procedimento');
-      document.getElementById('proc-tipo').value='';
-      document.getElementById('proc-valor').value='';
-      document.getElementById('proc-dentes').value='';
-      document.getElementById('proc-obs').value='';
-      document.getElementById('proc-paciente').value='';
-      document.getElementById('proc-paciente-nome').value='';
-      document.getElementById('proc-paciente-busca').value='';
-      await window.carregarProcedimentos();
-    } catch(e) {
-      console.error(e);
-      alert('Erro ao registrar: '+e.message);
-    } finally {
-      btn.disabled = false;
-    }
-  };
-
 });
 
 const CORES=['#2D7DD2','#7C3AED','#D94040','#1A9E75','#D98B1A','#534AB7','#0F6E56','#993C1D'];
@@ -959,7 +785,7 @@ function iniciais(nome){return (nome||'?').split(' ').map(n=>n[0]).join('').subs
 <!-- MODAL LIMITE DO PLANO -->
 <div class="modal-overlay" id="modal-limite">
   <div class="modal" style="text-align:center;max-width:400px">
-    <div style="width:56px;height:56px;background:rgba(240,176,70,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px">🔒</div>
+    <div style="width:56px;height:56px;background:#FDF4E6;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px">🔒</div>
     <div style="font-size:17px;font-weight:700;margin-bottom:8px">Limite do plano atingido</div>
     <p id="modal-limite-msg" style="font-size:14px;color:var(--text-2);margin-bottom:8px"></p>
     <p style="font-size:13px;color:var(--text-3);margin-bottom:24px">Faça upgrade para continuar usando sem limites.</p>
