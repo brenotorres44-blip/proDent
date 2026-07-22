@@ -3,43 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DentalPro — Prontuário</title>
+<title>ProDent — Prontuário</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.3.0/dist/tabler-icons.min.css">
 <style>
 :root{
-  --bg:#0D1320;--surface:#151D2E;--border:#232C40;
-  --text:#EAF0FA;--text-2:#8493AD;--text-3:#5E6B82;
-  --accent:#5B8CFF;--accent-light:rgba(91,140,255,.15);--accent-dark:#3F6FD8;
-  --success:#34D399;--success-bg:rgba(52,211,153,.14);
-  --danger:#F4736B;--danger-bg:rgba(244,115,107,.14);
-  --warning:#F0B046;--warning-bg:rgba(240,176,70,.14);
-  --radius:12px;--shadow:0 2px 10px rgba(0,0,0,.35);color-scheme:dark;
+  --bg:#F7F8FA;--surface:#fff;--border:#E4E9EE;
+  --text:#0F1923;--text-2:#5A6A7A;--text-3:#9AABB8;
+  --accent:#2D7DD2;--accent-light:#EBF3FC;--accent-dark:#1A5FA8;
+  --success:#1A9E75;--success-bg:#E6F7F2;
+  --danger:#D94040;--danger-bg:#FDEAEA;
+  --warning:#D98B1A;--warning-bg:#FDF4E6;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.06);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
-
-/* LAYOUT */
 .layout{display:grid;grid-template-columns:280px 1fr;gap:20px;padding:20px;max-width:1400px;margin:0 auto}
-
-/* SIDEBAR PACIENTE */
 .patient-sidebar{display:flex;flex-direction:column;gap:16px}
 .patient-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
 .back-btn{display:flex;align-items:center;gap:6px;color:var(--text-2);font-size:13px;cursor:pointer;border:none;background:none;padding:0;margin-bottom:16px}
 .back-btn:hover{color:var(--text)}
-.patient-avatar{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#fff;margin:0 auto 12px;position:relative;cursor:pointer;overflow:hidden;transition:opacity .2s}
-.patient-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.avatar-overlay{position:absolute;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;border-radius:50%}
-.patient-avatar:hover .avatar-overlay{opacity:1}
-.avatar-overlay i{font-size:22px;color:#fff}
-.avatar-uploading{opacity:.5;pointer-events:none}
-.sig-canvas{border:2px dashed var(--border);border-radius:var(--radius);cursor:crosshair;touch-action:none;width:100%;display:block;background:#1B2435}
-.sig-actions{display:flex;gap:8px;margin-top:8px}
-.doc-card{background:#1B2435;border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color .15s}
-.doc-card:hover{border-color:var(--accent)}
-.doc-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.doc-title{font-size:14px;font-weight:600}
-.doc-sub{font-size:12px;color:var(--text-2);margin-top:2px}
-.doc-status{margin-left:auto;font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px}
+.patient-avatar{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;margin:0 auto 12px}
 .patient-name{font-size:16px;font-weight:700;text-align:center;margin-bottom:4px}
 .patient-sub{font-size:12.5px;color:var(--text-2);text-align:center;margin-bottom:16px}
 .patient-info{border-top:1px solid var(--border);padding-top:14px;display:flex;flex-direction:column;gap:10px}
@@ -47,16 +30,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .info-label{color:var(--text-2);font-size:12px}
 .info-value{font-weight:500}
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11.5px;font-weight:600}
-.badge-success{background:var(--success-bg);color:#34D399}
+.badge-success{background:var(--success-bg);color:#0D7D5C}
 .badge-info{background:var(--accent-light);color:var(--accent-dark)}
-
-/* TABS */
 .main-area{display:flex;flex-direction:column;gap:0}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
-.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);border-radius:var(--radius) var(--radius) 0 0;overflow:hidden}
-.tab{padding:13px 18px;font-size:13px;font-weight:500;cursor:pointer;color:var(--text-2);border-bottom:2px solid transparent;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:all .15s}
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);border-radius:var(--radius) var(--radius) 0 0;overflow-x:auto}
+.tab{padding:13px 16px;font-size:13px;font-weight:500;cursor:pointer;color:var(--text-2);border-bottom:2px solid transparent;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:all .15s;flex-shrink:0}
 .tab:hover{color:var(--text);background:var(--bg)}
-.tab.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--surface)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
 .tab-panel{display:none;padding:20px}
 .tab-panel.active{display:block}
 
@@ -70,50 +51,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tooth-num{font-size:10px;color:var(--text-3);font-weight:600;height:14px;display:flex;align-items:center}
 .tooth-svg{width:28px;height:32px}
 .tooth-label{font-size:9px;color:var(--text-3);text-align:center;line-height:1.2;min-height:20px;display:flex;align-items:center;justify-content:center}
-
-/* Cores dos dentes */
-.tooth-normal   .face{fill:#2A3548;stroke:#4A5568;stroke-width:1.5}
-.tooth-carie    .face{fill:#F4736B;stroke:#D94040;stroke-width:1.5}
-.tooth-restaurado .face{fill:#5B8CFF;stroke:#3F6FD8;stroke-width:1.5}
-.tooth-extraido .face{fill:#5A6A7A;stroke:#3D4D5C;stroke-width:1.5}
-.tooth-protese  .face{fill:#7C3AED;stroke:#5B21B6;stroke-width:1.5}
-.tooth-canal    .face{fill:#F0B046;stroke:#C88F2A;stroke-width:1.5}
-.tooth-implante .face{fill:#1A9E75;stroke:#0D7D5C;stroke-width:1.5}
-.tooth-ausente  .face{fill:#F0F2F5;stroke:#CBD4DC;stroke-width:1;stroke-dasharray:3 2}
-
 .tooth-leite .tooth-svg{width:22px;height:26px}
-
-/* LEGENDA */
 .legenda{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
 .leg-item{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--text-2);cursor:pointer;padding:3px 8px;border-radius:5px;border:1.5px solid transparent;transition:all .15s}
 .leg-item:hover{background:var(--bg)}
 .leg-item.selected{border-color:var(--accent);background:var(--accent-light)}
 .leg-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
-
-/* MODAL DENTE */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,25,35,.5);z-index:1000;align-items:center;justify-content:center}
-.modal-overlay.open{display:flex}
-.modal{background:var(--surface);border-radius:14px;padding:28px;width:420px;max-width:95vw;box-shadow:0 8px 32px rgba(0,0,0,.12)}
-.modal-title{font-size:16px;font-weight:700;margin-bottom:6px}
-.modal-sub{font-size:13px;color:var(--text-2);margin-bottom:20px}
-.cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.cond-btn{padding:10px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:500;transition:all .15s}
-.cond-btn:hover{border-color:var(--accent);background:var(--accent-light)}
-.cond-btn.selected{border-color:var(--accent);background:var(--accent-light);color:var(--accent-dark)}
-.cond-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
-.form-group{margin-bottom:14px}
-.form-label{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:5px}
-.form-input{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:7px;font-size:13.5px;outline:none;color:var(--text)}
-.form-input:focus{border-color:var(--accent)}
-.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-primary:hover{background:var(--accent-dark)}
-.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border)}
-.btn-ghost:hover{background:var(--bg)}
-.btn-danger-sm{background:var(--danger-bg);color:var(--danger);border:1px solid #f9c4c4;padding:5px 10px;font-size:12px}
-
-/* HISTÓRICO ODONTOGRAMA */
 .odonto-log{margin-top:16px;border-top:1px solid var(--border);padding-top:16px}
 .log-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #F5F7FA}
 .log-item:last-child{border-bottom:none}
@@ -121,23 +64,39 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .log-text{font-size:13px;flex:1}
 .log-date{font-size:11.5px;color:var(--text-3)}
 
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,25,35,.5);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:14px;padding:28px;width:420px;max-width:95vw;box-shadow:0 8px 32px rgba(0,0,0,.12);max-height:90vh;overflow-y:auto}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:6px}
+.modal-sub{font-size:13px;color:var(--text-2);margin-bottom:20px}
+.cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.cond-btn{padding:10px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:500;transition:all .15s}
+.cond-btn:hover,.cond-btn.selected{border-color:var(--accent);background:var(--accent-light);color:var(--accent-dark)}
+.cond-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.form-group{margin-bottom:14px}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:5px}
+.form-input{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:7px;font-size:13.5px;outline:none;color:var(--text)}
+.form-input:focus{border-color:var(--accent)}
+textarea.form-input{resize:vertical;min-height:80px;font-family:inherit}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-dark)}
+.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border)}.btn-ghost:hover{background:var(--bg)}
+
 /* ANEXOS */
 .upload-area{border:2px dashed var(--border);border-radius:10px;padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg)}
 .upload-area:hover,.upload-area.drag{border-color:var(--accent);background:var(--accent-light)}
 .upload-area i{font-size:36px;color:var(--text-3);display:block;margin-bottom:10px}
 .upload-area p{font-size:13.5px;color:var(--text-2)}
-.upload-area span{font-size:12px;color:var(--text-3)}
 .upload-progress{margin-top:12px;display:none}
 .progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:6px}
 .progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .2s}
-
 .files-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:16px}
-.file-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;transition:all .15s}
+.file-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:8px;transition:all .15s}
 .file-card:hover{border-color:var(--accent);background:var(--accent-light)}
 .file-icon{font-size:32px;color:var(--accent)}
-.file-icon.pdf{color:#D94040}
-.file-icon.img{color:#1A9E75}
-.file-icon.doc{color:#2D7DD2}
+.file-icon.pdf{color:#D94040}.file-icon.img{color:#1A9E75}.file-icon.doc{color:#2D7DD2}
 .file-name{font-size:12px;font-weight:500;text-align:center;word-break:break-all;line-height:1.4;max-height:36px;overflow:hidden}
 .file-size{font-size:11px;color:var(--text-3)}
 .file-actions{display:flex;gap:6px;margin-top:4px}
@@ -146,81 +105,48 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .file-btn.del:hover{background:var(--danger-bg);color:var(--danger);border-color:#f9c4c4}
 .file-thumb{width:100%;height:80px;object-fit:cover;border-radius:6px}
 
-/* PRONTUÁRIO TEXTO */
+/* EVOLUÇÃO */
 .evolucao-list{display:flex;flex-direction:column;gap:12px}
 .evolucao-item{background:var(--bg);border-radius:8px;padding:14px 16px;border-left:3px solid var(--accent)}
 .evolucao-data{font-size:11.5px;color:var(--text-3);margin-bottom:4px}
 .evolucao-texto{font-size:13.5px;line-height:1.6}
 .nova-evolucao{margin-bottom:16px}
-textarea.form-input{resize:vertical;min-height:80px;font-family:inherit}
 
-/* RESPONSIVE */
-@media(max-width:768px){
-  .layout{grid-template-columns:1fr}
-  .cond-grid{grid-template-columns:1fr}
-  .patient-sidebar{border-right:none;border-bottom:1px solid var(--border)}
-  .patient-main{padding:16px}
-  .form-row{grid-template-columns:1fr}
-  .modal{padding:20px;max-width:95vw}
-}
+/* DOCUMENTOS */
+.doc-modelo-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:all .2s;text-align:center}
+.doc-modelo-card:hover{border-color:var(--accent);background:var(--accent-light);transform:translateY(-2px);box-shadow:0 4px 16px rgba(45,125,210,.1)}
+.doc-salvo-item{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg);border-radius:8px;margin-bottom:8px;border:1px solid var(--border)}
+.doc-salvo-item:hover{border-color:var(--accent);background:var(--accent-light)}
+
+/* SIGNATURE */
+#signature-canvas{display:block;width:100%;height:180px;touch-action:none;cursor:crosshair;background:#fff}
+
+@media(max-width:768px){.layout{grid-template-columns:1fr}.cond-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <div class="layout">
-
   <!-- SIDEBAR -->
   <div class="patient-sidebar">
     <div class="patient-card">
-      <button class="back-btn" onclick="history.back()">
-        <i class="ti ti-arrow-left"></i> Voltar
-      </button>
-      <div class="patient-avatar" id="p-avatar" style="background:#5B8CFF" onclick="document.getElementById('foto-input').click()">
-        <span id="p-iniciais">BT</span>
-        <div class="avatar-overlay"><i class="ti ti-camera"></i></div>
-      </div>
-      <input type="file" id="foto-input" accept="image/*" style="display:none" onchange="uploadFotoPaciente(this)">
-      <div class="patient-name" id="p-nome">Ana Mendes</div>
-      <div class="patient-sub" id="p-sub">38 anos • F</div>
+      <button class="back-btn" onclick="history.back()"><i class="ti ti-arrow-left"></i> Voltar</button>
+      <div class="patient-avatar" id="p-avatar" style="background:#2D7DD2">AM</div>
+      <div class="patient-name" id="p-nome">Carregando...</div>
+      <div class="patient-sub" id="p-sub">—</div>
       <div class="patient-info">
-        <div class="info-row">
-          <span class="info-label">CPF</span>
-          <span class="info-value" id="p-cpf">111.222.333-44</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Telefone</span>
-          <span class="info-value" id="p-tel">(11) 98765-4321</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Convênio</span>
-          <span class="info-value" id="p-conv">Unimed</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Status</span>
-          <span class="badge badge-success">Ativo</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Alergias</span>
-          <span class="info-value" id="p-alerg" style="color:var(--danger);font-size:12px">—</span>
-        </div>
+        <div class="info-row"><span class="info-label">CPF</span><span class="info-value" id="p-cpf">—</span></div>
+        <div class="info-row"><span class="info-label">Telefone</span><span class="info-value" id="p-tel">—</span></div>
+        <div class="info-row"><span class="info-label">Convênio</span><span class="info-value" id="p-conv">—</span></div>
+        <div class="info-row"><span class="info-label">Status</span><span class="badge badge-success">Ativo</span></div>
+        <div class="info-row"><span class="info-label">Alergias</span><span class="info-value" id="p-alerg" style="color:var(--danger);font-size:12px">—</span></div>
       </div>
     </div>
-
-    <!-- RESUMO -->
     <div class="patient-card">
       <div style="font-size:12px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Resumo</div>
-      <div class="info-row" style="margin-bottom:8px">
-        <span class="info-label">Consultas</span>
-        <span class="badge badge-info" id="r-consultas">12</span>
-      </div>
-      <div class="info-row" style="margin-bottom:8px">
-        <span class="info-label">Procedimentos</span>
-        <span class="badge badge-info" id="r-procs">8</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Anexos</span>
-        <span class="badge badge-info" id="r-anexos">3</span>
-      </div>
+      <div class="info-row" style="margin-bottom:8px"><span class="info-label">Consultas</span><span class="badge badge-info" id="r-consultas">0</span></div>
+      <div class="info-row" style="margin-bottom:8px"><span class="info-label">Procedimentos</span><span class="badge badge-info" id="r-procs">0</span></div>
+      <div class="info-row"><span class="info-label">Anexos</span><span class="badge badge-info" id="r-anexos">0</span></div>
     </div>
   </div>
 
@@ -228,172 +154,132 @@ textarea.form-input{resize:vertical;min-height:80px;font-family:inherit}
   <div class="main-area">
     <div class="card">
       <div class="tabs">
-        <div class="tab active" onclick="showTab('odontograma')"><i class="ti ti-tooth"></i> Odontograma</div>
-        <div class="tab" onclick="showTab('evolucao')"><i class="ti ti-notes"></i> Evolução Clínica</div>
-        <div class="tab" onclick="showTab('anexos')"><i class="ti ti-paperclip"></i> Anexos <span id="anexos-count" style="background:var(--accent);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:2px">0</span></div>
-        <div class="tab" onclick="showTab('historico')"><i class="ti ti-history"></i> Histórico</div>
-        <div class="tab" onclick="showTab('documentos')"><i class="ti ti-file-certificate"></i> Documentos</div>
+        <div class="tab active" onclick="showTab('odontograma',this)"><i class="ti ti-tooth"></i> Odontograma</div>
+        <div class="tab" onclick="showTab('evolucao',this)"><i class="ti ti-notes"></i> Evolução Clínica</div>
+        <div class="tab" onclick="showTab('anexos',this)"><i class="ti ti-paperclip"></i> Anexos <span id="anexos-count" style="background:var(--accent);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:2px">0</span></div>
+        <div class="tab" onclick="showTab('documentos',this)"><i class="ti ti-file-certificate"></i> Documentos</div>
+        <div class="tab" onclick="showTab('historico',this)"><i class="ti ti-history"></i> Histórico</div>
       </div>
 
       <!-- ODONTOGRAMA -->
       <div id="tab-odontograma" class="tab-panel active">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-          <div>
-            <div style="font-size:15px;font-weight:700">Odontograma</div>
-            <div style="font-size:12.5px;color:var(--text-2)">Clique em um dente para registrar condição</div>
-          </div>
-          <button class="btn btn-primary btn-sm" onclick="salvarOdontograma()" style="padding:7px 14px;font-size:13px">
-            <i class="ti ti-device-floppy"></i> Salvar
-          </button>
+          <div><div style="font-size:15px;font-weight:700">Odontograma</div><div style="font-size:12.5px;color:var(--text-2)">Clique em um dente para registrar condição</div></div>
+          <button class="btn btn-primary" onclick="salvarOdontograma()" style="padding:7px 14px;font-size:13px"><i class="ti ti-device-floppy"></i> Salvar</button>
         </div>
-
         <div class="odonto-wrap">
-          <!-- ADULTO SUPERIOR -->
-          <div class="odonto-section">
-            <div class="odonto-label">Adulto — Superior</div>
-            <div class="odonto-row" id="row-adulto-sup"></div>
-          </div>
-          <!-- ADULTO INFERIOR -->
-          <div class="odonto-section">
-            <div class="odonto-label">Adulto — Inferior</div>
-            <div class="odonto-row" id="row-adulto-inf"></div>
-          </div>
-
+          <div class="odonto-section"><div class="odonto-label">Adulto — Superior</div><div class="odonto-row" id="row-adulto-sup"></div></div>
+          <div class="odonto-section"><div class="odonto-label">Adulto — Inferior</div><div class="odonto-row" id="row-adulto-inf"></div></div>
           <div style="border-top:2px dashed var(--border);margin:20px 0;position:relative">
             <span style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--surface);padding:0 12px;font-size:11px;color:var(--text-3);font-weight:600">DENTIÇÃO INFANTIL (DECÍDUA)</span>
           </div>
-
-          <!-- INFANTIL SUPERIOR -->
-          <div class="odonto-section">
-            <div class="odonto-label">Infantil — Superior</div>
-            <div class="odonto-row" id="row-inf-sup"></div>
-          </div>
-          <!-- INFANTIL INFERIOR -->
-          <div class="odonto-section">
-            <div class="odonto-label">Infantil — Inferior</div>
-            <div class="odonto-row" id="row-inf-inf"></div>
-          </div>
+          <div class="odonto-section"><div class="odonto-label">Infantil — Superior</div><div class="odonto-row" id="row-inf-sup"></div></div>
+          <div class="odonto-section"><div class="odonto-label">Infantil — Inferior</div><div class="odonto-row" id="row-inf-inf"></div></div>
         </div>
-
-        <!-- LEGENDA -->
         <div class="legenda" id="legenda"></div>
-
-        <!-- LOG -->
         <div class="odonto-log" id="odonto-log" style="display:none">
           <div style="font-size:13px;font-weight:600;margin-bottom:10px">Histórico de alterações</div>
           <div id="log-list"></div>
         </div>
       </div>
 
-      <!-- EVOLUÇÃO CLÍNICA -->
+      <!-- EVOLUÇÃO -->
       <div id="tab-evolucao" class="tab-panel">
         <div class="nova-evolucao">
           <div style="font-size:14px;font-weight:600;margin-bottom:12px">Nova evolução</div>
           <div class="form-group">
             <label class="form-label">Anotação clínica</label>
-            <textarea class="form-input" id="nova-evolucao-txt" placeholder="Descreva o atendimento, observações clínicas, orientações ao paciente..."></textarea>
+            <textarea class="form-input" id="nova-evolucao-txt" placeholder="Descreva o atendimento, observações clínicas..."></textarea>
           </div>
-          <button class="btn btn-primary" onclick="salvarEvolucao()" style="font-size:13px;padding:8px 16px">
-            <i class="ti ti-plus"></i> Registrar
-          </button>
+          <button class="btn btn-primary" onclick="salvarEvolucao()" style="font-size:13px;padding:8px 16px"><i class="ti ti-plus"></i> Registrar</button>
         </div>
         <div class="evolucao-list" id="evolucao-list">
-          <div style="text-align:center;padding:32px;color:var(--text-3)">
-            <i class="ti ti-notes" style="font-size:32px;display:block;margin-bottom:8px"></i>
-            Nenhuma evolução registrada
-          </div>
+          <div style="text-align:center;padding:32px;color:var(--text-3)"><i class="ti ti-notes" style="font-size:32px;display:block;margin-bottom:8px"></i>Nenhuma evolução registrada</div>
         </div>
       </div>
 
       <!-- ANEXOS -->
       <div id="tab-anexos" class="tab-panel">
-        <div class="upload-area" id="upload-area"
-          onclick="document.getElementById('file-input').click()"
-          ondragover="dragOver(event)"
-          ondragleave="dragLeave(event)"
-          ondrop="dropFile(event)">
+        <div class="upload-area" id="upload-area" onclick="document.getElementById('file-input').click()" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)">
           <i class="ti ti-cloud-upload"></i>
           <p><b>Clique para selecionar</b> ou arraste arquivos aqui</p>
-          <span>PDF, imagens, raio-x, documentos — qualquer formato</span>
+          <span style="font-size:12px;color:var(--text-3)">PDF, imagens, raio-x, documentos</span>
           <input type="file" id="file-input" multiple style="display:none" onchange="handleFiles(this.files)">
         </div>
-
         <div class="upload-progress" id="upload-progress">
           <div style="font-size:13px;color:var(--text-2)" id="upload-status">Enviando...</div>
           <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
         </div>
-
         <div class="files-grid" id="files-grid">
-          <div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text-3)">
-            <i class="ti ti-paperclip" style="font-size:28px;display:block;margin-bottom:8px"></i>
-            Nenhum arquivo anexado
+          <div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text-3)"><i class="ti ti-paperclip" style="font-size:28px;display:block;margin-bottom:8px"></i>Nenhum arquivo anexado</div>
+        </div>
+      </div>
+
+      <!-- DOCUMENTOS -->
+      <div id="tab-documentos" class="tab-panel">
+        <div id="docs-lista-view">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <div><div style="font-size:15px;font-weight:700">Documentos</div><div style="font-size:12.5px;color:var(--text-2)">Termos, contratos e orçamentos do paciente</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:28px">
+            <div class="doc-modelo-card" onclick="abrirNovoDoc('termo_imagem')">
+              <i class="ti ti-camera" style="font-size:28px;color:#7C3AED;margin-bottom:10px;display:block"></i>
+              <div style="font-size:13.5px;font-weight:700;margin-bottom:4px">Termo de Imagem</div>
+              <div style="font-size:12px;color:var(--text-2)">Autorização de uso de imagens</div>
+            </div>
+            <div class="doc-modelo-card" onclick="abrirNovoDoc('contrato')">
+              <i class="ti ti-file-text" style="font-size:28px;color:#2D7DD2;margin-bottom:10px;display:block"></i>
+              <div style="font-size:13.5px;font-weight:700;margin-bottom:4px">Contrato</div>
+              <div style="font-size:12px;color:var(--text-2)">Contrato de prestação de serviços</div>
+            </div>
+            <div class="doc-modelo-card" onclick="abrirNovoDoc('orcamento')">
+              <i class="ti ti-receipt" style="font-size:28px;color:#1A9E75;margin-bottom:10px;display:block"></i>
+              <div style="font-size:13.5px;font-weight:700;margin-bottom:4px">Orçamento</div>
+              <div style="font-size:12px;color:var(--text-2)">Orçamento detalhado de procedimentos</div>
+            </div>
+            <div class="doc-modelo-card" onclick="abrirNovoDoc('distrato')">
+              <i class="ti ti-file-x" style="font-size:28px;color:#D94040;margin-bottom:10px;display:block"></i>
+              <div style="font-size:13.5px;font-weight:700;margin-bottom:4px">Distrato</div>
+              <div style="font-size:12px;color:var(--text-2)">Rescisão de contrato</div>
+            </div>
+          </div>
+          <div style="font-size:12px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Documentos Assinados</div>
+          <div id="docs-salvos-list">
+            <div style="text-align:center;padding:32px;color:var(--text-3)"><i class="ti ti-file-certificate" style="font-size:32px;display:block;margin-bottom:8px"></i>Nenhum documento assinado ainda</div>
+          </div>
+        </div>
+
+        <!-- FORMULÁRIO + ASSINATURA -->
+        <div id="docs-form-view" style="display:none">
+          <button class="back-btn" onclick="voltarListaDocs()" style="margin-bottom:16px"><i class="ti ti-arrow-left"></i> Voltar</button>
+          <div style="font-size:15px;font-weight:700;margin-bottom:4px" id="doc-form-titulo">Documento</div>
+          <div style="font-size:12.5px;color:var(--text-2);margin-bottom:20px">Preencha os dados e colete a assinatura do paciente</div>
+
+          <div id="doc-campos-extras" style="margin-bottom:16px"></div>
+
+          <div id="doc-preview" style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:28px;margin-bottom:20px;font-family:Georgia,serif;line-height:1.8;font-size:14px;max-height:400px;overflow-y:auto"></div>
+
+          <div style="margin-bottom:20px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:8px">Assinatura do Paciente</div>
+            <div style="border:2px solid var(--border);border-radius:10px;overflow:hidden;position:relative;background:#fff">
+              <canvas id="signature-canvas"></canvas>
+              <button onclick="limparAssinatura()" style="position:absolute;top:8px;right:8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;color:var(--text-2)"><i class="ti ti-refresh"></i> Limpar</button>
+            </div>
+            <div style="font-size:11.5px;color:var(--text-3);margin-top:6px"><i class="ti ti-info-circle"></i> Assine com o dedo (tablet) ou mouse (computador)</div>
+          </div>
+
+          <div style="display:flex;gap:10px;justify-content:flex-end">
+            <button class="btn btn-ghost" onclick="voltarListaDocs()">Cancelar</button>
+            <button class="btn btn-primary" onclick="salvarDocumento()"><i class="ti ti-check"></i> Salvar documento assinado</button>
           </div>
         </div>
       </div>
 
       <!-- HISTÓRICO -->
       <div id="tab-historico" class="tab-panel">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-          <div style="font-size:14px;font-weight:600">Histórico de Procedimentos</div>
-          <button class="btn btn-primary btn-sm" onclick="abrirModalProcedimento()" style="padding:7px 14px;font-size:13px">
-            <i class="ti ti-plus"></i> Novo procedimento
-          </button>
-        </div>
-        <div id="historico-list">
-          <div style="text-align:center;padding:32px;color:var(--text-3)">Carregando...</div>
-        </div>
+        <div style="font-size:14px;font-weight:600;margin-bottom:16px">Histórico de Procedimentos</div>
+        <div id="historico-list"><div style="text-align:center;padding:32px;color:var(--text-3)">Carregando...</div></div>
       </div>
-
-      <!-- DOCUMENTOS -->
-      <div id="tab-documentos" class="tab-panel">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-          <div>
-            <div style="font-size:15px;font-weight:700">Documentos e Consentimentos</div>
-            <div style="font-size:12.5px;color:var(--text-2)">Gere documentos e colete assinaturas digitais</div>
-          </div>
-        </div>
-
-        <!-- Modelos de documento -->
-        <div style="font-size:12px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Modelos disponíveis</div>
-        <div id="doc-templates">
-          <div class="doc-card" onclick="gerarDocumento('consentimento_cirurgia')">
-            <div class="doc-icon" style="background:rgba(91,140,255,.15);color:var(--accent)"><i class="ti ti-heartbeat"></i></div>
-            <div><div class="doc-title">Consentimento para Cirurgia</div><div class="doc-sub">Autorização do paciente para procedimentos cirúrgicos</div></div>
-          </div>
-          <div class="doc-card" onclick="gerarDocumento('consentimento_procedimento')">
-            <div class="doc-icon" style="background:rgba(52,211,153,.15);color:var(--success)"><i class="ti ti-clipboard-check"></i></div>
-            <div><div class="doc-title">Consentimento para Procedimento</div><div class="doc-sub">Autorização geral para procedimentos odontológicos</div></div>
-          </div>
-          <div class="doc-card" onclick="gerarDocumento('uso_imagem')">
-            <div class="doc-icon" style="background:rgba(155,139,214,.15);color:#B9A7F0"><i class="ti ti-camera"></i></div>
-            <div><div class="doc-title">Termo de Uso de Imagem</div><div class="doc-sub">Autorização para registro fotográfico e uso de imagem</div></div>
-          </div>
-          <div class="doc-card" onclick="gerarDocumento('orcamento')">
-            <div class="doc-icon" style="background:rgba(240,176,70,.15);color:var(--warning)"><i class="ti ti-receipt"></i></div>
-            <div><div class="doc-title">Orçamento / Plano de Tratamento</div><div class="doc-sub">Detalhamento financeiro e etapas do tratamento</div></div>
-          </div>
-          <div class="doc-card" onclick="gerarDocumento('contrato')">
-            <div class="doc-icon" style="background:rgba(244,115,107,.15);color:var(--danger)"><i class="ti ti-file-text"></i></div>
-            <div><div class="doc-title">Contrato de Prestação de Serviço</div><div class="doc-sub">Contrato entre clínica e paciente</div></div>
-          </div>
-        </div>
-
-        <!-- Assinatura digital -->
-        <div style="font-size:12px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.5px;margin:24px 0 12px">Assinatura digital do paciente</div>
-        <canvas id="sig-canvas" class="sig-canvas" width="600" height="200"></canvas>
-        <div class="sig-actions">
-          <button class="btn btn-ghost btn-sm" onclick="limparAssinatura()"><i class="ti ti-eraser"></i> Limpar</button>
-          <button class="btn btn-primary btn-sm" onclick="salvarAssinatura()"><i class="ti ti-check"></i> Salvar assinatura</button>
-          <span id="sig-status" style="font-size:12px;color:var(--success);margin-left:auto;display:none"><i class="ti ti-check"></i> Assinatura salva</span>
-        </div>
-
-        <!-- Documentos já gerados -->
-        <div style="font-size:12px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.5px;margin:24px 0 12px">Documentos gerados</div>
-        <div id="docs-gerados">
-          <div style="text-align:center;padding:20px;color:var(--text-3);font-size:13px">Nenhum documento gerado ainda</div>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>
@@ -401,68 +287,16 @@ textarea.form-input{resize:vertical;min-height:80px;font-family:inherit}
 <!-- MODAL DENTE -->
 <div class="modal-overlay" id="modal-dente">
   <div class="modal">
-    <div class="modal-title" id="modal-dente-titulo">Dente 11</div>
+    <div class="modal-title" id="modal-dente-titulo">Dente</div>
     <div class="modal-sub">Selecione a condição e adicione observações</div>
-
     <div class="cond-grid" id="cond-grid"></div>
-
     <div class="form-group">
       <label class="form-label">Observações</label>
       <textarea class="form-input" id="dente-obs" rows="2" placeholder="Ex: cárie na face vestibular..."></textarea>
     </div>
-
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="fecharModal()">Cancelar</button>
       <button class="btn btn-primary" onclick="salvarCondicaoDente()"><i class="ti ti-check"></i> Salvar</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL PROCEDIMENTO -->
-<div class="modal-overlay" id="modal-proc">
-  <div class="modal">
-    <div class="modal-title">Novo procedimento</div>
-    <div class="modal-sub">Registre um procedimento individualizado com data</div>
-
-    <div class="form-group">
-      <label class="form-label">Procedimento *</label>
-      <input class="form-input" id="proc-tipo" placeholder="Ex: Restauração em resina, Canal, Extração...">
-    </div>
-
-    <div style="display:flex;gap:12px">
-      <div class="form-group" style="flex:1">
-        <label class="form-label">Data de realização *</label>
-        <input class="form-input" type="date" id="proc-data">
-      </div>
-      <div class="form-group" style="flex:1">
-        <label class="form-label">Valor (R$)</label>
-        <input class="form-input" type="number" id="proc-valor" min="0" step="0.01" placeholder="0,00">
-      </div>
-    </div>
-
-    <div style="display:flex;gap:12px">
-      <div class="form-group" style="flex:1">
-        <label class="form-label">Dentes envolvidos</label>
-        <input class="form-input" id="proc-dentes" placeholder="Ex: 11, 12, 21">
-      </div>
-      <div class="form-group" style="flex:1">
-        <label class="form-label">Status</label>
-        <select class="form-input" id="proc-status">
-          <option value="em_andamento">Em andamento</option>
-          <option value="concluido">Concluído</option>
-          <option value="parcial">Parcial</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Observações</label>
-      <textarea class="form-input" id="proc-obs" rows="2" placeholder="Detalhes do procedimento, materiais, orientações..."></textarea>
-    </div>
-
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="fecharModalProcedimento()">Cancelar</button>
-      <button class="btn btn-primary" id="proc-salvar-btn" onclick="salvarProcedimento()"><i class="ti ti-check"></i> Registrar</button>
     </div>
   </div>
 </div>
@@ -472,632 +306,319 @@ import { requireAuth }   from "./js/auth.js";
 import { Procedimentos } from "./js/db.js";
 import { uploadAnexo, listarAnexos, excluirAnexo, iconeArquivo, formatarTamanho } from "./js/storage.js";
 import { db }            from "./js/firebase.js";
-import { getClinicaIdSessao } from "./js/tenant.js";
 import {
-  doc, getDoc, setDoc, updateDoc, collection, addDoc,
-  getDocs, orderBy, where, query, serverTimestamp, Timestamp
+  doc, getDoc, setDoc, collection, addDoc,
+  getDocs, orderBy, query, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ── Pega pacienteId da URL ────────────────────────────────────
-const params    = new URLSearchParams(location.search);
+const params     = new URLSearchParams(location.search);
 const pacienteId = params.get("id") || "demo";
 
-// ── Condições do odontograma ──────────────────────────────────
 const CONDICOES = [
-  { id: "normal",    label: "Normal / Sadio",  cor: "#2A3548", stroke:"#4A5568" },
-  { id: "carie",     label: "Cárie",           cor: "#F4736B", stroke:"#D94040" },
-  { id: "restaurado",label: "Restaurado",      cor: "#5B8CFF", stroke:"#3F6FD8" },
-  { id: "canal",     label: "Tratado (Canal)", cor: "#F0B046", stroke:"#C88F2A" },
-  { id: "protese",   label: "Prótese",         cor: "#7C3AED", stroke:"#5B21B6" },
-  { id: "implante",  label: "Implante",        cor: "#34D399", stroke:"#1A9E75" },
-  { id: "extraido",  label: "Extraído",        cor: "#5A6A7A", stroke:"#3D4D5C" },
-  { id: "ausente",   label: "Ausente/Não erup.",cor:"#1E2638", stroke:"#4A5568" },
+  { id:"normal",    label:"Normal / Sadio",   cor:"#fff",    stroke:"#CBD4DC" },
+  { id:"carie",     label:"Cárie",            cor:"#D94040", stroke:"#B83232" },
+  { id:"restaurado",label:"Restaurado",       cor:"#2D7DD2", stroke:"#1A5FA8" },
+  { id:"canal",     label:"Tratado (Canal)",  cor:"#D98B1A", stroke:"#B06A0D" },
+  { id:"protese",   label:"Prótese",          cor:"#7C3AED", stroke:"#5B21B6" },
+  { id:"implante",  label:"Implante",         cor:"#1A9E75", stroke:"#0D7D5C" },
+  { id:"extraido",  label:"Extraído",         cor:"#5A6A7A", stroke:"#3D4D5C" },
+  { id:"ausente",   label:"Ausente/Não erup.",cor:"#F0F2F5", stroke:"#CBD4DC" },
 ];
 
-// ── Numeração FDI ─────────────────────────────────────────────
-const ADULTO_SUP = [18,17,16,15,14,13,12,11, 21,22,23,24,25,26,27,28];
-const ADULTO_INF = [48,47,46,45,44,43,42,41, 31,32,33,34,35,36,37,38];
-const LEITE_SUP  = [55,54,53,52,51, 61,62,63,64,65];
-const LEITE_INF  = [85,84,83,82,81, 71,72,73,74,75];
+const ADULTO_SUP = [18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28];
+const ADULTO_INF = [48,47,46,45,44,43,42,41,31,32,33,34,35,36,37,38];
+const LEITE_SUP  = [55,54,53,52,51,61,62,63,64,65];
+const LEITE_INF  = [85,84,83,82,81,71,72,73,74,75];
 
-// Estado do odontograma
-let odonto = {}; // { "11": { cond: "carie", obs: "..." }, ... }
-let denteAtual = null;
-let condAtual  = "normal";
-let clinicaId  = null;
+let odonto = {}, denteAtual = null, condAtual = "normal", clinicaId = null, pacienteData = {};
 
-requireAuth(({ clinicaId: cid }) => {
-  clinicaId = cid;
-  init();
-});
+requireAuth(({ clinicaId: cid }) => { clinicaId = cid; init(); });
 
 async function init() {
   await carregarPaciente();
-  renderOdontograma();
-  renderLegenda();
+  renderOdontograma(); renderLegenda();
   await carregarOdontograma();
-  await carregarEvolucoes();
   await carregarAnexos();
   await carregarHistorico();
-  await carregarDocumentosGerados();
+  await carregarDocumentos();
 }
 
-// ── Carrega paciente ──────────────────────────────────────────
 async function carregarPaciente() {
   if (pacienteId === "demo") return;
-  const snap = await getDoc(doc(db, "clinica", clinicaId, "pacientes", pacienteId));
+  const snap = await getDoc(doc(db,"clinica",clinicaId,"pacientes",pacienteId));
   if (!snap.exists()) return;
-  const p = snap.data();
-
-  const iniciais = p.nome.split(" ").map(n => n[0]).join("").substring(0,2).toUpperCase();
-  const cores = ["#5B8CFF","#7C3AED","#F4736B","#34D399","#F0B046","#534AB7"];
-  const cor   = cores[p.nome.charCodeAt(0) % cores.length];
-
-  const avatarEl = document.getElementById("p-avatar");
-  const iniciaisEl = document.getElementById("p-iniciais");
-  if (p.fotoUrl) {
-    iniciaisEl.style.display = "none";
-    avatarEl.style.background = "none";
-    const img = document.createElement("img"); img.src = p.fotoUrl; img.alt = p.nome;
-    avatarEl.insertBefore(img, avatarEl.firstChild);
-  } else {
-    iniciaisEl.textContent = iniciais;
-    avatarEl.style.background = cor;
-  }
-  document.getElementById("p-nome").textContent     = p.nome;
-  document.getElementById("p-cpf").textContent      = p.cpf || "—";
-  document.getElementById("p-tel").textContent      = p.telefone || "—";
-  document.getElementById("p-conv").textContent     = p.convenio || "Particular";
-  document.getElementById("p-alerg").textContent    = p.alergias || "Nenhuma";
-
-  if (p.dataNasc) {
-    const nasc = new Date(p.dataNasc);
-    const idade = new Date().getFullYear() - nasc.getFullYear();
-    document.getElementById("p-sub").textContent = `${idade} anos`;
-  }
-  document.title = `DentalPro — ${p.nome}`;
+  const p = snap.data(); pacienteData = p;
+  const ini = p.nome.split(" ").map(n=>n[0]).join("").substring(0,2).toUpperCase();
+  const cores = ["#2D7DD2","#7C3AED","#D94040","#1A9E75","#D98B1A","#534AB7"];
+  document.getElementById("p-avatar").textContent = ini;
+  document.getElementById("p-avatar").style.background = cores[p.nome.charCodeAt(0)%cores.length];
+  document.getElementById("p-nome").textContent = p.nome;
+  document.getElementById("p-cpf").textContent  = p.cpf||"—";
+  document.getElementById("p-tel").textContent  = p.telefone||"—";
+  document.getElementById("p-conv").textContent = p.convenio||"Particular";
+  document.getElementById("p-alerg").textContent = p.alergias||"Nenhuma";
+  if (p.dataNasc) { const idade=new Date().getFullYear()-new Date(p.dataNasc).getFullYear(); document.getElementById("p-sub").textContent=`${idade} anos`; }
+  document.title = `ProDent — ${p.nome}`;
 }
 
-// ── SVG de um dente ───────────────────────────────────────────
 function toothSVG(cond, isLeite) {
-  const cfg = CONDICOES.find(c => c.id === cond) || CONDICOES[0];
-  const w = isLeite ? 22 : 28;
-  const h = isLeite ? 26 : 32;
-  const dash = cond === "ausente" ? 'stroke-dasharray="3 2"' : '';
+  const cfg = CONDICOES.find(c=>c.id===cond)||CONDICOES[0];
+  const w=isLeite?22:28, h=isLeite?26:32;
+  const dash = cond==="ausente"?'stroke-dasharray="3 2"':'';
   return `<svg width="${w}" height="${h}" viewBox="0 0 28 32" xmlns="http://www.w3.org/2000/svg">
-    <path class="face" d="M4 6 C4 2 10 1 14 1 C18 1 24 2 24 6 L26 22 C26 28 22 31 14 31 C6 31 2 28 2 22 Z"
-      fill="${cfg.cor}" stroke="${cfg.stroke}" stroke-width="1.5" ${dash}/>
-    ${cond==="extraido" ? '<line x1="8" y1="8" x2="20" y2="24" stroke="#fff" stroke-width="2"/><line x1="20" y1="8" x2="8" y2="24" stroke="#fff" stroke-width="2"/>' : ''}
-    ${cond==="canal" ? '<circle cx="14" cy="16" r="4" fill="none" stroke="#fff" stroke-width="1.5"/>' : ''}
-    ${cond==="implante" ? '<line x1="14" y1="6" x2="14" y2="26" stroke="#fff" stroke-width="2"/><line x1="9" y1="14" x2="19" y2="14" stroke="#fff" stroke-width="1.5"/>' : ''}
+    <path d="M4 6 C4 2 10 1 14 1 C18 1 24 2 24 6 L26 22 C26 28 22 31 14 31 C6 31 2 28 2 22 Z" fill="${cfg.cor}" stroke="${cfg.stroke}" stroke-width="1.5" ${dash}/>
+    ${cond==="extraido"?'<line x1="8" y1="8" x2="20" y2="24" stroke="#fff" stroke-width="2"/><line x1="20" y1="8" x2="8" y2="24" stroke="#fff" stroke-width="2"/>':''}
+    ${cond==="canal"?'<circle cx="14" cy="16" r="4" fill="none" stroke="#fff" stroke-width="1.5"/>':''}
+    ${cond==="implante"?'<line x1="14" y1="6" x2="14" y2="26" stroke="#fff" stroke-width="2"/><line x1="9" y1="14" x2="19" y2="14" stroke="#fff" stroke-width="1.5"/>':''}
   </svg>`;
 }
 
-// ── Renderiza linha de dentes ─────────────────────────────────
-function renderLinha(nums, containerId, isLeite) {
-  const c = document.getElementById(containerId);
-  c.innerHTML = "";
+function renderLinha(nums, cid, isLeite) {
+  const c = document.getElementById(cid); c.innerHTML="";
   nums.forEach(num => {
-    const n = String(num);
-    const estado = odonto[n] || { cond: "normal", obs: "" };
-    const div = document.createElement("div");
-    div.className = `tooth${isLeite ? " tooth-leite" : ""}`;
-    div.innerHTML = `
-      <div class="tooth-num">${num}</div>
-      <div class="tooth-svg">${toothSVG(estado.cond, isLeite)}</div>
-      <div class="tooth-label">${estado.cond !== "normal" ? (CONDICOES.find(c=>c.id===estado.cond)?.label||"") : ""}</div>
-    `;
-    div.onclick = () => abrirModalDente(num, isLeite);
-    c.appendChild(div);
+    const n=String(num), estado=odonto[n]||{cond:"normal",obs:""};
+    const div=document.createElement("div"); div.className=`tooth${isLeite?" tooth-leite":""}`;
+    div.innerHTML=`<div class="tooth-num">${num}</div><div class="tooth-svg">${toothSVG(estado.cond,isLeite)}</div><div class="tooth-label">${estado.cond!=="normal"?(CONDICOES.find(c=>c.id===estado.cond)?.label||""):""}</div>`;
+    div.onclick=()=>abrirModalDente(num,isLeite); c.appendChild(div);
   });
 }
 
 function renderOdontograma() {
-  renderLinha(ADULTO_SUP, "row-adulto-sup", false);
-  renderLinha(ADULTO_INF, "row-adulto-inf", false);
-  renderLinha(LEITE_SUP,  "row-inf-sup",    true);
-  renderLinha(LEITE_INF,  "row-inf-inf",    true);
+  renderLinha(ADULTO_SUP,"row-adulto-sup",false); renderLinha(ADULTO_INF,"row-adulto-inf",false);
+  renderLinha(LEITE_SUP,"row-inf-sup",true); renderLinha(LEITE_INF,"row-inf-inf",true);
 }
 
-// ── Legenda ───────────────────────────────────────────────────
 function renderLegenda() {
-  const c = document.getElementById("legenda");
-  c.innerHTML = CONDICOES.map(cond => `
-    <div class="leg-item" onclick="selecionarCondicao('${cond.id}', this)">
-      <div class="leg-dot" style="background:${cond.cor};border:1.5px solid ${cond.stroke}"></div>
-      ${cond.label}
-    </div>
-  `).join("");
+  document.getElementById("legenda").innerHTML = CONDICOES.map(c=>`
+    <div class="leg-item" onclick="selecionarCondicao('${c.id}',this)">
+      <div class="leg-dot" style="background:${c.cor};border:1.5px solid ${c.stroke}"></div>${c.label}
+    </div>`).join("");
 }
 
-window.selecionarCondicao = function(id, el) {
-  condAtual = id;
-  document.querySelectorAll(".leg-item").forEach(e => e.classList.remove("selected"));
-  el.classList.add("selected");
-};
+window.selecionarCondicao = (id,el) => { condAtual=id; document.querySelectorAll(".leg-item").forEach(e=>e.classList.remove("selected")); el.classList.add("selected"); };
 
-// ── Modal dente ───────────────────────────────────────────────
-window.abrirModalDente = function(num, isLeite) {
-  denteAtual = String(num);
-  const estado = odonto[denteAtual] || { cond: "normal", obs: "" };
-  document.getElementById("modal-dente-titulo").textContent =
-    `Dente ${num}${isLeite ? " (decíduo)" : ""}`;
-  document.getElementById("dente-obs").value = estado.obs || "";
-
-  const grid = document.getElementById("cond-grid");
-  grid.innerHTML = CONDICOES.map(c => `
-    <button class="cond-btn${estado.cond === c.id ? " selected" : ""}" onclick="selecionarCondModal('${c.id}', this)">
-      <div class="cond-dot" style="background:${c.cor};border:1.5px solid ${c.stroke}"></div>
-      ${c.label}
-    </button>
-  `).join("");
-
+window.abrirModalDente = function(num,isLeite) {
+  denteAtual=String(num); const estado=odonto[denteAtual]||{cond:"normal",obs:""};
+  document.getElementById("modal-dente-titulo").textContent=`Dente ${num}${isLeite?" (decíduo)":""}`;
+  document.getElementById("dente-obs").value=estado.obs||"";
+  document.getElementById("cond-grid").innerHTML=CONDICOES.map(c=>`
+    <button class="cond-btn${estado.cond===c.id?" selected":""}" onclick="selecionarCondModal('${c.id}',this)">
+      <div class="cond-dot" style="background:${c.cor};border:1.5px solid ${c.stroke}"></div>${c.label}
+    </button>`).join("");
   document.getElementById("modal-dente").classList.add("open");
 };
 
-window.selecionarCondModal = function(id, el) {
-  condAtual = id;
-  document.querySelectorAll(".cond-btn").forEach(b => b.classList.remove("selected"));
-  el.classList.add("selected");
-};
+window.selecionarCondModal = (id,el) => { condAtual=id; document.querySelectorAll(".cond-btn").forEach(b=>b.classList.remove("selected")); el.classList.add("selected"); };
+window.fecharModal = () => document.getElementById("modal-dente").classList.remove("open");
+window.salvarCondicaoDente = () => { if(!denteAtual)return; odonto[denteAtual]={cond:condAtual,obs:document.getElementById("dente-obs").value.trim()}; fecharModal(); renderOdontograma(); };
 
-window.fecharModal = function() {
-  document.getElementById("modal-dente").classList.remove("open");
-};
-
-window.salvarCondicaoDente = function() {
-  if (!denteAtual) return;
-  const obs = document.getElementById("dente-obs").value.trim();
-  odonto[denteAtual] = { cond: condAtual, obs };
-  fecharModal();
-  renderOdontograma();
-};
-
-// ── Salva odontograma no Firestore ────────────────────────────
 window.salvarOdontograma = async function() {
-  const ref = doc(db, "clinica", clinicaId, "pacientes", pacienteId, "odontograma", "atual");
-  await setDoc(ref, {
-    dentes: odonto,
-    atualizadoEm: serverTimestamp()
-  });
-
-  // Log de alteração
-  const logRef = collection(db, "clinica", clinicaId, "pacientes", pacienteId, "odontograma_log");
-  await addDoc(logRef, {
-    snapshot: odonto,
-    registradoEm: serverTimestamp()
-  });
-
-  mostrarToast("Odontograma salvo!");
-  await carregarLogOdontograma();
+  const ref=doc(db,"clinica",clinicaId,"pacientes",pacienteId,"odontograma","atual");
+  await setDoc(ref,{dentes:odonto,atualizadoEm:serverTimestamp()});
+  await addDoc(collection(db,"clinica",clinicaId,"pacientes",pacienteId,"odontograma_log"),{snapshot:odonto,registradoEm:serverTimestamp()});
+  mostrarToast("Odontograma salvo!"); await carregarLogOdontograma();
 };
 
-// ── Carrega odontograma salvo ─────────────────────────────────
 async function carregarOdontograma() {
-  if (pacienteId === "demo") return;
-  const snap = await getDoc(
-    doc(db, "clinica", clinicaId, "pacientes", pacienteId, "odontograma", "atual")
-  );
-  if (snap.exists()) {
-    odonto = snap.data().dentes || {};
-    renderOdontograma();
-  }
+  if(pacienteId==="demo")return;
+  const snap=await getDoc(doc(db,"clinica",clinicaId,"pacientes",pacienteId,"odontograma","atual"));
+  if(snap.exists()){odonto=snap.data().dentes||{};renderOdontograma();}
   await carregarLogOdontograma();
 }
 
 async function carregarLogOdontograma() {
-  if (pacienteId === "demo") return;
-  const q = query(
-    collection(db, "clinica", clinicaId, "pacientes", pacienteId, "odontograma_log"),
-    orderBy("registradoEm", "desc")
-  );
-  const snap = await getDocs(q);
-  if (snap.empty) return;
-
-  document.getElementById("odonto-log").style.display = "block";
-  const list = document.getElementById("log-list");
-  list.innerHTML = snap.docs.slice(0, 5).map(d => {
-    const data = d.data();
-    const dt = data.registradoEm?.toDate?.()?.toLocaleDateString("pt-BR") || "—";
-    const alterados = Object.entries(data.snapshot || {})
-      .filter(([,v]) => v.cond !== "normal")
-      .map(([k,v]) => `${k}:${CONDICOES.find(c=>c.id===v.cond)?.label}`)
-      .join(", ") || "Sem alterações";
-    return `<div class="log-item">
-      <div class="log-dot" style="background:var(--accent)"></div>
-      <div class="log-text">${alterados}</div>
-      <div class="log-date">${dt}</div>
-    </div>`;
+  if(pacienteId==="demo")return;
+  const snap=await getDocs(query(collection(db,"clinica",clinicaId,"pacientes",pacienteId,"odontograma_log"),orderBy("registradoEm","desc")));
+  if(snap.empty)return;
+  document.getElementById("odonto-log").style.display="block";
+  document.getElementById("log-list").innerHTML=snap.docs.slice(0,5).map(d=>{
+    const data=d.data(), dt=data.registradoEm?.toDate?.()?.toLocaleDateString("pt-BR")||"—";
+    const alt=Object.entries(data.snapshot||{}).filter(([,v])=>v.cond!=="normal").map(([k,v])=>`${k}:${CONDICOES.find(c=>c.id===v.cond)?.label}`).join(", ")||"Sem alterações";
+    return `<div class="log-item"><div class="log-dot" style="background:var(--accent)"></div><div class="log-text">${alt}</div><div class="log-date">${dt}</div></div>`;
   }).join("");
 }
 
-// ── Evolução clínica ──────────────────────────────────────────
 window.salvarEvolucao = async function() {
-  const txt = document.getElementById("nova-evolucao-txt").value.trim();
-  if (!txt) return;
-  await addDoc(
-    collection(db, "clinica", clinicaId, "pacientes", pacienteId, "evolucoes"),
-    { texto: txt, registradoEm: serverTimestamp() }
-  );
-  document.getElementById("nova-evolucao-txt").value = "";
-  await carregarEvolucoes();
-  mostrarToast("Evolução registrada!");
+  const txt=document.getElementById("nova-evolucao-txt").value.trim(); if(!txt)return;
+  await addDoc(collection(db,"clinica",clinicaId,"pacientes",pacienteId,"evolucoes"),{texto:txt,registradoEm:serverTimestamp()});
+  document.getElementById("nova-evolucao-txt").value=""; await carregarEvolucoes(); mostrarToast("Evolução registrada!");
 };
 
 async function carregarEvolucoes() {
-  if (pacienteId === "demo") return;
-  const q = query(
-    collection(db, "clinica", clinicaId, "pacientes", pacienteId, "evolucoes"),
-    orderBy("registradoEm", "desc")
-  );
-  const snap = await getDocs(q);
-  const list  = document.getElementById("evolucao-list");
-  if (snap.empty) { list.innerHTML = '<div style="text-align:center;padding:32px;color:var(--text-3)">Nenhuma evolução registrada</div>'; return; }
-  list.innerHTML = snap.docs.map(d => {
-    const data = d.data();
-    const dt = data.registradoEm?.toDate?.()?.toLocaleDateString("pt-BR","pt-BR") || "—";
-    return `<div class="evolucao-item">
-      <div class="evolucao-data">${dt}</div>
-      <div class="evolucao-texto">${data.texto}</div>
-    </div>`;
-  }).join("");
+  if(pacienteId==="demo")return;
+  const snap=await getDocs(query(collection(db,"clinica",clinicaId,"pacientes",pacienteId,"evolucoes"),orderBy("registradoEm","desc")));
+  const list=document.getElementById("evolucao-list");
+  list.innerHTML=snap.empty?'<div style="text-align:center;padding:32px;color:var(--text-3)">Nenhuma evolução registrada</div>':
+    snap.docs.map(d=>{const data=d.data(),dt=data.registradoEm?.toDate?.()?.toLocaleDateString("pt-BR")||"—";return`<div class="evolucao-item"><div class="evolucao-data">${dt}</div><div class="evolucao-texto">${data.texto}</div></div>`;}).join("");
 }
 
-// ── ANEXOS ────────────────────────────────────────────────────
-window.dragOver = function(e) {
-  e.preventDefault();
-  document.getElementById("upload-area").classList.add("drag");
-};
-window.dragLeave = function() {
-  document.getElementById("upload-area").classList.remove("drag");
-};
-window.dropFile = function(e) {
-  e.preventDefault();
-  document.getElementById("upload-area").classList.remove("drag");
-  handleFiles(e.dataTransfer.files);
-};
+window.dragOver=(e)=>{e.preventDefault();document.getElementById("upload-area").classList.add("drag");};
+window.dragLeave=()=>document.getElementById("upload-area").classList.remove("drag");
+window.dropFile=(e)=>{e.preventDefault();document.getElementById("upload-area").classList.remove("drag");handleFiles(e.dataTransfer.files);};
 
 window.handleFiles = async function(files) {
-  const prog = document.getElementById("upload-progress");
-  const fill  = document.getElementById("progress-fill");
-  const status = document.getElementById("upload-status");
-  prog.style.display = "block";
-
-  for (const file of files) {
-    status.textContent = `Enviando ${file.name}...`;
-    fill.style.width   = "0%";
-    await uploadAnexo(pacienteId, file, pct => { fill.style.width = pct + "%"; });
-  }
-
-  prog.style.display = "none";
-  mostrarToast(`${files.length} arquivo(s) enviado(s)!`);
-  await carregarAnexos();
+  const prog=document.getElementById("upload-progress"),fill=document.getElementById("progress-fill"),status=document.getElementById("upload-status");
+  prog.style.display="block";
+  for(const file of files){status.textContent=`Enviando ${file.name}...`;fill.style.width="0%";await uploadAnexo(pacienteId,file,pct=>{fill.style.width=pct+"%";});}
+  prog.style.display="none"; mostrarToast(`${files.length} arquivo(s) enviado(s)!`); await carregarAnexos();
 };
 
 async function carregarAnexos() {
-  if (pacienteId === "demo") return;
-  const anexos = await listarAnexos(pacienteId, clinicaId);
-  const grid   = document.getElementById("files-grid");
-  const count  = document.getElementById("anexos-count");
-  count.textContent = anexos.length;
-  document.getElementById("r-anexos").textContent = anexos.length;
-
-  if (!anexos.length) {
-    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text-3)">
-      <i class="ti ti-paperclip" style="font-size:28px;display:block;margin-bottom:8px"></i>Nenhum arquivo anexado</div>`;
-    return;
-  }
-
-  grid.innerHTML = anexos.map(a => {
-    const isImg = a.tipo?.startsWith("image/");
-    const icone = iconeArquivo(a.tipo);
-    const iconeCls = a.tipo?.includes("pdf") ? "pdf" : isImg ? "img" : a.tipo?.includes("word") ? "doc" : "";
-    return `<div class="file-card">
-      ${isImg
-        ? `<img src="${a.url}" class="file-thumb" alt="${a.nome}">`
-        : `<i class="ti ${icone} file-icon ${iconeCls}" style="font-size:36px"></i>`}
-      <div class="file-name" title="${a.nome}">${a.nome}</div>
-      <div class="file-size">${formatarTamanho(a.tamanho)}</div>
-      <div class="file-actions">
-        <a href="${a.url}" target="_blank" class="file-btn"><i class="ti ti-eye"></i> Ver</a>
-        <a href="${a.url}" download="${a.nome}" class="file-btn"><i class="ti ti-download"></i></a>
-        <button class="file-btn del" onclick="deletarAnexo('${a.id}','${a.publicId||""}')"><i class="ti ti-trash"></i></button>
-      </div>
-    </div>`;
-  }).join("");
+  if(pacienteId==="demo")return;
+  const anexos=await listarAnexos(pacienteId,clinicaId);
+  const grid=document.getElementById("files-grid");
+  document.getElementById("anexos-count").textContent=anexos.length;
+  document.getElementById("r-anexos").textContent=anexos.length;
+  if(!anexos.length){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text-3)"><i class="ti ti-paperclip" style="font-size:28px;display:block;margin-bottom:8px"></i>Nenhum arquivo anexado</div>';return;}
+  grid.innerHTML=anexos.map(a=>{const isImg=a.tipo?.startsWith("image/"),icone=iconeArquivo(a.tipo),cls=a.tipo?.includes("pdf")?"pdf":isImg?"img":a.tipo?.includes("word")?"doc":"";
+    return`<div class="file-card">${isImg?`<img src="${a.url}" class="file-thumb" alt="${a.nome}">`:`<i class="ti ${icone} file-icon ${cls}" style="font-size:36px"></i>`}<div class="file-name" title="${a.nome}">${a.nome}</div><div class="file-size">${formatarTamanho(a.tamanho)}</div><div class="file-actions"><a href="${a.url}" target="_blank" class="file-btn"><i class="ti ti-eye"></i> Ver</a><a href="${a.url}" download="${a.nome}" class="file-btn"><i class="ti ti-download"></i></a><button class="file-btn del" onclick="deletarAnexo('${a.id}','${a.publicId||""}')"><i class="ti ti-trash"></i></button></div></div>`;}).join("");
 }
 
-window.deletarAnexo = async function(id, publicId) {
-  if (!confirm("Excluir este arquivo?")) return;
-  await excluirAnexo(pacienteId, id, publicId, clinicaId);
-  await carregarAnexos();
-};
+window.deletarAnexo=async(id,publicId)=>{if(!confirm("Excluir?"))return;await excluirAnexo(pacienteId,id,publicId,clinicaId);await carregarAnexos();};
 
-// ── Histórico de procedimentos ────────────────────────────────
 async function carregarHistorico() {
-  if (pacienteId === "demo") return;
-  const list = document.getElementById("historico-list");
-  let procs;
-  try {
-    // Query sem orderBy para não exigir índice composto
-    const q = query(
-      collection(db, "clinica", clinicaId, "procedimentos"),
-      where("pacienteId", "==", pacienteId)
-    );
-    const snap = await getDocs(q);
-    procs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    // Ordena por data no JS (mais recente primeiro)
-    procs.sort((a,b) => {
-      const da = a.dataRealizacao?.toDate?.() || new Date(0);
-      const db2 = b.dataRealizacao?.toDate?.() || new Date(0);
-      return db2 - da;
-    });
-  } catch (e) {
-    console.error(e);
-    list.innerHTML = `<div style="text-align:center;padding:32px;color:var(--danger)">Erro ao carregar procedimentos.</div>`;
-    return;
-  }
-  if (!procs.length) {
-    list.innerHTML = `<div style="text-align:center;padding:32px;color:var(--text-3)">Nenhum procedimento registrado</div>`;
-    return;
-  }
-  document.getElementById("r-procs").textContent = procs.length;
-  list.innerHTML = `<table style="width:100%;border-collapse:collapse">
-    <thead><tr>
-      <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--text-2);border-bottom:1px solid var(--border);background:var(--bg)">Data</th>
-      <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--text-2);border-bottom:1px solid var(--border);background:var(--bg)">Procedimento</th>
-      <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--text-2);border-bottom:1px solid var(--border);background:var(--bg)">Dentes</th>
-      <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--text-2);border-bottom:1px solid var(--border);background:var(--bg)">Valor</th>
-      <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--text-2);border-bottom:1px solid var(--border);background:var(--bg)">Status</th>
-    </tr></thead>
-    <tbody>${procs.map(p => {
-      const dt = p.dataRealizacao?.toDate?.()?.toLocaleDateString("pt-BR") || "—";
-      const statusCls = p.status === "concluido" ? "badge-success" : p.status === "em_andamento" ? "badge-info" : "badge-warning";
-      const statusLabel = { concluido:"Concluído", em_andamento:"Em andamento", parcial:"Parcial" }[p.status] || p.status;
-      return `<tr>
-        <td style="padding:12px;font-size:13px;border-bottom:1px solid var(--border)">${dt}</td>
-        <td style="padding:12px;font-size:13px;border-bottom:1px solid var(--border);font-weight:500">${p.tipo}</td>
-        <td style="padding:12px;font-size:13px;border-bottom:1px solid var(--border);color:var(--text-2)">${(p.dentes||[]).join(", ")||"—"}</td>
-        <td style="padding:12px;font-size:13px;border-bottom:1px solid var(--border);font-weight:600">R$ ${(p.valor||0).toLocaleString("pt-BR")}</td>
-        <td style="padding:12px;border-bottom:1px solid var(--border)"><span class="badge ${statusCls}">${statusLabel}</span></td>
-      </tr>`;
-    }).join("")}</tbody>
-  </table>`;
+  if(pacienteId==="demo")return;
+  const procs=await Procedimentos.buscarPorPaciente(pacienteId,clinicaId);
+  const list=document.getElementById("historico-list");
+  if(!procs.length){list.innerHTML='<div style="text-align:center;padding:32px;color:var(--text-3)">Nenhum procedimento registrado</div>';return;}
+  document.getElementById("r-procs").textContent=procs.length;
+  list.innerHTML=`<table style="width:100%;border-collapse:collapse"><thead><tr>${["Data","Procedimento","Dentes","Valor","Status"].map(h=>`<th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--text-2);border-bottom:1px solid var(--border);background:var(--bg)">${h}</th>`).join("")}</tr></thead><tbody>${procs.map(p=>{const dt=p.dataRealizacao?.toDate?.()?.toLocaleDateString("pt-BR")||"—",sc=p.status==="concluido"?"badge-success":p.status==="em_andamento"?"badge-info":"badge-warning",sl={concluido:"Concluído",em_andamento:"Em andamento",parcial:"Parcial"}[p.status]||p.status;return`<tr><td style="padding:12px;font-size:13px;border-bottom:1px solid var(--border)">${dt}</td><td style="padding:12px;font-size:13px;border-bottom:1px solid var(--border);font-weight:500">${p.tipo}</td><td style="padding:12px;font-size:13px;border-bottom:1px solid var(--border);color:var(--text-2)">${(p.dentes||[]).join(", ")||"—"}</td><td style="padding:12px;font-size:13px;border-bottom:1px solid var(--border);font-weight:600">R$ ${(p.valor||0).toLocaleString("pt-BR")}</td><td style="padding:12px;border-bottom:1px solid var(--border)"><span class="badge ${sc}">${sl}</span></td></tr>`;}).join("")}</tbody></table>`;
 }
 
-// ── Cadastro de procedimento ──────────────────────────────────
-window.abrirModalProcedimento = function() {
-  if (pacienteId === "demo") {
-    mostrarToast("Abra o prontuário de um paciente real para registrar.");
-    return;
-  }
-  document.getElementById("proc-tipo").value   = "";
-  document.getElementById("proc-valor").value  = "";
-  document.getElementById("proc-dentes").value = "";
-  document.getElementById("proc-obs").value    = "";
-  document.getElementById("proc-status").value = "em_andamento";
-  // Data padrão = hoje (formato yyyy-mm-dd respeitando o fuso local)
-  const hoje = new Date();
-  const off  = hoje.getTimezoneOffset();
-  document.getElementById("proc-data").value =
-    new Date(hoje.getTime() - off * 60000).toISOString().slice(0, 10);
-  document.getElementById("modal-proc").classList.add("open");
+// ── DOCUMENTOS ────────────────────────────────────────────────
+const MODELOS = {
+  termo_imagem:{titulo:"Termo de Autorização de Uso de Imagem",cor:"#7C3AED",icone:"ti-camera",campos:[
+    {id:"autoriza",label:"Autoriza uso de imagens?",placeholder:"Sim / Não"},
+    {id:"obs",label:"Observações",placeholder:"Opcional..."}
+  ],texto:(p,c)=>`<div style="text-align:center;margin-bottom:20px"><div style="font-size:17px;font-weight:700;text-transform:uppercase">Termo de Autorização de Uso de Imagem</div></div>
+    <p>Eu, <b>${p.nome||"___"}</b>, CPF: <b>${p.cpf||"___"}</b>, autorizo o uso de imagens fotográficas e de vídeo do meu tratamento odontológico para fins didáticos, científicos e de divulgação.</p><br>
+    <p>Autorizo: <b>${c.autoriza||"☑ Sim"}</b></p>${c.obs?`<p>Obs: ${c.obs}</p>`:""}<br>
+    <p>Data: <b>${new Date().toLocaleDateString("pt-BR")}</b></p>`},
+  contrato:{titulo:"Contrato de Prestação de Serviços Odontológicos",cor:"#2D7DD2",icone:"ti-file-text",campos:[
+    {id:"procedimento",label:"Procedimento(s)",placeholder:"Ex: Implante dente 36, Canal dente 47..."},
+    {id:"valor_total",label:"Valor total (R$)",placeholder:"Ex: 2.500,00"},
+    {id:"parcelas",label:"Forma de pagamento",placeholder:"Ex: 3x de R$ 833,33 no cartão"}
+  ],texto:(p,c)=>`<div style="text-align:center;margin-bottom:20px"><div style="font-size:17px;font-weight:700;text-transform:uppercase">Contrato de Prestação de Serviços Odontológicos</div></div>
+    <p><b>CONTRATANTE:</b> ${p.nome||"___"}, CPF: ${p.cpf||"___"}, Tel: ${p.telefone||"___"}</p><br>
+    <p><b>OBJETO:</b> ${c.procedimento||"___"}</p><br>
+    <p><b>VALOR:</b> R$ ${c.valor_total||"___"} — ${c.parcelas||"___"}</p><br>
+    <p>O contratante declara estar ciente dos procedimentos e concorda com as condições estabelecidas.</p><br>
+    <p>Data: <b>${new Date().toLocaleDateString("pt-BR")}</b></p>`},
+  orcamento:{titulo:"Orçamento de Tratamento",cor:"#1A9E75",icone:"ti-receipt",campos:[
+    {id:"procedimentos",label:"Procedimentos",placeholder:"Ex: Implante (dente 36), Canal (dente 47)..."},
+    {id:"valor_total",label:"Valor total (R$)",placeholder:"Ex: 3.200,00"},
+    {id:"validade",label:"Validade",placeholder:"Ex: 30 dias"},
+    {id:"obs",label:"Observações",placeholder:"Condições especiais..."}
+  ],texto:(p,c)=>`<div style="text-align:center;margin-bottom:20px"><div style="font-size:17px;font-weight:700;text-transform:uppercase">Orçamento de Tratamento</div><div style="font-size:13px;color:#666">Data: ${new Date().toLocaleDateString("pt-BR")}</div></div>
+    <p><b>Paciente:</b> ${p.nome||"___"} | <b>CPF:</b> ${p.cpf||"___"}</p><br>
+    <div style="border:1px solid #ddd;border-radius:8px;padding:16px;margin:12px 0"><b>Procedimentos:</b><br>${c.procedimentos||"___"}
+    <div style="border-top:1px solid #ddd;margin-top:12px;padding-top:12px;display:flex;justify-content:space-between"><span style="font-weight:700">TOTAL</span><span style="font-weight:700;font-size:16px">R$ ${c.valor_total||"___"}</span></div></div>
+    <p><b>Validade:</b> ${c.validade||"30 dias"}</p>${c.obs?`<p><b>Obs:</b> ${c.obs}</p>`:""}<br>
+    <p style="font-size:12px;color:#888">O paciente declara compreender e concordar com os valores e procedimentos descritos.</p>`},
+  distrato:{titulo:"Distrato de Contrato",cor:"#D94040",icone:"ti-file-x",campos:[
+    {id:"motivo",label:"Motivo do distrato",placeholder:"Ex: Desistência do paciente, conclusão parcial..."},
+    {id:"valor_devolvido",label:"Valor a devolver ao paciente (R$)",placeholder:"Ex: 500,00 ou 0,00"}
+  ],texto:(p,c)=>`<div style="text-align:center;margin-bottom:20px"><div style="font-size:17px;font-weight:700;text-transform:uppercase">Distrato de Contrato</div></div>
+    <p>Eu, <b>${p.nome||"___"}</b>, CPF: <b>${p.cpf||"___"}</b>, concordo com o encerramento do contrato de serviços odontológicos.</p><br>
+    <p><b>Motivo:</b> ${c.motivo||"___"}</p><br>
+    <p><b>Valor a devolver:</b> R$ ${c.valor_devolvido||"0,00"}</p><br>
+    <p>Declaro estar ciente e de acordo com os termos deste distrato.</p><br>
+    <p>Data: <b>${new Date().toLocaleDateString("pt-BR")}</b></p>`}
 };
 
-window.fecharModalProcedimento = function() {
-  document.getElementById("modal-proc").classList.remove("open");
+let docAtual=null, canvasDoc=null, ctxDoc=null, assinando=false, posAnterior=null;
+
+window.abrirNovoDoc = function(tipo) {
+  docAtual=tipo; const modelo=MODELOS[tipo];
+  document.getElementById("doc-form-titulo").textContent=modelo.titulo;
+  const camposEl=document.getElementById("doc-campos-extras");
+  camposEl.innerHTML=modelo.campos.map(c=>`<div class="form-group"><label class="form-label">${c.label}</label><input type="text" id="doc-campo-${c.id}" class="form-input" placeholder="${c.placeholder}"></div>`).join("");
+  modelo.campos.forEach(c=>{const el=document.getElementById("doc-campo-"+c.id);if(el)el.addEventListener("input",atualizarPreview);});
+  atualizarPreview();
+  document.getElementById("docs-lista-view").style.display="none";
+  document.getElementById("docs-form-view").style.display="block";
+  setTimeout(iniciarCanvas,150);
 };
 
-window.salvarProcedimento = async function() {
-  const tipo    = document.getElementById("proc-tipo").value.trim();
-  const dataStr = document.getElementById("proc-data").value;
-  if (!tipo)    { mostrarToast("Informe o procedimento."); return; }
-  if (!dataStr) { mostrarToast("Informe a data."); return; }
-
-  const btn = document.getElementById("proc-salvar-btn");
-  btn.disabled = true;
-
-  // dataStr = "yyyy-mm-dd" → meio-dia local evita virar o dia anterior por fuso
-  const [ano, mes, dia] = dataStr.split("-").map(Number);
-  const dataRealizacao  = Timestamp.fromDate(new Date(ano, mes - 1, dia, 12, 0, 0));
-
-  const dentes = document.getElementById("proc-dentes").value
-    .split(",").map(s => s.trim()).filter(Boolean);
-
-  try {
-    await Procedimentos.criar({
-      pacienteId,
-      tipo,
-      dataRealizacao,
-      dentes,
-      valor:       parseFloat(document.getElementById("proc-valor").value) || 0,
-      status:      document.getElementById("proc-status").value,
-      observacoes: document.getElementById("proc-obs").value.trim()
-    }, clinicaId);
-
-    fecharModalProcedimento();
-    mostrarToast("Procedimento registrado!");
-    await carregarHistorico();
-  } catch (e) {
-    console.error(e);
-    mostrarToast("Erro ao registrar — veja o console (F12).");
-  } finally {
-    btn.disabled = false;
-  }
-};
-
-// Fecha modal de procedimento clicando fora
-document.getElementById("modal-proc").addEventListener("click", e => {
-  if (e.target === e.currentTarget) fecharModalProcedimento();
-});
-
-// ── Upload de foto do paciente ───────────────────────────────
-const CLOUD_NAME = "dggdjo87t";
-const UPLOAD_PRESET = "ml_default";
-window.uploadFotoPaciente = async function(input) {
-  const file = input.files?.[0]; if (!file) return;
-  if (!file.type.startsWith("image/")) { mostrarToast("Selecione uma imagem."); return; }
-  const avatar = document.getElementById("p-avatar");
-  avatar.classList.add("avatar-uploading");
-  try {
-    const fd = new FormData();
-    fd.append("file", file);
-    fd.append("upload_preset", UPLOAD_PRESET);
-    fd.append("folder", `dentalpro/${clinicaId}/fotos`);
-    const resp = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method:"POST", body:fd });
-    const data = await resp.json();
-    if (!data.secure_url) throw new Error("Upload falhou");
-    // Salva URL no documento do paciente
-    await updateDoc(doc(db, "clinica", clinicaId, "pacientes", pacienteId), { fotoUrl: data.secure_url, atualizadoEm: serverTimestamp() });
-    // Atualiza avatar na tela
-    const old = avatar.querySelector("img"); if (old) old.remove();
-    const img = document.createElement("img"); img.src = data.secure_url;
-    avatar.insertBefore(img, avatar.firstChild);
-    document.getElementById("p-iniciais").style.display = "none";
-    avatar.style.background = "none";
-    mostrarToast("Foto atualizada!");
-  } catch(e) { console.error(e); mostrarToast("Erro no upload."); }
-  finally { avatar.classList.remove("avatar-uploading"); input.value = ""; }
-};
-
-// ── Assinatura digital (canvas) ──────────────────────────────
-let sigDrawing = false;
-const sigCanvas = document.getElementById("sig-canvas");
-const sigCtx = sigCanvas ? sigCanvas.getContext("2d") : null;
-if (sigCtx) {
-  sigCtx.strokeStyle = "#EAF0FA";
-  sigCtx.lineWidth = 2;
-  sigCtx.lineCap = "round";
-
-  function sigPos(e) {
-    const r = sigCanvas.getBoundingClientRect();
-    const t = e.touches ? e.touches[0] : e;
-    return { x: (t.clientX - r.left) * (sigCanvas.width / r.width), y: (t.clientY - r.top) * (sigCanvas.height / r.height) };
-  }
-  function sigStart(e) { e.preventDefault(); sigDrawing = true; const p = sigPos(e); sigCtx.beginPath(); sigCtx.moveTo(p.x, p.y); }
-  function sigMove(e) { if (!sigDrawing) return; e.preventDefault(); const p = sigPos(e); sigCtx.lineTo(p.x, p.y); sigCtx.stroke(); }
-  function sigEnd() { sigDrawing = false; }
-  sigCanvas.addEventListener("mousedown", sigStart);
-  sigCanvas.addEventListener("mousemove", sigMove);
-  sigCanvas.addEventListener("mouseup", sigEnd);
-  sigCanvas.addEventListener("mouseleave", sigEnd);
-  sigCanvas.addEventListener("touchstart", sigStart, {passive:false});
-  sigCanvas.addEventListener("touchmove", sigMove, {passive:false});
-  sigCanvas.addEventListener("touchend", sigEnd);
+function atualizarPreview() {
+  if(!docAtual)return; const modelo=MODELOS[docAtual];
+  const campos={}; modelo.campos.forEach(c=>{const el=document.getElementById("doc-campo-"+c.id);if(el)campos[c.id]=el.value;});
+  document.getElementById("doc-preview").innerHTML=modelo.texto(pacienteData,campos);
 }
 
-window.limparAssinatura = function() {
-  if (sigCtx) sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
-  document.getElementById("sig-status").style.display = "none";
-};
+function iniciarCanvas() {
+  canvasDoc=document.getElementById("signature-canvas"); if(!canvasDoc)return;
+  const rect=canvasDoc.getBoundingClientRect();
+  canvasDoc.width=rect.width*window.devicePixelRatio; canvasDoc.height=180*window.devicePixelRatio;
+  ctxDoc=canvasDoc.getContext("2d"); ctxDoc.scale(window.devicePixelRatio,window.devicePixelRatio);
+  ctxDoc.strokeStyle="#0F1923"; ctxDoc.lineWidth=2.5; ctxDoc.lineCap="round"; ctxDoc.lineJoin="round";
+  const getPos=(e)=>{const r=canvasDoc.getBoundingClientRect();return e.touches?{x:e.touches[0].clientX-r.left,y:e.touches[0].clientY-r.top}:{x:e.clientX-r.left,y:e.clientY-r.top};};
+  canvasDoc.onmousedown=(e)=>{assinando=true;posAnterior=getPos(e);};
+  canvasDoc.ontouchstart=(e)=>{e.preventDefault();assinando=true;posAnterior=getPos(e);};
+  canvasDoc.onmousemove=(e)=>{if(!assinando)return;const p=getPos(e);ctxDoc.beginPath();ctxDoc.moveTo(posAnterior.x,posAnterior.y);ctxDoc.lineTo(p.x,p.y);ctxDoc.stroke();posAnterior=p;};
+  canvasDoc.ontouchmove=(e)=>{e.preventDefault();if(!assinando)return;const p=getPos(e);ctxDoc.beginPath();ctxDoc.moveTo(posAnterior.x,posAnterior.y);ctxDoc.lineTo(p.x,p.y);ctxDoc.stroke();posAnterior=p;};
+  canvasDoc.onmouseup=()=>assinando=false; canvasDoc.ontouchend=()=>assinando=false;
+}
 
-window.salvarAssinatura = async function() {
-  if (pacienteId === "demo") return;
-  const dataUrl = sigCanvas.toDataURL("image/png");
-  // Verifica se tem traço (canvas não está vazio)
-  const blank = document.createElement("canvas"); blank.width=sigCanvas.width; blank.height=sigCanvas.height;
-  if (dataUrl === blank.toDataURL("image/png")) { mostrarToast("Assine antes de salvar."); return; }
-  try {
-    // Converte base64 para blob e sobe no Cloudinary
-    const blob = await (await fetch(dataUrl)).blob();
-    const fd = new FormData();
-    fd.append("file", blob, "assinatura.png");
-    fd.append("upload_preset", UPLOAD_PRESET);
-    fd.append("folder", `dentalpro/${clinicaId}/assinaturas`);
-    const resp = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method:"POST", body:fd });
-    const data = await resp.json();
-    if (!data.secure_url) throw new Error("Upload falhou");
-    await updateDoc(doc(db, "clinica", clinicaId, "pacientes", pacienteId), {
-      assinaturaUrl: data.secure_url, assinaturaEm: serverTimestamp()
-    });
-    document.getElementById("sig-status").style.display = "inline";
-    mostrarToast("Assinatura salva!");
-  } catch(e) { console.error(e); mostrarToast("Erro ao salvar assinatura."); }
-};
+window.limparAssinatura=()=>{if(ctxDoc)ctxDoc.clearRect(0,0,canvasDoc.width,canvasDoc.height);};
 
-// ── Documentos / Consentimentos ──────────────────────────────
-window.gerarDocumento = async function(tipo) {
-  if (pacienteId === "demo") { mostrarToast("Abra um paciente real."); return; }
-  const snap = await getDoc(doc(db, "clinica", clinicaId, "pacientes", pacienteId));
-  if (!snap.exists()) return;
-  const pac = snap.data();
-  const tenSnap = await getDoc(doc(db, "tenants", clinicaId));
-  const clinica = tenSnap.exists() ? tenSnap.data() : {};
+function canvasVazio(){if(!canvasDoc)return true;return!ctxDoc.getImageData(0,0,canvasDoc.width,canvasDoc.height).data.some(v=>v!==0);}
 
-  const titulos = {
-    consentimento_cirurgia: "Termo de Consentimento para Cirurgia",
-    consentimento_procedimento: "Termo de Consentimento para Procedimento Odontológico",
-    uso_imagem: "Termo de Autorização de Uso de Imagem",
-    orcamento: "Orçamento / Plano de Tratamento",
-    contrato: "Contrato de Prestação de Serviços Odontológicos"
-  };
-
-  const hoje = new Date().toLocaleDateString("pt-BR");
-  const titulo = titulos[tipo] || tipo;
-
-  // Salva o documento no Firestore
-  const docRef = await addDoc(collection(db, "clinica", clinicaId, "pacientes", pacienteId, "documentos"), {
-    tipo, titulo,
-    pacienteNome: pac.nome,
-    pacienteCpf: pac.cpf || "",
-    clinicaNome: clinica.nome || "",
-    assinaturaUrl: pac.assinaturaUrl || null,
-    geradoEm: serverTimestamp(),
-    status: pac.assinaturaUrl ? "assinado" : "pendente"
+window.salvarDocumento = async function() {
+  if(canvasVazio()){alert("Por favor, colete a assinatura do paciente.");return;}
+  const modelo=MODELOS[docAtual], campos={};
+  modelo.campos.forEach(c=>{const el=document.getElementById("doc-campo-"+c.id);if(el)campos[c.id]=el.value;});
+  await addDoc(collection(db,"clinica",clinicaId,"pacientes",pacienteId,"documentos"),{
+    tipo:docAtual, titulo:modelo.titulo, campos,
+    docHTML:document.getElementById("doc-preview").innerHTML,
+    assinatura:canvasDoc.toDataURL("image/png"),
+    pacienteNome:pacienteData.nome||"", assinadoEm:serverTimestamp()
   });
-
-  mostrarToast(`"${titulo}" gerado!`);
-  await carregarDocumentosGerados();
+  mostrarToast("Documento salvo e assinado!"); voltarListaDocs(); await carregarDocumentos();
 };
 
-async function carregarDocumentosGerados() {
-  if (pacienteId === "demo") return;
-  const el = document.getElementById("docs-gerados");
+window.voltarListaDocs=()=>{document.getElementById("docs-lista-view").style.display="block";document.getElementById("docs-form-view").style.display="none";};
+
+async function carregarDocumentos() {
+  if(pacienteId==="demo")return;
   try {
-    const q2 = query(collection(db, "clinica", clinicaId, "pacientes", pacienteId, "documentos"), orderBy("geradoEm","desc"));
-    const snap = await getDocs(q2);
-    if (snap.empty) { el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-3);font-size:13px">Nenhum documento gerado ainda</div>'; return; }
-    el.innerHTML = snap.docs.map(d => {
-      const dd = d.data();
-      const dt = dd.geradoEm?.toDate?.()?.toLocaleDateString("pt-BR") || "";
-      const st = dd.status === "assinado"
-        ? '<span style="background:rgba(52,211,153,.15);color:var(--success);padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600">Assinado</span>'
-        : '<span style="background:rgba(240,176,70,.15);color:var(--warning);padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600">Pendente</span>';
-      return `<div class="doc-card" style="cursor:default">
-        <div class="doc-icon" style="background:rgba(91,140,255,.15);color:var(--accent)"><i class="ti ti-file-check"></i></div>
-        <div><div class="doc-title">${dd.titulo}</div><div class="doc-sub">Gerado em ${dt}</div></div>
-        <div style="margin-left:auto">${st}</div>
-      </div>`;
-    }).join("");
-  } catch(e) { console.warn("Docs:",e.message); }
+    const snap=await getDocs(query(collection(db,"clinica",clinicaId,"pacientes",pacienteId,"documentos"),orderBy("assinadoEm","desc")));
+    const list=document.getElementById("docs-salvos-list");
+    const cores={termo_imagem:"#7C3AED",contrato:"#2D7DD2",orcamento:"#1A9E75",distrato:"#D94040"};
+    const icones={termo_imagem:"ti-camera",contrato:"ti-file-text",orcamento:"ti-receipt",distrato:"ti-file-x"};
+    list.innerHTML=snap.empty?'<div style="text-align:center;padding:32px;color:var(--text-3)"><i class="ti ti-file-certificate" style="font-size:32px;display:block;margin-bottom:8px"></i>Nenhum documento assinado ainda</div>':
+      snap.docs.map(d=>{const data=d.data(),dt=data.assinadoEm?.toDate?.()?.toLocaleDateString("pt-BR")||"—",cor=cores[data.tipo]||"#2D7DD2",ico=icones[data.tipo]||"ti-file";
+        return`<div class="doc-salvo-item"><div style="width:40px;height:40px;border-radius:8px;background:${cor}20;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ${ico}" style="color:${cor};font-size:18px"></i></div><div style="flex:1"><div style="font-size:13.5px;font-weight:600">${data.titulo}</div><div style="font-size:12px;color:var(--text-2)">Assinado em ${dt}</div></div><button class="btn btn-ghost" style="font-size:12px;padding:5px 10px" onclick="verDocumento('${d.id}')"><i class="ti ti-eye"></i> Ver</button></div>`;
+      }).join("");
+  } catch(e){console.warn("Documentos:",e.message);}
 }
 
-// ── Tabs ──────────────────────────────────────────────────────
-window.showTab = function(id) {
-  document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  document.getElementById("tab-" + id).classList.add("active");
-  event.currentTarget.classList.add("active");
+window.verDocumento = async function(docId) {
+  const snap=await getDoc(doc(db,"clinica",clinicaId,"pacientes",pacienteId,"documentos",docId));
+  if(!snap.exists())return; const data=snap.data(), dt=data.assinadoEm?.toDate?.()?.toLocaleDateString("pt-BR")||"—";
+  const win=window.open("","_blank");
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${data.titulo}</title>
+    <style>body{font-family:Georgia,serif;max-width:700px;margin:40px auto;padding:20px;font-size:14px;line-height:1.8;color:#111}.sig{margin-top:40px;border-top:1px solid #ddd;padding-top:20px}img{max-width:300px;border:1px solid #ddd;border-radius:4px}@media print{button{display:none}}</style>
+    </head><body>${data.docHTML}<div class="sig"><div style="font-weight:700;margin-bottom:12px">Assinatura do Paciente</div><img src="${data.assinatura}" alt="Assinatura"><div style="font-size:12px;color:#666;margin-top:8px">Assinado digitalmente em ${dt}</div></div>
+    <div style="margin-top:20px"><button onclick="window.print()" style="padding:8px 20px;background:#2D7DD2;color:#fff;border:none;border-radius:6px;cursor:pointer">🖨️ Imprimir / Salvar PDF</button></div></body></html>`);
+  win.document.close();
 };
 
-// ── Toast ─────────────────────────────────────────────────────
+window.showTab = function(id,el) {
+  document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.getElementById("tab-"+id).classList.add("active");
+  if(el)el.classList.add("active");
+  if(id==="evolucao")carregarEvolucoes();
+};
+
 function mostrarToast(msg) {
-  let t = document.getElementById("toast");
-  if (!t) {
-    t = document.createElement("div");
-    t.id = "toast";
-    t.style.cssText = "position:fixed;bottom:24px;right:24px;background:#0F1923;color:#fff;padding:12px 20px;border-radius:8px;font-size:13.5px;z-index:9999;transition:opacity .3s;box-shadow:0 4px 12px rgba(0,0,0,.2)";
-    document.body.appendChild(t);
-  }
-  t.textContent = "✓ " + msg;
-  t.style.opacity = "1";
-  setTimeout(() => { t.style.opacity = "0"; }, 2500);
+  let t=document.getElementById("toast");
+  if(!t){t=document.createElement("div");t.id="toast";t.style.cssText="position:fixed;bottom:24px;right:24px;background:#0F1923;color:#fff;padding:12px 20px;border-radius:8px;font-size:13.5px;z-index:9999;transition:opacity .3s;box-shadow:0 4px 12px rgba(0,0,0,.2)";document.body.appendChild(t);}
+  t.textContent="✓ "+msg; t.style.opacity="1"; setTimeout(()=>t.style.opacity="0",2500);
 }
 
-// ── Fecha modal clicando fora ─────────────────────────────────
-document.getElementById("modal-dente").addEventListener("click", e => {
-  if (e.target === e.currentTarget) fecharModal();
-});
+document.getElementById("modal-dente").addEventListener("click",e=>{if(e.target===e.currentTarget)fecharModal();});
 </script>
 </body>
 </html>
